@@ -124,17 +124,12 @@ const renderEducation = (data: ResumeData, fontSize: number) => {
     }
 
     const educationItems = data.education.map((education) => {
-        const title = `${education.degree}${education.institution ? ' at ' + education.institution : ''}`;
+        const title = `${education.degree}${education.institution ? ' at ' + education.institution : ''}${education.location ? ', ' + education.location : ''}`;
         const dateRange = convertDateRange(education.startDate, education.endDate, education.isPresent || false);
-        const location = education.location && education.location.trim() ? escapeTypstText(education.location) : '';
 
         let content = `${renderTemplateSubHeader(title, fontSize)}
 
 ${renderTemplateDate(dateRange, fontSize)}`;
-
-        if (location) {
-            content += `\n\n*Location:* ${location}`;
-        }
 
         if (education.graduationScore && education.graduationScore.trim()) {
             content += `\n\n*Grade:* ${escapeTypstText(education.graduationScore)}`;
