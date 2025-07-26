@@ -1,5 +1,5 @@
 <template>
-    <main class="flex flex-col items-center justify-center min-h-[calc(100vh-64px)] px-4 sm:px-6 lg:px-8">
+    <main class="flex flex-col items-center justify-center h-[calc(100vh-64px-88px)] px-4 sm:px-6 lg:px-8">
         <div class="text-center max-w-2xl mx-auto">
             <h1 class="text-4xl font-bold text-black mb-8">Contact Us</h1>
             

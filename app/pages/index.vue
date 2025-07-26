@@ -14,7 +14,7 @@ useHead({
 </script>
 
 <template>
-    <main class="flex flex-col items-center justify-center min-h-[calc(100vh-64px)] px-4 sm:px-6 lg:px-8">
+    <main class="flex flex-col items-center justify-center h-[calc(100vh-64px-88px)] px-4 sm:px-6 lg:px-8">
         <!-- Hero Section -->
         <div class="text-center">
             <h1 class="text-6xl font-bold text-black mb-16">

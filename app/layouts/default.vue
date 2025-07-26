@@ -3,7 +3,7 @@ import { FileText, Github, HelpCircle, Edit, Mail } from 'lucide-vue-next';
 </script>
 
 <template>
-    <div class="min-h-screen bg-white">
+    <div class="min-h-screen bg-white flex flex-col">
         <!-- Navigation -->
         <nav class="border-b border-gray-200">
             <div class="px-4 lg:px-8">
@@ -67,7 +67,26 @@ import { FileText, Github, HelpCircle, Edit, Mail } from 'lucide-vue-next';
         </nav>
 
         <!-- Page Content -->
-        <slot/>
+        <main class="flex-1">
+            <slot/>
+        </main>
+
+        <!-- Footer -->
+        <footer v-if="$route.path !== '/builder'" class="bg-gray-50 border-t border-gray-200 mt-auto">
+            <div class="px-4 lg:px-8 py-6">
+                <div class="text-center space-y-3">
+                    <p class="text-sm text-gray-600">
+                        Built by <a href="https://konsowa.com" target="_blank" rel="noopener noreferrer" class="font-medium text-gray-900 hover:text-blue-600 transition-colors">Ibrahim Konsowa</a>
+                    </p>
+                    <div class="flex items-center justify-center space-x-2 text-xs text-gray-500">
+                        <span>Powered by</span>
+                        <a href="https://github.com/Myriad-Dreamin/typst.ts" target="_blank" rel="noopener noreferrer" class="text-gray-700 hover:text-blue-600 transition-colors">Typst.ts</a>
+                        <span>&</span>
+                        <a href="https://nuxt.com" target="_blank" rel="noopener noreferrer" class="text-gray-700 hover:text-blue-600 transition-colors">Nuxt</a>
+                    </div>
+                </div>
+            </div>
+        </footer>
     </div>
 </template>
 
