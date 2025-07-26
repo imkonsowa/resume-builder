@@ -36,14 +36,6 @@
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                 <div class="space-y-2">
-                    <Label>Field of Study</Label>
-                    <Input
-                        :model-value="education.fieldOfStudy"
-                        placeholder="Computer Science"
-                        @update:model-value="(value) => resumeStore.updateEducation(index, 'fieldOfStudy', value)"
-                    />
-                </div>
-                <div class="space-y-2">
                     <Label>Location</Label>
                     <Input
                         :model-value="education.location"
@@ -51,19 +43,6 @@
                         @update:model-value="(value) => resumeStore.updateEducation(index, 'location', value)"
                     />
                 </div>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
-                <MonthYearPicker
-                    :model-value="education.startDate"
-                    label="Start Date"
-                    @update:model-value="(value) => resumeStore.updateEducation(index, 'startDate', value)"
-                />
-                <MonthYearPicker
-                    :model-value="education.endDate"
-                    label="End Date"
-                    @update:model-value="(value) => resumeStore.updateEducation(index, 'endDate', value)"
-                />
                 <div class="space-y-2">
                     <Label>Graduation Score</Label>
                     <Input
@@ -71,6 +50,35 @@
                         placeholder="GPA, Grade, etc."
                         @update:model-value="(value) => resumeStore.updateEducation(index, 'graduationScore', value)"
                     />
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                <div class="space-y-2">
+                    <MonthYearPicker
+                        :model-value="education.startDate"
+                        label="Start Date"
+                        @update:model-value="(value) => resumeStore.updateEducation(index, 'startDate', value)"
+                    />
+                </div>
+                <div class="space-y-2">
+                    <MonthYearPicker
+                        :model-value="education.endDate"
+                        label="End Date"
+                        :disabled="education.isPresent"
+                        @update:model-value="(value) => resumeStore.updateEducation(index, 'endDate', value)"
+                    />
+                    <div class="flex items-center space-x-2 mt-2">
+                        <Checkbox
+                            :id="`present-${index}`"
+                            :model-value="education.isPresent"
+                            @update:model-value="(value) => {
+                                resumeStore.updateEducation(index, 'isPresent', value);
+                                if (value) resumeStore.updateEducation(index, 'endDate', '');
+                            }"
+                        />
+                        <Label :for="`present-${index}`" class="text-sm">Present</Label>
+                    </div>
                 </div>
             </div>
 
@@ -91,6 +99,7 @@
 import { Input } from './ui/input';
 import { Label } from './ui/label';
 import { Textarea } from './ui/textarea';
+import { Checkbox } from './ui/checkbox';
 import MonthYearPicker from './MonthYearPicker.vue';
 import FormCard from './FormCard.vue';
 import FormContainer from './FormContainer.vue';

@@ -340,6 +340,7 @@ export const useResumeStore = defineStore('resume', {
                     location: '',
                     startDate: '',
                     endDate: '',
+                    isPresent: false,
                     description: '',
                     graduationScore: ''
                 }];

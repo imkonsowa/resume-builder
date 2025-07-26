@@ -16,6 +16,7 @@ export interface Education {
     location: string;
     startDate: string;
     endDate: string;
+    isPresent?: boolean;
     description: string;
     graduationScore?: string;
 }
