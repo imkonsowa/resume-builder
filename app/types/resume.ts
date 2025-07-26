@@ -91,6 +91,7 @@ export interface SectionHeaders {
 }
 
 export interface ResumeData {
+    version: string;
     firstName: string;
     lastName: string;
     email: string;
@@ -140,6 +141,7 @@ export interface AppSettings {
 }
 
 export const defaultResumeData: ResumeData = {
+    version: 'v1',
     firstName: '',
     lastName: '',
     email: '',
