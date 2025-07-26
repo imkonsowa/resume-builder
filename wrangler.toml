@@ -1,0 +1,26 @@
+name = "resume-builder"
+main = ".output/server/index.mjs"
+compatibility_date = "2025-07-15"
+
+[assets]
+directory = ".output/public"
+binding = "ASSETS"
+
+# Build configuration
+[build]
+command = "npm run build"
+
+# Environment variables (optional)
+# [vars]
+# EXAMPLE_VAR = "example_value"
+
+# KV namespaces (if needed)
+# [[kv_namespaces]]
+# binding = "MY_KV"
+# id = "your-kv-namespace-id"
+
+# D1 databases (if needed)
+# [[d1_databases]]
+# binding = "DB"
+# database_name = "resume-db"
+# database_id = "your-database-id"

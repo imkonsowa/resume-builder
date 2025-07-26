@@ -1,0 +1,49 @@
+{
+  "name": "nuxt-app",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "nuxt build",
+    "deploy": "nuxt build && wrangler deploy",
+    "deploy:staging": "nuxt build && wrangler deploy --env staging",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare"
+  },
+  "dependencies": {
+    "@myriaddreamin/typst-ts-renderer": "^0.6.0",
+    "@myriaddreamin/typst-ts-web-compiler": "^0.6.0",
+    "@myriaddreamin/typst.ts": "^0.6.0",
+    "@pinia/nuxt": "^0.11.1",
+    "@tailwindcss/postcss": "^4.1.11",
+    "@tailwindcss/vite": "^4.1.11",
+    "@vee-validate/zod": "^4.15.1",
+    "@vite-pwa/nuxt": "^1.0.4",
+    "@vuepic/vue-datepicker": "^11.0.2",
+    "@vueuse/core": "^13.5.0",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "lucide-vue-next": "^0.525.0",
+    "nuxt": "^4.0.0",
+    "pinia-plugin-persistedstate": "^4.4.1",
+    "reka-ui": "^2.4.0",
+    "shadcn-nuxt": "^2.2.0",
+    "tailwind-merge": "^3.3.1",
+    "tailwindcss": "^4.1.11",
+    "tw-animate-css": "^1.3.5",
+    "vee-validate": "^4.15.1",
+    "vue": "^3.5.17",
+    "vue-router": "^4.5.1",
+    "vue-sonner": "^2.0.1",
+    "zod": "^3.25.76"
+  },
+  "devDependencies": {
+    "@nuxt/eslint": "^1.6.0",
+    "eslint": "^9.0.0",
+    "typescript": "^5.8.3",
+    "wrangler": "^4.25.0"
+  }
+}

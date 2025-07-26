@@ -1,0 +1,307 @@
+<template>
+    <ClientOnly>
+        <div>
+            <!-- Preview Controls -->
+            <div class="flex justify-between items-center mb-8">
+                <h2 class="text-xl font-semibold">Preview</h2>
+
+                <!-- Desktop Controls -->
+                <div class="hidden md:flex space-x-3">
+                    <!-- Template Selection -->
+                    <Popover v-model:open="showTemplateMenu">
+                        <PopoverTrigger as-child>
+                            <Button variant="outline" size="sm">
+                                <span>{{ (availableTemplates?.find(t => t.id === selectedTemplate).name || 'Default') }} Template</span>
+                                <ChevronDown class="w-4 h-4 ml-2"/>
+                            </Button>
+                        </PopoverTrigger>
+                        <PopoverContent class="w-80">
+                            <div class="space-y-2">
+                                <div
+                                    v-for="template in availableTemplates"
+                                    :key="template.id"
+                                    class="cursor-pointer rounded-md p-3 hover:bg-accent transition-colors"
+                                    :class="selectedTemplate === template.id ? 'bg-accent' : ''"
+                                    @click="handleTemplateSelect(template.id)"
+                                >
+                                    <div class="flex flex-col space-y-1">
+                                        <div class="font-medium text-sm">{{ template.name }}</div>
+                                        <div class="text-xs text-muted-foreground">{{ template.description }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </PopoverContent>
+                    </Popover>
+
+                    <!-- Settings Button -->
+                    <Button variant="outline" size="sm" @click="showSettingsModal = true">
+                        <SlidersHorizontal class="w-4 h-4 mr-2"/>
+                        Settings
+                    </Button>
+
+                    <!-- Download Button -->
+                    <Button size="sm" @click="handleDownload">
+                        <Download class="w-4 h-4 mr-2"/>
+                        Download PDF
+                    </Button>
+                </div>
+
+                <!-- Mobile Controls Button -->
+                <div class="md:hidden flex space-x-2">
+                    <Button size="sm" @click="handleDownload">
+                        <Download class="w-4 h-4 mr-2"/>
+                        Download
+                    </Button>
+                    <Button variant="outline" size="sm" @click="showSettingsModal = true">
+                        <Settings class="w-4 h-4"/>
+                    </Button>
+                </div>
+            </div>
+
+
+            <!-- Preview Card -->
+            <Card class="h-full">
+                <CardContent class="p-0">
+                    <!-- Preview Container -->
+                    <div class="bg-gray-100 rounded-lg overflow-hidden h-full">
+                        <div class="bg-white h-full min-h-[calc(100vh-200px)] flex flex-col">
+                            <!-- Loading State -->
+                            <div v-if="isLoading" class="flex items-center justify-center flex-1">
+                                <div class="text-center">
+                                    <div
+                                        class="w-16 h-16 border-4 border-gray-300 border-t-blue-500 rounded-full animate-spin mx-auto mb-4"/>
+                                    <h3 class="text-xl font-semibold text-gray-800 mb-2">Loading Preview</h3>
+                                    <p class="text-gray-600">Compiling your resume...</p>
+                                </div>
+                            </div>
+
+                            <!-- Error State -->
+                            <div v-else-if="error" class="flex items-center justify-center flex-1">
+                                <div class="text-center">
+                                    <div
+                                        class="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                                        <svg
+                                            class="w-8 h-8 text-red-500" fill="none" stroke="currentColor"
+                                            viewBox="0 0 24 24">
+                                            <path
+                                                stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M6 18L18 6M6 6l12 12"/>
+                                        </svg>
+                                    </div>
+                                    <h3 class="text-xl font-semibold text-red-800 mb-2">Preview Error</h3>
+                                    <p class="text-red-600 mb-4">{{ error }}</p>
+                                    <Button variant="outline" size="sm" @click="generatePreview">
+                                        Try Again
+                                    </Button>
+                                </div>
+                            </div>
+
+                            <!-- Preview Content -->
+                            <div v-else-if="previewContent" class="flex-1 overflow-auto p-4">
+                                <div class="preview-container flex justify-center min-h-full">
+                                    <!-- eslint-disable-next-line vue/no-v-html -->
+                                    <div class="resume-preview-wrapper" v-html="previewContent"/>
+                                </div>
+                            </div>
+
+                            <!-- Typst Not Ready -->
+                            <div v-else class="flex items-center justify-center flex-1">
+                                <div class="text-center">
+                                    <div
+                                        class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                                        <svg
+                                            class="w-8 h-8 text-blue-500" fill="none" stroke="currentColor"
+                                            viewBox="0 0 24 24">
+                                            <path
+                                                stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                        </svg>
+                                    </div>
+                                    <h3 class="text-xl font-semibold text-gray-800 mb-2">Initializing Typst</h3>
+                                    <p class="text-gray-600">Setting up the resume compiler...</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </CardContent>
+            </Card>
+
+            <!-- Settings Modal -->
+            <SettingsModal v-model="showSettingsModal"/>
+        </div>
+    </ClientOnly>
+</template>
+
+<script setup lang="ts">
+    import {Card, CardContent} from './ui/card';
+    import {Button} from './ui/button';
+    import {Popover, PopoverContent, PopoverTrigger} from './ui/popover';
+    import {ChevronDown, Download, Settings, SlidersHorizontal} from 'lucide-vue-next';
+    import {availableTemplates} from '~/types/resume';
+    import {useResumeGenerator} from '~/composables/useResumeGenerator';
+    import {useDebounceFn} from '@vueuse/core';
+    import SettingsModal from './SettingsModal.vue';
+    import {useSettingsStore} from '~/stores/settings';
+    import {useResumeStore} from '~/stores/resume';
+    import {storeToRefs} from 'pinia';
+
+    // No props needed - we'll use stores directly
+
+    const {generatePreview, downloadPDF} = useResumeGenerator();
+    const {isReady: typstReady} = useTypstLoader();
+
+    // Store instances
+    const settingsStore = useSettingsStore();
+    const resumeStore = useResumeStore();
+
+    // Reactive store data
+    const {resumeData} = storeToRefs(resumeStore);
+    const {selectedFont, selectedTemplate, fontSize} = storeToRefs(settingsStore);
+
+    // State for preview
+    const isLoading = ref(false);
+    const error = ref<string | null>(null);
+    const previewContent = ref<string>('');
+
+    // State for popover menus
+    const showTemplateMenu = ref(false);
+
+    // State for settings modal
+    const showSettingsModal = ref(false);
+
+    // Handler functions to close popovers after selection
+    const handleTemplateSelect = (template: string) => {
+        settingsStore.setSelectedTemplate(template);
+        showTemplateMenu.value = false;
+    };
+
+    // Generate preview when data changes
+    const generatePreviewInternal = async () => {
+        if (!resumeData.value) return;
+
+        isLoading.value = true;
+        error.value = null;
+
+        try {
+            // Wait for Typst to be ready
+            if (!typstReady.value) {
+                // Wait for initialization to complete
+                await new Promise((resolve) => {
+                    const unwatch = watch(
+                        typstReady,
+                        (ready) => {
+                            if (ready) {
+                                unwatch();
+                                resolve(void 0);
+                            }
+                        }
+                    );
+                });
+            }
+
+            if (!typstReady.value) {
+                return;
+            }
+
+
+            previewContent.value = await generatePreview(
+                resumeData.value,
+                selectedTemplate.value || 'default',
+                selectedFont.value || 'Calibri'
+            );
+        } catch (err) {
+            console.error(err);
+            error.value = err instanceof Error ? err.message : 'Failed to generate preview';
+
+        } finally {
+            isLoading.value = false;
+        }
+    };
+
+    // Handle PDF download
+    const handleDownload = async () => {
+        if (!resumeData.value) return;
+
+        try {
+            await downloadPDF(
+                resumeData.value,
+                selectedTemplate.value || 'default',
+                selectedFont.value || 'Calibri'
+            );
+        } catch (err) {
+            error.value = err instanceof Error ? err.message : 'Failed to download PDF';
+            console.error('PDF download error:', err);
+        }
+    };
+
+    // Watch for changes and regenerate preview with debounce
+    const debouncedGeneratePreview = useDebounceFn(() => {
+        generatePreviewInternal();
+    }, 100);
+
+    watch(
+        [resumeData, selectedTemplate, selectedFont, fontSize],
+        () => {
+            debouncedGeneratePreview();
+        },
+        {deep: true, immediate: true}
+    );
+
+    // Expose generatePreview for error retry
+    defineExpose({
+        generatePreview: generatePreviewInternal
+    });
+</script>
+
+<style scoped>
+    /* Desktop styles - Fixed A4 size with scrolling */
+    @media (min-width: 1024px) {
+        .resume-preview-wrapper :deep(svg) {
+            width: 794px !important; /* A4 width at 96 DPI */
+            height: auto !important;
+            max-width: none !important;
+            max-height: none !important;
+            display: block;
+            margin: 0 auto;
+            background: white;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border-radius: 4px;
+        }
+
+        .resume-preview-wrapper {
+            min-width: 810px; /* SVG width + padding */
+            padding: 8px;
+        }
+    }
+
+    /* Mobile styles - Fit to screen width */
+    @media (max-width: 1023px) {
+        .resume-preview-wrapper :deep(svg) {
+            width: 100% !important;
+            height: auto !important;
+            max-width: 100% !important;
+            max-height: none !important;
+            display: block;
+            margin: 0 auto;
+            background: white;
+            box-shadow: none !important;
+            border-radius: 0;
+        }
+
+        .resume-preview-wrapper {
+            width: 100%;
+            padding: 0;
+            min-width: auto;
+        }
+    }
+
+    /* Common styles for all screen sizes */
+    .resume-preview-wrapper :deep(svg) + :deep(svg) {
+        margin-top: 16px; /* Space between pages */
+    }
+
+    /* Ensure the container allows proper scrolling */
+    .preview-container {
+        min-width: 100%;
+    }
+</style>
