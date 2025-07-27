@@ -24,10 +24,71 @@
 </template>
 
 <script lang="ts" setup>
-import { Card, CardContent } from '~/components/ui/card';
+    import {Card, CardContent} from '~/components/ui/card';
 
-// Set page title
-useHead({
-    title: 'Contact Us - Resume Builder',
-});
+    useHead({
+        title: 'Contact Us - Get Help with Free Resume Builder | Support',
+        meta: [
+            {
+                name: 'description',
+                content: 'Need help with our free resume builder? Contact our support team for assistance with creating professional resumes. Fast and friendly customer service.',
+            },
+            {
+                name: 'keywords',
+                content: 'resume builder support, contact resume help, customer service, resume builder assistance, help with resume',
+            },
+            {
+                name: 'robots',
+                content: 'index, follow',
+            },
+            // Open Graph tags
+            {
+                property: 'og:type',
+                content: 'website',
+            },
+            {
+                property: 'og:site_name',
+                content: 'Free Resume Builder',
+            },
+            {
+                property: 'og:title',
+                content: 'Contact Us - Get Help with Free Resume Builder',
+            },
+            {
+                property: 'og:description',
+                content: 'Need help with our free resume builder? Contact our support team for assistance with creating professional resumes.',
+            },
+            {
+                property: 'og:url',
+                content: 'https://resumeforfree.com/contact',
+            },
+            {
+                property: 'og:image',
+                content: 'https://resumeforfree.com/og-image.png',
+            },
+            // Twitter Card tags
+            {
+                name: 'twitter:card',
+                content: 'summary_large_image',
+            },
+            {
+                name: 'twitter:title',
+                content: 'Contact Us - Get Help with Free Resume Builder',
+            },
+            {
+                name: 'twitter:description',
+                content: 'Need help with our free resume builder? Contact our support team for assistance.',
+            },
+            {
+                name: 'twitter:image',
+                content: 'https://resumeforfree.com/og-image.png',
+            },
+        ],
+        link: [
+            {
+                rel: 'canonical',
+                href: 'https://resumeforfree.com/contact',
+            },
+        ],
+    });
 </script>

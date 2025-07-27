@@ -1,16 +1,111 @@
 <script lang="ts" setup>
-import { Button } from '~/components/ui/button';
-import { Check, Download, FileText, Shield, Users, Zap } from 'lucide-vue-next';
+    import {Button} from '~/components/ui/button';
+    import {Check, Download, FileText, Shield, Users, Zap} from 'lucide-vue-next';
 
-useHead({
-    title: 'Resume Builder - Build Your Resume for Free',
-    meta: [
-        {
-            name: 'description',
-            content: 'Build professional resumes for free. No servers, no registration, no payments. Unlimited downloads and resumes.',
-        },
-    ],
-});
+    useHead({
+        title: 'Free Resume Builder - No Registration Required | Privacy-First Resume Maker',
+        meta: [
+            {
+                name: 'description',
+                content: 'Build professional resumes for free with complete privacy. No servers, no registration, no payments. Unlimited downloads and resumes. Everything runs locally on your device.',
+            },
+            {
+                name: 'keywords',
+                content: 'free resume builder, privacy resume maker, no registration resume, unlimited downloads, local resume builder, professional resume, CV maker',
+            },
+            {
+                name: 'author',
+                content: 'Resume Builder',
+            },
+            // Open Graph tags
+            {
+                property: 'og:type',
+                content: 'website',
+            },
+            {
+                property: 'og:site_name',
+                content: 'Free Resume Builder',
+            },
+            {
+                property: 'og:title',
+                content: 'Free Resume Builder - No Registration Required | Privacy-First Resume Maker',
+            },
+            {
+                property: 'og:description',
+                content: 'Build professional resumes for free with complete privacy. No servers, no registration, no payments. Unlimited downloads and resumes.',
+            },
+            {
+                property: 'og:url',
+                content: 'https://resumeforfree.com',
+            },
+            {
+                property: 'og:image',
+                content: 'https://resumeforfree.com/og-image.png',
+            },
+            {
+                property: 'og:image:width',
+                content: '1200',
+            },
+            {
+                property: 'og:image:height',
+                content: '630',
+            },
+            {
+                property: 'og:locale',
+                content: 'en_US',
+            },
+            // Twitter Card tags
+            {
+                name: 'twitter:card',
+                content: 'summary_large_image',
+            },
+            {
+                name: 'twitter:title',
+                content: 'Free Resume Builder - No Registration Required',
+            },
+            {
+                name: 'twitter:description',
+                content: 'Build professional resumes for free with complete privacy. No servers, no registration, no payments.',
+            },
+            {
+                name: 'twitter:image',
+                content: 'https://resumeforfree.com/og-image.png',
+            },
+            // Additional SEO tags
+            {
+                name: 'application-name',
+                content: 'Resume Builder',
+            },
+            {
+                name: 'apple-mobile-web-app-title',
+                content: 'Resume Builder',
+            },
+            {
+                name: 'apple-mobile-web-app-capable',
+                content: 'yes',
+            },
+            {
+                name: 'mobile-web-app-capable',
+                content: 'yes',
+            },
+        ],
+        link: [
+            {
+                rel: 'canonical',
+                href: 'https://resumeforfree.com',
+            },
+        ],
+        script: [
+            {
+                type: 'application/ld+json',
+                children: JSON.stringify(createWebsiteStructuredData()),
+            },
+            {
+                type: 'application/ld+json',
+                children: JSON.stringify(createSoftwareApplicationStructuredData()),
+            },
+        ],
+    });
 </script>
 
 <template>
@@ -33,7 +128,7 @@ useHead({
         <div class="grid grid-cols-2 md:grid-cols-3 gap-6 max-w-4xl mx-auto mt-16">
             <div class="text-center">
                 <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-3">
-                    <Check class="w-6 h-6 text-green-600" />
+                    <Check class="w-6 h-6 text-green-600"/>
                 </div>
                 <h3 class="text-lg font-semibold mb-1">
                     100% Free and Private
@@ -45,7 +140,7 @@ useHead({
 
             <div class="text-center">
                 <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-3">
-                    <Shield class="w-6 h-6 text-blue-600" />
+                    <Shield class="w-6 h-6 text-blue-600"/>
                 </div>
                 <h3 class="text-lg font-semibold mb-1">
                     No Servers Included
@@ -57,7 +152,7 @@ useHead({
 
             <div class="text-center">
                 <div class="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-3">
-                    <Users class="w-6 h-6 text-purple-600" />
+                    <Users class="w-6 h-6 text-purple-600"/>
                 </div>
                 <h3 class="text-lg font-semibold mb-1">
                     No Registration Required
@@ -69,7 +164,7 @@ useHead({
 
             <div class="text-center">
                 <div class="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-3">
-                    <Download class="w-6 h-6 text-orange-600" />
+                    <Download class="w-6 h-6 text-orange-600"/>
                 </div>
                 <h3 class="text-lg font-semibold mb-1">
                     Unlimited Downloads
@@ -81,7 +176,7 @@ useHead({
 
             <div class="text-center">
                 <div class="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-3">
-                    <FileText class="w-6 h-6 text-red-600" />
+                    <FileText class="w-6 h-6 text-red-600"/>
                 </div>
                 <h3 class="text-lg font-semibold mb-1">
                     Unlimited Resumes
@@ -93,7 +188,7 @@ useHead({
 
             <div class="text-center">
                 <div class="w-12 h-12 bg-indigo-100 rounded-full flex items-center justify-center mx-auto mb-3">
-                    <Zap class="w-6 h-6 text-indigo-600" />
+                    <Zap class="w-6 h-6 text-indigo-600"/>
                 </div>
                 <h3 class="text-lg font-semibold mb-1">
                     Fast & Efficient

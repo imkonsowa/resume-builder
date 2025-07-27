@@ -20,11 +20,27 @@ export default defineNuxtConfig({
         head: {
             link: [
                 { rel: 'icon', type: 'image/svg+xml', href: '/favicon.svg' },
+                { rel: 'canonical', href: 'https://resumeforfree.com' },
+            ],
+            meta: [
+                { charset: 'utf-8' },
+                { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+                { name: 'format-detection', content: 'telephone=no' },
+                { name: 'robots', content: 'index, follow' },
+                { name: 'author', content: 'Resume Builder' },
+                { name: 'theme-color', content: '#3b82f6' },
             ],
         },
     },
 
     css: ['~/assets/css/tailwind.css', '~/assets/css/app.css'],
+
+    site: {
+        url: 'https://resumeforfree.com',
+        name: 'Resume Builder',
+        description: 'Build professional resumes for free. No servers, no registration, no payments. Unlimited downloads and resumes with complete privacy.',
+        defaultLocale: 'en',
+    },
     future: {
         compatibilityVersion: 4,
     },
@@ -61,6 +77,10 @@ export default defineNuxtConfig({
 
     piniaPluginPersistedstate: {
         storage: 'localStorage',
+    },
+
+    seo: {
+        redirectToCanonicalSiteUrl: true,
     },
 
     shadcn: {
