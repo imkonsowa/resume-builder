@@ -1,5 +1,10 @@
 import { escapeTypstText } from './stringUtils';
 
+// Spacing constants
+export const HEADER_SPACING = '1em';
+export const SECTION_SPACING = '1.6em';
+export const ITEMS_SPACING = '0.8em';
+
 export const convertEmail = (email: string): string => {
     if (!email) return '';
     return `#link("mailto:${email}")[#text(fill: blue, "${email}")]`;
@@ -22,7 +27,7 @@ export const convertExternalLinkIcon = (url: string): string => {
 
 export const convertHeader = (title: string, size = '16pt'): string => {
     if (!title) return '';
-    return `#block(below: 1.2em, above: 2em)[#text("${escapeTypstText(title)}", size: ${size}, weight: "bold")]`;
+    return `#block(below: ${HEADER_SPACING}, above: 0em)[#text("${escapeTypstText(title)}", size: ${size}, weight: "bold")]`;
 };
 
 export const convertSubHeader = (title: string, size = '14pt'): string => {

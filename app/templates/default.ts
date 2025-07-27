@@ -6,10 +6,13 @@ import {
     convertGrid,
     convertLink,
     convertList,
+    HEADER_SPACING,
+    ITEMS_SPACING,
     renderTemplateDate,
     renderTemplateDateWithLink,
     renderTemplateHeader,
     renderTemplateSubHeader,
+    SECTION_SPACING,
 } from '~/utils/typstUtils';
 import {useSettingsStore} from '~/stores/settings';
 
@@ -33,12 +36,14 @@ const convertResumeHeader = (data: ResumeData, fontSize: number) => {
 
 ${renderTemplateHeader(data?.sectionHeaders?.profile || 'Profile', fontSize)}
 
-${escapeTypstText(data.summary)}`
+#block(above: 0em, below: ${SECTION_SPACING})[${escapeTypstText(data.summary)}]`
         : '';
+
+    const positionBlock = position ? `#block(above: 0em, below: ${SECTION_SPACING})[${position}]` : '';
 
     return `= ${fullName}
 
-${position}${summary}`;
+${positionBlock}${summary}`;
 };
 
 const convertContactInfo = (data: ResumeData, fontSize: number) => {
@@ -50,9 +55,11 @@ const convertContactInfo = (data: ResumeData, fontSize: number) => {
     if (contactInfo.length === 0) return '';
 
     const headerText = data?.sectionHeaders?.info || 'Info';
-    return `${renderTemplateHeader(headerText, fontSize)}
+    return `#block(above: 0em, below: ${SECTION_SPACING})[
+${renderTemplateHeader(headerText, fontSize)}
 
-${contactInfo.map(item => `#block(above: 0.9em, below: 0.9em)[${item}]`).join('')}`;
+${contactInfo.map(item => `#block(above: 0em, below: ${ITEMS_SPACING})[${item}]`).join('')}
+]`;
 };
 
 const renderSocialLinks = (data: ResumeData, fontSize: number) => {
@@ -82,9 +89,11 @@ const renderSocialLinks = (data: ResumeData, fontSize: number) => {
     });
 
     const headerText = data?.sectionHeaders?.socialLinks || 'Links';
-    return `${renderTemplateHeader(headerText, fontSize)}
+    return `#block(above: 0em, below: ${SECTION_SPACING})[
+${renderTemplateHeader(headerText, fontSize)}
 
-${linkItems.map(item => `#block(above: 0.9em, below: 0.9em)[${item}]`).join('')}`;
+${linkItems.map(item => `#block(above: 0em, below: ${ITEMS_SPACING})[${item}]`).join('')}
+]`;
 };
 
 const renderEmploymentHistory = (data: ResumeData, fontSize: number) => {
@@ -111,12 +120,14 @@ const renderEmploymentHistory = (data: ResumeData, fontSize: number) => {
 ${dateAndLinkSection}
 
 ${convertList(achievements)}`;
-    }).map(item => `#block(below: 1.5em)[${item}]`).join('');
+    }).join('\n\n');
 
     const headerText = data?.sectionHeaders?.experience || 'Employment History';
-    return `${renderTemplateHeader(headerText, fontSize)}
+    return `#block(above: 0em, below: ${SECTION_SPACING})[
+${renderTemplateHeader(headerText, fontSize)}
 
-${experienceItems}`;
+${experienceItems}
+]`;
 };
 
 const renderEducation = (data: ResumeData, fontSize: number) => {
@@ -141,12 +152,14 @@ ${renderTemplateDate(dateRange, fontSize)}`;
         }
 
         return content;
-    }).map(item => `#block(below: 1.5em)[${item}]`).join('');
+    }).join('\n\n');
 
     const headerText = data?.sectionHeaders?.education || 'Education';
-    return `${renderTemplateHeader(headerText, fontSize)}
+    return `#block(above: 0em, below: ${SECTION_SPACING})[
+${renderTemplateHeader(headerText, fontSize)}
 
-${educationItems}`;
+${educationItems}
+]`;
 };
 
 const renderTechnicalSkills = (data: ResumeData, fontSize: number) => {
@@ -158,24 +171,28 @@ const renderTechnicalSkills = (data: ResumeData, fontSize: number) => {
                 if (!skill.description.trim()) return `*${escapeTypstText(skill.title)}*`;
                 return `*${escapeTypstText(skill.title)}:* ${escapeTypstText(skill.description)}`;
             })
-            .map(content => `#block(below: 0.8em)[${content}]`)
+            .map(content => `#block(above: 0em, below: ${ITEMS_SPACING})[${content}]`)
             .join('');
 
         if (!skillItems) return '';
 
         const headerText = data?.sectionHeaders?.skills || 'Skills';
-        return `${renderTemplateHeader(headerText, fontSize)}
+        return `#block(above: 0em, below: ${SECTION_SPACING})[
+${renderTemplateHeader(headerText, fontSize)}
 
-${skillItems}`;
+${skillItems}
+]`;
     }
 
     if (!data?.technicalSkills || data.technicalSkills.trim() === '') {
         return '';
     }
 
-    return `${renderTemplateHeader('Technical Skills', fontSize)}
+    return `#block(above: 0em, below: ${SECTION_SPACING})[
+${renderTemplateHeader('Technical Skills', fontSize)}
 
-${escapeTypstText(data.technicalSkills)}`;
+${escapeTypstText(data.technicalSkills)}
+]`;
 };
 
 const renderVolunteering = (data: ResumeData, fontSize: number) => {
@@ -195,12 +212,14 @@ const renderVolunteering = (data: ResumeData, fontSize: number) => {
 ${renderTemplateDate(dateRange, fontSize)}
 
 ${convertList(achievements)}`;
-    }).map(item => `#block(below: 1.5em)[${item}]`).join('');
+    }).join('\n\n');
 
     const headerText = data?.sectionHeaders?.volunteering || 'Volunteering';
-    return `${renderTemplateHeader(headerText, fontSize)}
+    return `#block(above: 0em, below: ${SECTION_SPACING})[
+${renderTemplateHeader(headerText, fontSize)}
 
-${volunteeringItems}`;
+${volunteeringItems}
+]`;
 };
 
 const renderProjects = (data: ResumeData, fontSize: number) => {
@@ -229,15 +248,17 @@ const renderProjects = (data: ResumeData, fontSize: number) => {
             return content;
         })
         .filter(content => content.trim())
-        .map(content => `#block(above: 0.9em, below: 0.9em)[${content}]`)
+        .map(content => `#block(above: 0em, below: ${HEADER_SPACING})[${content}]`)
         .join('');
 
     if (!projectItems) return '';
 
     const headerText = data?.sectionHeaders?.projects || 'Projects';
-    return `${renderTemplateHeader(headerText, fontSize)}
+    return `#block(above: 0em, below: ${SECTION_SPACING})[
+${renderTemplateHeader(headerText, fontSize)}
 
-${projectItems}`;
+${projectItems}
+]`;
 };
 
 const renderLanguages = (data: ResumeData, fontSize: number) => {
@@ -257,15 +278,17 @@ const renderLanguages = (data: ResumeData, fontSize: number) => {
             return content;
         })
         .filter(content => content.trim())
-        .map(content => `#block(above: 0.9em, below: 0.9em)[${content}]`)
+        .map(content => `#block(above: 0em, below: ${ITEMS_SPACING})[${content}]`)
         .join('');
 
     if (!languageItems) return '';
 
     const headerText = data?.sectionHeaders?.languages || 'Languages';
-    return `${renderTemplateHeader(headerText, fontSize)}
+    return `#block(above: 0em, below: ${SECTION_SPACING})[
+${renderTemplateHeader(headerText, fontSize)}
 
-${languageItems}`;
+${languageItems}
+]`;
 };
 
 const parse = (data: ResumeData, font: string): string => {
@@ -329,7 +352,6 @@ const parse = (data: ResumeData, font: string): string => {
         .sort((a, b) => (leftSectionOrder[a] || 999) - (leftSectionOrder[b] || 999))
         .map(section => allSections[section]())
         .filter(content => content.trim() !== '')
-        .map(content => `#block(below: 1.5em)[${content}]`)
         .join('');
 
     const dynamicRightContent = rightSections
@@ -343,12 +365,9 @@ const parse = (data: ResumeData, font: string): string => {
     ].filter(content => content.trim() !== '');
 
     const rightContent = [...staticRightContent, ...dynamicRightContent]
-        .map(content => `#block(below: 1.5em)[${content}]`)
         .join('');
 
     const headerAndLeftContent = `${convertResumeHeader(data, fontSize)}
-
-#v(1em)
 
 ${leftContent}`;
 
