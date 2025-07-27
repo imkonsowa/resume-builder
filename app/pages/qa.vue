@@ -4,6 +4,7 @@
     import {Card, CardContent} from '~/components/ui/card';
     import {Accordion, AccordionContent, AccordionItem, AccordionTrigger} from '~/components/ui/accordion';
     import {ArrowRight, CheckCircle, HelpCircle} from 'lucide-vue-next';
+    import {createFAQStructuredData} from '~/composables/useSEO';
 
     useHead({
         title: 'Q&A - Free Resume Builder | Frequently Asked Questions & Help',
