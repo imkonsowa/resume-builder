@@ -1,174 +1,185 @@
 <script setup lang="ts">
-import { Button } from '~/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '~/components/ui/card';
-import { Badge } from '~/components/ui/badge';
-import { Input } from '~/components/ui/input';
-import { Label } from '~/components/ui/label';
-import { FileText, Plus, Edit, Trash2, Copy, Calendar, Check, X, PencilIcon, Search } from 'lucide-vue-next';
-import { Checkbox } from '~/components/ui/checkbox';
-import ConfirmationModal from '~/components/ConfirmationModal.vue';
-import type { Resume } from '~/types/resume';
+    import {Button} from '~/components/ui/button';
+    import {Card, CardContent, CardHeader, CardTitle} from '~/components/ui/card';
+    import {Badge} from '~/components/ui/badge';
+    import {Input} from '~/components/ui/input';
+    import {Calendar, Check, Copy, Edit, FileText, PencilIcon, Plus, Search, Trash2, X} from 'lucide-vue-next';
+    import ConfirmationModal from '~/components/ConfirmationModal.vue';
+    import CreateResumeModal from '~/components/CreateResumeModal.vue';
+    import CopyResumeModal from '~/components/CopyResumeModal.vue';
+    import type {Resume} from '~/types/resume';
 
-const resumeStore = useResumeStore();
-const router = useRouter();
-const confirmation = useConfirmation();
+    const resumeStore = useResumeStore();
+    const router = useRouter();
+    const confirmation = useConfirmation();
 
-// Initialize store
-onMounted(() => {
-    resumeStore.initialize();
-});
-
-// Search functionality
-const searchQuery = ref('');
-
-// Get all resumes with search filtering
-const resumes = computed(() => {
-    const allResumes = resumeStore.resumesList;
-    if (!searchQuery.value.trim()) {
-        return allResumes;
-    }
-
-    const query = searchQuery.value.toLowerCase().trim();
-    return allResumes.filter(resume =>
-        resume.name.toLowerCase().includes(query)
-    );
-});
-
-const resumeCount = computed(() => resumeStore.resumeCount);
-const filteredCount = computed(() => resumes.value.length);
-
-// Resume name editing
-const editingResumeId = ref<string | null>(null);
-const editingResumeName = ref('');
-
-// Create modal state
-const showCreateModal = ref(false);
-const newResumeName = ref('');
-const navigateToBuilder = ref(true);
-
-// Create new resume
-const createNewResume = () => {
-    showCreateModal.value = true;
-    newResumeName.value = '';
-    navigateToBuilder.value = true;
-};
-
-// Confirm create resume
-const confirmCreateResume = () => {
-    const name = newResumeName.value.trim() || 'Untitled Resume';
-    const newResumeId = resumeStore.createResume(name);
-    resumeStore.setActiveResume(newResumeId);
-    showCreateModal.value = false;
-    newResumeName.value = '';
-
-    if (navigateToBuilder.value) {
-        router.push('/builder');
-    }
-};
-
-// Cancel create resume
-const cancelCreateResume = () => {
-    showCreateModal.value = false;
-    newResumeName.value = '';
-    navigateToBuilder.value = true;
-};
-
-// Edit resume
-const editResume = (id: string) => {
-    resumeStore.setActiveResume(id);
-    router.push('/builder');
-};
-
-// Duplicate resume
-const duplicateResume = (id: string) => {
-    const newResumeId = resumeStore.duplicateResume(id);
-    if (newResumeId) {
-        resumeStore.setActiveResume(newResumeId);
-        router.push('/builder');
-    }
-};
-
-// Delete resume
-const deleteResume = async (id: string) => {
-    const resume = resumeStore.resumesList.find(r => r.id === id);
-    const resumeName = resume?.name || 'this resume';
-
-    const confirmed = await confirmation.confirm({
-        title: 'Delete Resume',
-        message: `Are you sure you want to delete "${resumeName}"? This action cannot be undone.`,
-        confirmText: 'Delete',
-        cancelText: 'Cancel'
+    // Initialize store
+    onMounted(() => {
+        resumeStore.initialize();
     });
 
-    if (confirmed) {
-        resumeStore.deleteResume(id);
-    }
-};
+    // Search functionality
+    const searchQuery = ref('');
 
-// Start editing resume name
-const startEditingName = (resume: Resume) => {
-    editingResumeId.value = resume.id;
-    editingResumeName.value = resume.name;
-};
-
-// Save resume name
-const saveResumeName = () => {
-    if (editingResumeId.value && editingResumeName.value.trim()) {
-        resumeStore.renameResume(editingResumeId.value, editingResumeName.value.trim());
-    }
-    editingResumeId.value = null;
-    editingResumeName.value = '';
-};
-
-// Cancel editing
-const cancelEditing = () => {
-    editingResumeId.value = null;
-    editingResumeName.value = '';
-};
-
-// Handle enter key in create modal
-const handleCreateEnter = (event: KeyboardEvent) => {
-    if (event.key === 'Enter') {
-        confirmCreateResume();
-    }
-};
-
-// Format date
-const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString('en-US', {
-        year: 'numeric',
-        month: 'short',
-        day: 'numeric'
-    });
-};
-
-// Get resume preview info
-const getResumePreview = (resume: Resume) => {
-    const data = resume.data;
-    const fullName = [data.firstName, data.lastName].filter(Boolean).join(' ');
-    const position = data.position || 'No position specified';
-    const sections = [];
-
-    if (data.experiences?.length) sections.push(`${data.experiences.length} experience${data.experiences.length > 1 ? 's' : ''}`);
-    if (data.education?.length) sections.push(`${data.education.length} education${data.education.length > 1 ? 's' : ''}`);
-    if (data.skills?.length) sections.push(`${data.skills.length} skill${data.skills.length > 1 ? 's' : ''}`);
-
-    return {
-        fullName: fullName || 'Unnamed Resume',
-        position,
-        sections: sections.join(', ') || 'No sections added'
-    };
-};
-
-useHead({
-    title: 'Your Resumes - Resume Builder',
-    meta: [
-        {
-            name: 'description',
-            content: 'Manage all your resumes in one place. Create, edit, duplicate, and organize your professional resumes.'
+    // Get all resumes with search filtering
+    const resumes = computed(() => {
+        const allResumes = resumeStore.resumesList;
+        if (!searchQuery.value.trim()) {
+            return allResumes;
         }
-    ]
-});
+
+        const query = searchQuery.value.toLowerCase().trim();
+        return allResumes.filter(resume =>
+            resume.name.toLowerCase().includes(query)
+        );
+    });
+
+    const resumeCount = computed(() => resumeStore.resumeCount);
+    const filteredCount = computed(() => resumes.value.length);
+
+    // Resume name editing
+    const editingResumeId = ref<string | null>(null);
+    const editingResumeName = ref('');
+
+    // Create modal state
+    const showCreateModal = ref(false);
+
+    // Copy modal state
+    const showCopyModal = ref(false);
+    const resumeToCopy = ref<Resume | null>(null);
+
+    const createNewResume = () => {
+        showCreateModal.value = true;
+    };
+
+    // Handle create resume confirmation
+    const handleCreateResume = (name: string, navigateToBuilder: boolean) => {
+        const resumeName = name.trim() || 'Untitled Resume';
+        const newResumeId = resumeStore.createResume(resumeName);
+        resumeStore.setActiveResume(newResumeId);
+        showCreateModal.value = false;
+
+        if (navigateToBuilder) {
+            router.push('/builder');
+        }
+    };
+
+    // Edit resume
+    const editResume = (id: string) => {
+        resumeStore.setActiveResume(id);
+        router.push('/builder');
+    };
+
+    // Show copy modal
+    const showCopyResumeModal = (id: string) => {
+        const resume = resumeStore.resumesList.find(r => r.id === id);
+        if (resume) {
+            resumeToCopy.value = resume;
+            showCopyModal.value = true;
+        }
+    };
+
+    // Handle copy resume confirmation
+    const handleCopyResume = (name: string, navigateToBuilder: boolean) => {
+        if (resumeToCopy.value) {
+            const resumeName = name.trim() || 'Untitled Resume';
+            const newResumeId = resumeStore.duplicateResume(resumeToCopy.value.id, resumeName);
+            if (newResumeId) {
+                resumeStore.setActiveResume(newResumeId);
+                showCopyModal.value = false;
+                resumeToCopy.value = null;
+
+                if (navigateToBuilder) {
+                    router.push('/builder');
+                }
+            }
+        }
+    };
+
+    // Duplicate resume (legacy function for direct duplication)
+    const duplicateResume = (id: string) => {
+        const newResumeId = resumeStore.duplicateResume(id);
+        if (newResumeId) {
+            resumeStore.setActiveResume(newResumeId);
+            router.push('/builder');
+        }
+    };
+
+    // Delete resume
+    const deleteResume = async (id: string) => {
+        const resume = resumeStore.resumesList.find(r => r.id === id);
+        const resumeName = resume?.name || 'this resume';
+
+        const confirmed = await confirmation.confirm({
+            title: 'Delete Resume',
+            message: `Are you sure you want to delete "${resumeName}"? This action cannot be undone.`,
+            confirmText: 'Delete',
+            cancelText: 'Cancel'
+        });
+
+        if (confirmed) {
+            resumeStore.deleteResume(id);
+        }
+    };
+
+    // Start editing resume name
+    const startEditingName = (resume: Resume) => {
+        editingResumeId.value = resume.id;
+        editingResumeName.value = resume.name;
+    };
+
+    // Save resume name
+    const saveResumeName = () => {
+        if (editingResumeId.value && editingResumeName.value.trim()) {
+            resumeStore.renameResume(editingResumeId.value, editingResumeName.value.trim());
+        }
+        editingResumeId.value = null;
+        editingResumeName.value = '';
+    };
+
+    // Cancel editing
+    const cancelEditing = () => {
+        editingResumeId.value = null;
+        editingResumeName.value = '';
+    };
+
+
+    // Format date
+    const formatDate = (dateString: string) => {
+        return new Date(dateString).toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'short',
+            day: 'numeric'
+        });
+    };
+
+    // Get resume preview info
+    const getResumePreview = (resume: Resume) => {
+        const data = resume.data;
+        const fullName = [data.firstName, data.lastName].filter(Boolean).join(' ');
+        const position = data.position || 'No position specified';
+        const sections = [];
+
+        if (data.experiences?.length) sections.push(`${data.experiences.length} experience${data.experiences.length > 1 ? 's' : ''}`);
+        if (data.education?.length) sections.push(`${data.education.length} education${data.education.length > 1 ? 's' : ''}`);
+        if (data.skills?.length) sections.push(`${data.skills.length} skill${data.skills.length > 1 ? 's' : ''}`);
+
+        return {
+            fullName: fullName || 'Unnamed Resume',
+            position,
+            sections: sections.join(', ') || 'No sections added'
+        };
+    };
+
+    useHead({
+        title: 'Your Resumes - Resume Builder',
+        meta: [
+            {
+                name: 'description',
+                content: 'Manage all your resumes in one place. Create, edit, duplicate, and organize your professional resumes.'
+            }
+        ]
+    });
 </script>
 
 <template>
@@ -190,7 +201,7 @@ useHead({
             <div class="flex flex-col sm:flex-row gap-3 sm:items-center">
                 <!-- Search Box -->
                 <div class="relative">
-                    <Search class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+                    <Search class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4"/>
                     <Input
                         v-model="searchQuery"
                         placeholder="Search resumes..."
@@ -199,7 +210,7 @@ useHead({
                 </div>
 
                 <Button class="flex items-center gap-2" @click="createNewResume">
-                    <Plus class="w-4 h-4" />
+                    <Plus class="w-4 h-4"/>
                     Create New Resume
                 </Button>
             </div>
@@ -207,7 +218,7 @@ useHead({
 
         <!-- Empty State -->
         <div v-if="resumeCount === 0" class="text-center py-16">
-            <FileText class="w-24 h-24 text-gray-300 mx-auto mb-4" />
+            <FileText class="w-24 h-24 text-gray-300 mx-auto mb-4"/>
             <h2 class="text-2xl font-semibold text-gray-900 mb-2">No resumes yet</h2>
             <p class="text-gray-600 mb-6">Create your first resume to get started</p>
             <Button size="lg" @click="createNewResume">
@@ -217,7 +228,7 @@ useHead({
 
         <!-- No Search Results -->
         <div v-else-if="filteredCount === 0 && searchQuery" class="text-center py-16">
-            <Search class="w-24 h-24 text-gray-300 mx-auto mb-4" />
+            <Search class="w-24 h-24 text-gray-300 mx-auto mb-4"/>
             <h2 class="text-2xl font-semibold text-gray-900 mb-2">No resumes found</h2>
             <p class="text-gray-600 mb-6">
                 No resumes match your search for "{{ searchQuery }}"
@@ -261,13 +272,13 @@ useHead({
                             class="p-1 text-green-600 hover:text-green-700"
                             @click="saveResumeName"
                         >
-                            <Check class="w-4 h-4" />
+                            <Check class="w-4 h-4"/>
                         </button>
                         <button
                             class="p-1 text-red-600 hover:text-red-700"
                             @click="cancelEditing"
                         >
-                            <X class="w-4 h-4" />
+                            <X class="w-4 h-4"/>
                         </button>
                     </div>
                     <div v-else class="flex items-center gap-2 pr-16">
@@ -279,11 +290,11 @@ useHead({
                             title="Edit resume name"
                             @click="startEditingName(resume)"
                         >
-                            <PencilIcon class="w-4 h-4" />
+                            <PencilIcon class="w-4 h-4"/>
                         </button>
                     </div>
                     <div class="flex items-center gap-2 text-sm text-gray-500">
-                        <Calendar class="w-4 h-4" />
+                        <Calendar class="w-4 h-4"/>
                         <span>Updated {{ formatDate(resume.updatedAt) }}</span>
                     </div>
                 </CardHeader>
@@ -309,16 +320,16 @@ useHead({
                             class="flex items-center gap-1"
                             @click="editResume(resume.id)"
                         >
-                            <Edit class="w-3 h-3" />
+                            <Edit class="w-3 h-3"/>
                             Build
                         </Button>
                         <Button
                             variant="outline"
                             size="sm"
                             class="flex items-center gap-1"
-                            @click.stop="duplicateResume(resume.id)"
+                            @click.stop="showCopyResumeModal(resume.id)"
                         >
-                            <Copy class="w-3 h-3" />
+                            <Copy class="w-3 h-3"/>
                             Copy
                         </Button>
                         <Button
@@ -327,7 +338,7 @@ useHead({
                             class="flex items-center gap-1 text-red-600 hover:text-red-700"
                             @click.stop="deleteResume(resume.id)"
                         >
-                            <Trash2 class="w-3 h-3" />
+                            <Trash2 class="w-3 h-3"/>
                             Delete
                         </Button>
                     </div>
@@ -336,54 +347,19 @@ useHead({
         </div>
 
         <!-- Create Resume Modal -->
-        <div
-            v-if="showCreateModal"
-            class="fixed inset-0 z-50 flex items-center justify-center"
-            @click="cancelCreateResume"
-        >
-            <!-- Backdrop -->
-            <div class="absolute inset-0 bg-black/50" />
+        <CreateResumeModal
+            :is-open="showCreateModal"
+            @close="showCreateModal = false"
+            @confirm="handleCreateResume"
+        />
 
-            <!-- Modal Content -->
-            <div
-                class="relative bg-white border rounded-lg shadow-xl p-6 w-96 max-w-[90vw]"
-                @click.stop
-            >
-                <div class="space-y-4">
-                    <h3 class="text-lg font-semibold text-gray-900">Create New Resume</h3>
-
-                    <div class="space-y-2">
-                        <Label for="resume-name">Resume Name</Label>
-                        <Input
-                            id="resume-name"
-                            v-model="newResumeName"
-                            placeholder="Enter resume name"
-                            autofocus
-                            @keydown="handleCreateEnter"
-                        />
-                    </div>
-
-                    <div class="flex items-center space-x-2 pt-2">
-                        <Checkbox
-                            id="navigate-to-builder"
-                            v-model="navigateToBuilder"
-                        />
-                        <Label for="navigate-to-builder" class="text-sm font-normal">
-                            Navigate to the builder after creating
-                        </Label>
-                    </div>
-
-                    <div class="flex gap-3 pt-4">
-                        <Button class="flex-1" @click="confirmCreateResume">
-                            Create Resume
-                        </Button>
-                        <Button variant="outline" class="flex-1" @click="cancelCreateResume">
-                            Cancel
-                        </Button>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <!-- Copy Resume Modal -->
+        <CopyResumeModal
+            :is-open="showCopyModal"
+            :resume-name="resumeToCopy ? `${resumeToCopy.name} (Copy)` : ''"
+            @close="showCopyModal = false; resumeToCopy = null"
+            @confirm="handleCopyResume"
+        />
 
         <!-- Confirmation Modal -->
         <ConfirmationModal
