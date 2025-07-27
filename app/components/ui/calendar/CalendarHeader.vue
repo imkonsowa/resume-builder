@@ -13,8 +13,8 @@
 
 <template>
     <CalendarHeader
-        data-slot="calendar-header"
         :class="cn('flex justify-center pt-1 relative items-center w-full', props.class)"
+        data-slot="calendar-header"
         v-bind="forwardedProps"
     >
         <slot/>

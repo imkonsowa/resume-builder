@@ -1,18 +1,18 @@
 <template>
     <FormContainer
-        :title="resumeStore.resumeData.sectionHeaders.education"
         :is-empty="resumeStore.resumeData.education.length === 0"
-        empty-message="No education entries added yet. Click 'Add Education' to get started."
+        :title="resumeStore.resumeData.sectionHeaders.education"
         add-button-label="Add Education"
+        empty-message="No education entries added yet. Click 'Add Education' to get started."
         @add="resumeStore.addEducation"
         @edit-title="(value) => resumeStore.updateSectionHeader('education', value)"
     >
         <FormCard
             v-for="(education, index) in resumeStore.resumeData.education"
             :key="index"
-            :title="`Education ${index + 1}`"
-            :confirm-title="'Delete Education'"
             :confirm-message="`Are you sure you want to delete this education entry? This action cannot be undone.`"
+            :confirm-title="'Delete Education'"
+            :title="`Education ${index + 1}`"
             @remove="resumeStore.removeEducation(index)"
         >
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
@@ -63,9 +63,9 @@
                 </div>
                 <div class="space-y-2">
                     <MonthYearPicker
+                        :disabled="education.isPresent"
                         :model-value="education.endDate"
                         label="End Date"
-                        :disabled="education.isPresent"
                         @update:model-value="(value) => resumeStore.updateEducation(index, 'endDate', value)"
                     />
                     <div class="flex items-center space-x-2 mt-2">
@@ -77,7 +77,10 @@
                                 if (value) resumeStore.updateEducation(index, 'endDate', '');
                             }"
                         />
-                        <Label :for="`present-${index}`" class="text-sm">Present</Label>
+                        <Label
+                            :for="`present-${index}`"
+                            class="text-sm"
+                        >Present</Label>
                     </div>
                 </div>
             </div>
@@ -86,8 +89,8 @@
                 <Label>Description</Label>
                 <Textarea
                     :model-value="education.description"
-                    rows="3"
                     placeholder="Relevant coursework, achievements, honors, etc."
+                    rows="3"
                     @update:model-value="(value) => resumeStore.updateEducation(index, 'description', value)"
                 />
             </div>
@@ -95,14 +98,14 @@
     </FormContainer>
 </template>
 
-<script setup lang="ts">
-    import {Input} from './ui/input';
-    import {Label} from './ui/label';
-    import {Textarea} from './ui/textarea';
-    import {Checkbox} from './ui/checkbox';
-    import MonthYearPicker from './MonthYearPicker.vue';
-    import FormCard from './FormCard.vue';
-    import FormContainer from './FormContainer.vue';
+<script lang="ts" setup>
+    import {Input} from '~/components/ui/input';
+    import {Label} from '~/components/ui/label';
+    import {Textarea} from '~/components/ui/textarea';
+    import {Checkbox} from '~/components/ui/checkbox';
+    import MonthYearPicker from '~/components/elements/MonthYearPicker.vue';
+    import FormCard from '~/components/elements/FormCard.vue';
+    import FormContainer from '~/components/elements/FormContainer.vue';
 
     // Use the store directly instead of props
     const resumeStore = useResumeStore();

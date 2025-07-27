@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
     import type {PrimitiveProps} from 'reka-ui';
     import {Primitive} from 'reka-ui';
     import type {HTMLAttributes} from 'vue';
@@ -16,8 +16,8 @@
 
 <template>
     <Primitive
-        data-slot="badge"
         :class="cn(badgeVariants({ variant }), props.class)"
+        data-slot="badge"
         v-bind="delegatedProps"
     >
         <slot/>

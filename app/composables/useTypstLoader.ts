@@ -51,6 +51,6 @@ export const useTypstLoader = () => {
         isReady: computed(() => state.value.isReady),
         error: computed(() => state.value.error),
         hasInitialized: computed(() => state.value.hasInitialized),
-        retry
+        retry,
     };
 };

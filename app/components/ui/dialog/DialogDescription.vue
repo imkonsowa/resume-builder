@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
     import type {HTMLAttributes} from 'vue';
     import {reactiveOmit} from '@vueuse/core';
     import {DialogDescription, type DialogDescriptionProps, useForwardProps} from 'reka-ui';
@@ -13,9 +13,9 @@
 
 <template>
     <DialogDescription
+        :class="cn('text-muted-foreground text-sm', props.class)"
         data-slot="dialog-description"
         v-bind="forwardedProps"
-        :class="cn('text-muted-foreground text-sm', props.class)"
     >
         <slot/>
     </DialogDescription>

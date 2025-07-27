@@ -4,19 +4,19 @@ import {defaultAppSettings} from '~/types/resume';
 
 export const useSettingsStore = defineStore('settings', {
     state: () => ({
-        settings: {...defaultAppSettings} as AppSettings
+        settings: {...defaultAppSettings} as AppSettings,
     }),
 
     persist: true,
 
     getters: {
-        selectedFont: (state) => state.settings.selectedFont,
-        selectedTemplate: (state) => state.settings.selectedTemplate,
-        isRawMode: (state) => state.settings.isRawMode,
-        showDownloadMenu: (state) => state.settings.showDownloadMenu,
-        showFontMenu: (state) => state.settings.showFontMenu,
-        showTemplateMenu: (state) => state.settings.showTemplateMenu,
-        fontSize: (state) => state.settings.fontSize ?? 14
+        selectedFont: state => state.settings.selectedFont,
+        selectedTemplate: state => state.settings.selectedTemplate,
+        isRawMode: state => state.settings.isRawMode,
+        showDownloadMenu: state => state.settings.showDownloadMenu,
+        showFontMenu: state => state.settings.showFontMenu,
+        showTemplateMenu: state => state.settings.showTemplateMenu,
+        fontSize: state => state.settings.fontSize ?? 14,
     },
 
     actions: {
@@ -64,6 +64,6 @@ export const useSettingsStore = defineStore('settings', {
 
         updateSettings(newSettings: Partial<AppSettings>) {
             this.settings = {...this.settings, ...newSettings};
-        }
-    }
+        },
+    },
 });

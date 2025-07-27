@@ -14,7 +14,6 @@
 
 <template>
     <StepperIndicator
-        v-bind="forwarded"
         :class="cn(
             'inline-flex items-center justify-center rounded-full text-muted-foreground/50 w-8 h-8',
             // Disabled
@@ -25,6 +24,7 @@
             'group-data-[state=completed]:bg-accent group-data-[state=completed]:text-accent-foreground',
             props.class,
         )"
+        v-bind="forwarded"
     >
         <slot/>
     </StepperIndicator>

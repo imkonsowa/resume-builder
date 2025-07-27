@@ -3,14 +3,19 @@
         <div>
             <!-- Preview Controls -->
             <div class="flex justify-between items-center mb-8">
-                <h2 class="text-xl font-semibold">Preview</h2>
+                <h2 class="text-xl font-semibold">
+                    Preview
+                </h2>
 
                 <!-- Desktop Controls -->
                 <div class="hidden md:flex space-x-3">
                     <!-- Template Selection -->
                     <Popover v-model:open="showTemplateMenu">
                         <PopoverTrigger as-child>
-                            <Button variant="outline" size="sm">
+                            <Button
+                                size="sm"
+                                variant="outline"
+                            >
                                 <span>{{ (availableTemplates?.find(t => t.id === selectedTemplate).name || 'Default') }} Template</span>
                                 <ChevronDown class="w-4 h-4 ml-2"/>
                             </Button>
@@ -20,13 +25,17 @@
                                 <div
                                     v-for="template in availableTemplates"
                                     :key="template.id"
-                                    class="cursor-pointer rounded-md p-3 hover:bg-accent transition-colors"
                                     :class="selectedTemplate === template.id ? 'bg-accent' : ''"
+                                    class="cursor-pointer rounded-md p-3 hover:bg-accent transition-colors"
                                     @click="handleTemplateSelect(template.id)"
                                 >
                                     <div class="flex flex-col space-y-1">
-                                        <div class="font-medium text-sm">{{ template.name }}</div>
-                                        <div class="text-xs text-muted-foreground">{{ template.description }}</div>
+                                        <div class="font-medium text-sm">
+                                            {{ template.name }}
+                                        </div>
+                                        <div class="text-xs text-muted-foreground">
+                                            {{ template.description }}
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -34,13 +43,20 @@
                     </Popover>
 
                     <!-- Settings Button -->
-                    <Button variant="outline" size="sm" @click="showSettingsModal = true">
+                    <Button
+                        size="sm"
+                        variant="outline"
+                        @click="showSettingsModal = true"
+                    >
                         <SlidersHorizontal class="w-4 h-4 mr-2"/>
                         Settings
                     </Button>
 
                     <!-- Download Button -->
-                    <Button size="sm" @click="handleDownload">
+                    <Button
+                        size="sm"
+                        @click="handleDownload"
+                    >
                         <Download class="w-4 h-4 mr-2"/>
                         Download PDF
                     </Button>
@@ -48,16 +64,22 @@
 
                 <!-- Mobile Controls Button -->
                 <div class="md:hidden flex space-x-2">
-                    <Button size="sm" @click="handleDownload">
+                    <Button
+                        size="sm"
+                        @click="handleDownload"
+                    >
                         <Download class="w-4 h-4 mr-2"/>
                         Download
                     </Button>
-                    <Button variant="outline" size="sm" @click="showSettingsModal = true">
+                    <Button
+                        size="sm"
+                        variant="outline"
+                        @click="showSettingsModal = true"
+                    >
                         <Settings class="w-4 h-4"/>
                     </Button>
                 </div>
             </div>
-
 
             <!-- Preview Card -->
             <Card class="h-full">
@@ -66,59 +88,105 @@
                     <div class="bg-gray-100 rounded-lg overflow-hidden h-full">
                         <div class="bg-white h-full min-h-[calc(100vh-200px)] flex flex-col">
                             <!-- Loading State -->
-                            <div v-if="isLoading" class="flex items-center justify-center flex-1">
+                            <div
+                                v-if="isLoading"
+                                class="flex items-center justify-center flex-1"
+                            >
                                 <div class="text-center">
                                     <div
-                                        class="w-16 h-16 border-4 border-gray-300 border-t-blue-500 rounded-full animate-spin mx-auto mb-4"/>
-                                    <h3 class="text-xl font-semibold text-gray-800 mb-2">Loading Preview</h3>
-                                    <p class="text-gray-600">Compiling your resume...</p>
+                                        class="w-16 h-16 border-4 border-gray-300 border-t-blue-500 rounded-full animate-spin mx-auto mb-4"
+                                    />
+                                    <h3 class="text-xl font-semibold text-gray-800 mb-2">
+                                        Loading Preview
+                                    </h3>
+                                    <p class="text-gray-600">
+                                        Compiling your resume...
+                                    </p>
                                 </div>
                             </div>
 
                             <!-- Error State -->
-                            <div v-else-if="error" class="flex items-center justify-center flex-1">
+                            <div
+                                v-else-if="error"
+                                class="flex items-center justify-center flex-1"
+                            >
                                 <div class="text-center">
                                     <div
-                                        class="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                                        class="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4"
+                                    >
                                         <svg
-                                            class="w-8 h-8 text-red-500" fill="none" stroke="currentColor"
-                                            viewBox="0 0 24 24">
+                                            class="w-8 h-8 text-red-500"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            viewBox="0 0 24 24"
+                                        >
                                             <path
-                                                stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                d="M6 18L18 6M6 6l12 12"/>
+                                                d="M6 18L18 6M6 6l12 12"
+                                                stroke-linecap="round"
+                                                stroke-linejoin="round"
+                                                stroke-width="2"
+                                            />
                                         </svg>
                                     </div>
-                                    <h3 class="text-xl font-semibold text-red-800 mb-2">Preview Error</h3>
-                                    <p class="text-red-600 mb-4">{{ error }}</p>
-                                    <Button variant="outline" size="sm" @click="generatePreview">
+                                    <h3 class="text-xl font-semibold text-red-800 mb-2">
+                                        Preview Error
+                                    </h3>
+                                    <p class="text-red-600 mb-4">
+                                        {{ error }}
+                                    </p>
+                                    <Button
+                                        size="sm"
+                                        variant="outline"
+                                        @click="generatePreview"
+                                    >
                                         Try Again
                                     </Button>
                                 </div>
                             </div>
 
                             <!-- Preview Content -->
-                            <div v-else-if="previewContent" class="flex-1 overflow-auto p-4">
+                            <div
+                                v-else-if="previewContent"
+                                class="flex-1 overflow-auto p-4"
+                            >
                                 <div class="preview-container flex justify-center min-h-full">
                                     <!-- eslint-disable-next-line vue/no-v-html -->
-                                    <div class="resume-preview-wrapper" v-html="previewContent"/>
+                                    <div
+                                        class="resume-preview-wrapper"
+                                        v-html="previewContent"
+                                    />
                                 </div>
                             </div>
 
                             <!-- Typst Not Ready -->
-                            <div v-else class="flex items-center justify-center flex-1">
+                            <div
+                                v-else
+                                class="flex items-center justify-center flex-1"
+                            >
                                 <div class="text-center">
                                     <div
-                                        class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                                        class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4"
+                                    >
                                         <svg
-                                            class="w-8 h-8 text-blue-500" fill="none" stroke="currentColor"
-                                            viewBox="0 0 24 24">
+                                            class="w-8 h-8 text-blue-500"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            viewBox="0 0 24 24"
+                                        >
                                             <path
-                                                stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                                d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+                                                stroke-linecap="round"
+                                                stroke-linejoin="round"
+                                                stroke-width="2"
+                                            />
                                         </svg>
                                     </div>
-                                    <h3 class="text-xl font-semibold text-gray-800 mb-2">Initializing Typst</h3>
-                                    <p class="text-gray-600">Setting up the resume compiler...</p>
+                                    <h3 class="text-xl font-semibold text-gray-800 mb-2">
+                                        Initializing Typst
+                                    </h3>
+                                    <p class="text-gray-600">
+                                        Setting up the resume compiler...
+                                    </p>
                                 </div>
                             </div>
                         </div>
@@ -132,15 +200,15 @@
     </ClientOnly>
 </template>
 
-<script setup lang="ts">
-    import {Card, CardContent} from './ui/card';
-    import {Button} from './ui/button';
-    import {Popover, PopoverContent, PopoverTrigger} from './ui/popover';
+<script lang="ts" setup>
+    import {Card, CardContent} from '~/components/ui/card';
+    import {Button} from '~/components/ui/button';
+    import {Popover, PopoverContent, PopoverTrigger} from '~/components/ui/popover';
     import {ChevronDown, Download, Settings, SlidersHorizontal} from 'lucide-vue-next';
     import {availableTemplates} from '~/types/resume';
     import {useResumeGenerator} from '~/composables/useResumeGenerator';
     import {useDebounceFn} from '@vueuse/core';
-    import SettingsModal from './SettingsModal.vue';
+    import SettingsModal from '~/components/elements/SettingsModal.vue';
     import {useSettingsStore} from '~/stores/settings';
     import {useResumeStore} from '~/stores/resume';
     import {storeToRefs} from 'pinia';
@@ -194,7 +262,7 @@
                                 unwatch();
                                 resolve(void 0);
                             }
-                        }
+                        },
                     );
                 });
             }
@@ -203,16 +271,14 @@
                 return;
             }
 
-
             previewContent.value = await generatePreview(
                 resumeData.value,
                 selectedTemplate.value || 'default',
-                selectedFont.value || 'Calibri'
+                selectedFont.value || 'Calibri',
             );
         } catch (err) {
             console.error(err);
             error.value = err instanceof Error ? err.message : 'Failed to generate preview';
-
         } finally {
             isLoading.value = false;
         }
@@ -226,7 +292,7 @@
             await downloadPDF(
                 resumeData.value,
                 selectedTemplate.value || 'default',
-                selectedFont.value || 'Calibri'
+                selectedFont.value || 'Calibri',
             );
         } catch (err) {
             error.value = err instanceof Error ? err.message : 'Failed to download PDF';
@@ -244,12 +310,12 @@
         () => {
             debouncedGeneratePreview();
         },
-        {deep: true, immediate: true}
+        {deep: true, immediate: true},
     );
 
     // Expose generatePreview for error retry
     defineExpose({
-        generatePreview: generatePreviewInternal
+        generatePreview: generatePreviewInternal,
     });
 </script>
 

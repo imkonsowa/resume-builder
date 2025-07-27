@@ -9,7 +9,7 @@ import {
     renderTemplateDate,
     renderTemplateDateWithLink,
     renderTemplateHeader,
-    renderTemplateSubHeader
+    renderTemplateSubHeader,
 } from '~/utils/typstUtils';
 import {useSettingsStore} from '~/stores/settings';
 
@@ -28,11 +28,13 @@ export interface TemplateSettings {
 const convertResumeHeader = (data: ResumeData, fontSize: number) => {
     const fullName = `${escapeTypstText(data?.firstName || '')} ${escapeTypstText(data?.lastName || '')}`.trim();
     const position = escapeTypstText(data?.position || '');
-    const summary = data?.summary ? `
+    const summary = data?.summary
+        ? `
 
 ${renderTemplateHeader(data?.sectionHeaders?.profile || 'Profile', fontSize)}
 
-${escapeTypstText(data.summary)}` : '';
+${escapeTypstText(data.summary)}`
+        : '';
 
     return `= ${fullName}
 
@@ -58,20 +60,20 @@ const renderSocialLinks = (data: ResumeData, fontSize: number) => {
 
     if (socialLinks.length === 0) return '';
 
-    const linkItems = socialLinks.map(link => {
+    const linkItems = socialLinks.map((link) => {
         let linkText = '';
         if (link.platform === 'other' && link.customLabel) {
             linkText = link.customLabel;
         } else {
             const platformLabels = {
-                'linkedin': 'LinkedIn',
-                'github': 'GitHub',
-                'twitter': 'Twitter',
-                'portfolio': 'Portfolio',
-                'dribbble': 'Dribbble',
-                'medium': 'Medium',
-                'devto': 'Dev.to',
-                'personal': 'Personal'
+                linkedin: 'LinkedIn',
+                github: 'GitHub',
+                twitter: 'Twitter',
+                portfolio: 'Portfolio',
+                dribbble: 'Dribbble',
+                medium: 'Medium',
+                devto: 'Dev.to',
+                personal: 'Personal',
             };
             linkText = platformLabels[link.platform as keyof typeof platformLabels] || link.platform;
         }
@@ -84,7 +86,6 @@ const renderSocialLinks = (data: ResumeData, fontSize: number) => {
 
 ${linkItems.map(item => `#block(above: 0.9em, below: 0.9em)[${item}]`).join('')}`;
 };
-
 
 const renderEmploymentHistory = (data: ResumeData, fontSize: number) => {
     if (!data?.experiences || data.experiences.length === 0) {
@@ -152,7 +153,7 @@ const renderTechnicalSkills = (data: ResumeData, fontSize: number) => {
     if (data?.skills && data.skills.length > 0) {
         const skillItems = data.skills
             .filter(skill => skill.title.trim() || skill.description.trim())
-            .map(skill => {
+            .map((skill) => {
                 if (!skill.title.trim()) return escapeTypstText(skill.description);
                 if (!skill.description.trim()) return `*${escapeTypstText(skill.title)}*`;
                 return `*${escapeTypstText(skill.title)}:* ${escapeTypstText(skill.description)}`;
@@ -209,7 +210,7 @@ const renderProjects = (data: ResumeData, fontSize: number) => {
 
     const projectItems = data.projects
         .filter(project => project.title.trim() || project.description.trim())
-        .map(project => {
+        .map((project) => {
             let content = '';
 
             if (project.title.trim()) {
@@ -246,7 +247,7 @@ const renderLanguages = (data: ResumeData, fontSize: number) => {
 
     const languageItems = data.languages
         .filter(language => language.name.trim())
-        .map(language => {
+        .map((language) => {
             let content = `*${escapeTypstText(language.name)}*`;
 
             if (language.proficiency.trim()) {
@@ -273,14 +274,14 @@ const parse = (data: ResumeData, font: string): string => {
     const fontSize = settingsStore.fontSize;
 
     const allSections = {
-        'experiences': () => renderEmploymentHistory(data, fontSize),
-        'education': () => renderEducation(data, fontSize),
-        'contact': () => convertContactInfo(data, fontSize),
-        'socialLinks': () => renderSocialLinks(data, fontSize),
-        'projects': () => renderProjects(data, fontSize),
-        'languages': () => renderLanguages(data, fontSize),
-        'technicalSkills': () => renderTechnicalSkills(data, fontSize),
-        'volunteering': () => renderVolunteering(data, fontSize)
+        experiences: () => renderEmploymentHistory(data, fontSize),
+        education: () => renderEducation(data, fontSize),
+        contact: () => convertContactInfo(data, fontSize),
+        socialLinks: () => renderSocialLinks(data, fontSize),
+        projects: () => renderProjects(data, fontSize),
+        languages: () => renderLanguages(data, fontSize),
+        technicalSkills: () => renderTechnicalSkills(data, fontSize),
+        volunteering: () => renderVolunteering(data, fontSize),
     };
 
     const fixedLeftSections = ['experiences', 'education'];
@@ -290,7 +291,7 @@ const parse = (data: ResumeData, font: string): string => {
     const leftSections = [...fixedLeftSections];
     const rightSections = [];
 
-    movableSections.forEach(section => {
+    movableSections.forEach((section) => {
         if (section === 'technicalSkills') {
             const placement = data.sectionPlacement?.skills || 'right';
             if (placement === 'left') {
@@ -309,19 +310,19 @@ const parse = (data: ResumeData, font: string): string => {
     });
 
     const leftSectionOrder = {
-        'experiences': data.sectionOrder?.experience || 1,
-        'education': data.sectionOrder?.education || 2,
-        'technicalSkills': data.sectionOrder?.skills || 3,
-        'projects': data.sectionOrder?.projects || 4,
-        'languages': data.sectionOrder?.languages || 5,
-        'volunteering': data.sectionOrder?.volunteering || 6
+        experiences: data.sectionOrder?.experience || 1,
+        education: data.sectionOrder?.education || 2,
+        technicalSkills: data.sectionOrder?.skills || 3,
+        projects: data.sectionOrder?.projects || 4,
+        languages: data.sectionOrder?.languages || 5,
+        volunteering: data.sectionOrder?.volunteering || 6,
     };
 
     const rightSectionOrder = {
-        'technicalSkills': data.sectionOrder?.skills || 1,
-        'projects': data.sectionOrder?.projects || 2,
-        'languages': data.sectionOrder?.languages || 3,
-        'volunteering': data.sectionOrder?.volunteering || 4
+        technicalSkills: data.sectionOrder?.skills || 1,
+        projects: data.sectionOrder?.projects || 2,
+        languages: data.sectionOrder?.languages || 3,
+        volunteering: data.sectionOrder?.volunteering || 4,
     };
 
     const leftContent = leftSections
@@ -337,7 +338,7 @@ const parse = (data: ResumeData, font: string): string => {
 
     const staticRightContent = [
         allSections['contact'](),
-        allSections['socialLinks']()
+        allSections['socialLinks'](),
     ].filter(content => content.trim() !== '');
 
     const rightContent = [...staticRightContent, ...dynamicRightContent].join('\n\n');
@@ -366,7 +367,7 @@ export const defaultTemplate: Template = {
         isTwoColumn: true,
         leftColumnRatio: '7fr',
         rightColumnRatio: '3fr',
-        movableSections: ['skills', 'projects', 'languages', 'volunteering']
+        movableSections: ['skills', 'projects', 'languages', 'volunteering'],
     },
-    parse
+    parse,
 };

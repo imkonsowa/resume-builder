@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
     import type {HTMLAttributes} from 'vue';
     import {reactiveOmit} from '@vueuse/core';
     import {RadioGroupRoot, type RadioGroupRootEmits, type RadioGroupRootProps, useForwardPropsEmits} from 'reka-ui';
@@ -14,8 +14,8 @@
 
 <template>
     <RadioGroupRoot
-        data-slot="radio-group"
         :class="cn('grid gap-3', props.class)"
+        data-slot="radio-group"
         v-bind="forwarded"
     >
         <slot/>

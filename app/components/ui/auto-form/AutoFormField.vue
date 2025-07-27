@@ -1,4 +1,4 @@
-<script setup lang="ts" generic="U extends ZodAny">
+<script generic="U extends ZodAny" lang="ts" setup>
     import type {ZodAny} from 'zod';
     import type {Config, ConfigItem, Shape} from './interface';
     import {computed} from 'vue';
@@ -32,12 +32,12 @@
                 : config.component
             : INPUT_COMPONENTS[DEFAULT_ZOD_HANDLERS[shape.type]] "
         v-if="!isHidden"
+        :config="config"
+        :disabled="isDisabled"
         :field-name="fieldName"
         :label="shape.schema?.description"
-        :required="isRequired || shape.required"
         :options="overrideOptions || shape.options"
-        :disabled="isDisabled"
-        :config="config"
+        :required="isRequired || shape.required"
         v-bind="delegatedProps"
     >
         <slot/>

@@ -1,21 +1,24 @@
 <template>
     <div class="mb-4">
-        <label v-if="label" class="block text-sm font-medium text-gray-700 mb-1">{{ label }}</label>
+        <label
+            v-if="label"
+            class="block text-sm font-medium text-gray-700 mb-1"
+        >{{ label }}</label>
         <div class="relative">
             <VueDatePicker
                 v-model="selectedDate"
-                month-picker
+                :disabled="disabled"
                 :format="formatDate"
                 :placeholder="placeholder"
-                :disabled="disabled"
                 class="month-year-picker"
+                month-picker
                 @update:model-value="handleDateChange"
             />
         </div>
     </div>
 </template>
 
-<script setup lang="ts">
+<script lang="ts" setup>
     import VueDatePicker from '@vuepic/vue-datepicker';
     import '@vuepic/vue-datepicker/dist/main.css';
 
@@ -28,7 +31,7 @@
 
     const props = withDefaults(defineProps<Props>(), {
         label: '',
-        placeholder: 'Select'
+        placeholder: 'Select',
     });
 
     const emit = defineEmits<{
@@ -82,7 +85,7 @@
         if (!date) return '';
         const options: Intl.DateTimeFormatOptions = {
             year: 'numeric',
-            month: 'long'
+            month: 'long',
         };
         return date.toLocaleDateString('en-US', options);
     };

@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
     import type {HTMLAttributes} from 'vue';
     import {reactiveOmit} from '@vueuse/core';
     import {DialogTitle, type DialogTitleProps, useForwardProps} from 'reka-ui';
@@ -13,9 +13,9 @@
 
 <template>
     <DialogTitle
+        :class="cn('text-lg leading-none font-semibold', props.class)"
         data-slot="dialog-title"
         v-bind="forwardedProps"
-        :class="cn('text-lg leading-none font-semibold', props.class)"
     >
         <slot/>
     </DialogTitle>

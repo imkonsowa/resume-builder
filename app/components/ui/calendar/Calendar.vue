@@ -28,8 +28,8 @@
 <template>
     <CalendarRoot
         v-slot="{ grid, weekDays }"
-        data-slot="calendar"
         :class="cn('p-3', props.class)"
+        data-slot="calendar"
         v-bind="forwarded"
     >
         <CalendarHeader>

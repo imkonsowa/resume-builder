@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
     import type {HTMLAttributes} from 'vue';
     import {reactiveOmit} from '@vueuse/core';
     import {PaginationList, type PaginationListProps} from 'reka-ui';
@@ -12,9 +12,9 @@
 <template>
     <PaginationList
         v-slot="slotProps"
+        :class="cn('flex flex-row items-center gap-1', props.class)"
         data-slot="pagination-content"
         v-bind="delegatedProps"
-        :class="cn('flex flex-row items-center gap-1', props.class)"
     >
         <slot v-bind="slotProps"/>
     </PaginationList>

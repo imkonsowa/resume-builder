@@ -4,7 +4,7 @@ import {compactTemplate} from './compact';
 
 export const templates: Record<string, Template> = {
     default: defaultTemplate,
-    compact: compactTemplate
+    compact: compactTemplate,
 };
 
 export const getTemplate = (id: string): Template => {

@@ -14,7 +14,6 @@
 
 <template>
     <StepperSeparator
-        v-bind="forwarded"
         :class="cn(
             'bg-muted',
             // Disabled
@@ -23,5 +22,6 @@
             'group-data-[state=completed]:bg-accent-foreground',
             props.class,
         )"
+        v-bind="forwarded"
     />
 </template>

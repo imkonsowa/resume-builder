@@ -12,7 +12,10 @@
                 <!-- Template Selection -->
                 <div class="space-y-2">
                     <Label for="template">Template</Label>
-                    <Select v-model="selectedTemplate" @update:model-value="updateTemplate">
+                    <Select
+                        v-model="selectedTemplate"
+                        @update:model-value="updateTemplate"
+                    >
                         <SelectTrigger id="template">
                             <SelectValue placeholder="Select a template">
                                 {{ selectedTemplateName }}
@@ -25,8 +28,12 @@
                                 :value="template.id"
                             >
                                 <div class="flex flex-col space-y-1">
-                                    <div class="font-medium">{{ template.name }}</div>
-                                    <div class="text-xs text-muted-foreground">{{ template.description }}</div>
+                                    <div class="font-medium">
+                                        {{ template.name }}
+                                    </div>
+                                    <div class="text-xs text-muted-foreground">
+                                        {{ template.description }}
+                                    </div>
                                 </div>
                             </SelectItem>
                         </SelectContent>
@@ -39,7 +46,10 @@
                 <!-- Font Selection -->
                 <div class="space-y-2">
                     <Label for="font-family">Font Family</Label>
-                    <Select v-model="selectedFont" @update:model-value="updateFont">
+                    <Select
+                        v-model="selectedFont"
+                        @update:model-value="updateFont"
+                    >
                         <SelectTrigger id="font-family">
                             <SelectValue placeholder="Select a font"/>
                         </SelectTrigger>
@@ -65,8 +75,8 @@
                         <Slider
                             id="font-size"
                             v-model="fontSize"
-                            :min="10"
                             :max="16"
+                            :min="10"
                             :step="1"
                             class="flex-1"
                             @update:model-value="updateFontSize"
@@ -80,7 +90,10 @@
             </div>
 
             <DialogFooter>
-                <Button variant="outline" @click="resetToDefaults">
+                <Button
+                    variant="outline"
+                    @click="resetToDefaults"
+                >
                     Reset to Defaults
                 </Button>
                 <Button @click="close">
@@ -91,7 +104,7 @@
     </Dialog>
 </template>
 
-<script setup lang="ts">
+<script lang="ts" setup>
     import {computed, ref, watch} from 'vue';
     import {
         Dialog,
@@ -99,7 +112,7 @@
         DialogDescription,
         DialogFooter,
         DialogHeader,
-        DialogTitle
+        DialogTitle,
     } from '~/components/ui/dialog';
     import {Button} from '~/components/ui/button';
     import {Label} from '~/components/ui/label';
@@ -129,7 +142,7 @@
     // Computed
     const isOpen = computed({
         get: () => props.modelValue,
-        set: (value) => emit('update:modelValue', value)
+        set: value => emit('update:modelValue', value),
     });
 
     const selectedTemplateName = computed(() => {

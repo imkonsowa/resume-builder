@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
     import {MenubarSub, type MenubarSubEmits, useForwardPropsEmits} from 'reka-ui';
 
     interface MenubarSubRootProps {

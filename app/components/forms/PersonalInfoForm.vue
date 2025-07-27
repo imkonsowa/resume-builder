@@ -1,11 +1,11 @@
 <template>
     <FormContainer
-        title="Personal Information"
-        :is-empty="false"
-        empty-message=""
-        add-button-label=""
-        :show-add-button="false"
         :editable="false"
+        :is-empty="false"
+        :show-add-button="false"
+        add-button-label=""
+        empty-message=""
+        title="Personal Information"
     >
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div class="space-y-2">
@@ -54,8 +54,8 @@
                     <Input
                         id="email"
                         :model-value="resumeStore.resumeData.email"
-                        type="email"
                         placeholder="john@example.com"
+                        type="email"
                         @update:model-value="(value) => resumeStore.updateField('email', value)"
                     />
                 </div>
@@ -64,8 +64,8 @@
                     <Input
                         id="phone"
                         :model-value="resumeStore.resumeData.phone"
-                        type="tel"
                         placeholder="+1 (555) 123-4567"
+                        type="tel"
                         @update:model-value="(value) => resumeStore.updateField('phone', value)"
                     />
                 </div>
@@ -82,8 +82,8 @@
                 <Textarea
                     id="summary"
                     :model-value="resumeStore.resumeData.summary"
-                    rows="4"
                     placeholder="Brief summary of your experience and skills..."
+                    rows="4"
                     @update:model-value="(value) => resumeStore.updateField('summary', value)"
                 />
             </div>
@@ -97,8 +97,8 @@
                     @update="(value) => resumeStore.updateSectionHeader('socialLinks', value)"
                 />
                 <Button
-                    variant="outline"
                     size="sm"
+                    variant="outline"
                     @click="resumeStore.addSocialLink"
                 >
                     <Plus class="w-4 h-4 mr-2"/>
@@ -114,7 +114,10 @@
                 >
                     <!-- Platform Icon -->
                     <div class="flex-none">
-                        <component :is="getPlatformIcon(link.platform)" class="w-5 h-5 text-gray-600"/>
+                        <component
+                            :is="getPlatformIcon(link.platform)"
+                            class="w-5 h-5 text-gray-600"
+                        />
                     </div>
 
                     <!-- Platform Dropdown -->
@@ -124,7 +127,11 @@
                             class="w-full px-3 py-2 border rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-sm"
                             @change="(e) => resumeStore.updateSocialLink(linkIndex, 'platform', (e.target as HTMLSelectElement).value)"
                         >
-                            <option v-for="platform in SOCIAL_PLATFORMS" :key="platform.value" :value="platform.value">
+                            <option
+                                v-for="platform in SOCIAL_PLATFORMS"
+                                :key="platform.value"
+                                :value="platform.value"
+                            >
                                 {{ platform.label }}
                             </option>
                         </select>
@@ -133,15 +140,18 @@
                     <!-- URL Input -->
                     <div class="flex-1">
                         <Input
-                            type="url"
                             :model-value="link.url"
                             placeholder="https://"
+                            type="url"
                             @update:model-value="(value) => resumeStore.updateSocialLink(linkIndex, 'url', value)"
                         />
                     </div>
 
                     <!-- Custom Label (only for 'other' platform) -->
-                    <div v-if="link.platform === 'other'" class="w-32">
+                    <div
+                        v-if="link.platform === 'other'"
+                        class="w-32"
+                    >
                         <Input
                             :model-value="link.customLabel || ''"
                             placeholder="Label"
@@ -152,24 +162,24 @@
                     <!-- Order Controls -->
                     <div class="flex items-center gap-1">
                         <Button
-                            variant="outline"
-                            size="sm"
                             :disabled="linkIndex === 0"
+                            size="sm"
+                            variant="outline"
                             @click="resumeStore.moveSocialLink(linkIndex, linkIndex - 1)"
                         >
                             <ChevronUp class="w-4 h-4"/>
                         </Button>
                         <Button
-                            variant="outline"
-                            size="sm"
                             :disabled="linkIndex === resumeStore.resumeData.socialLinks.length - 1"
+                            size="sm"
+                            variant="outline"
                             @click="resumeStore.moveSocialLink(linkIndex, linkIndex + 1)"
                         >
                             <ChevronDown class="w-4 h-4"/>
                         </Button>
                         <Button
-                            variant="outline"
                             size="sm"
+                            variant="outline"
                             @click="handleRemoveSocialLink(linkIndex)"
                         >
                             <Trash2 class="w-4 h-4"/>
@@ -182,21 +192,21 @@
 
     <!-- Confirmation Modal -->
     <ConfirmationModal
-        :is-open="confirmation.isOpen.value"
-        :title="confirmation.title.value"
-        :message="confirmation.message.value"
-        :confirm-text="confirmation.confirmText.value"
         :cancel-text="confirmation.cancelText.value"
-        @confirm="confirmation.handleConfirm"
+        :confirm-text="confirmation.confirmText.value"
+        :is-open="confirmation.isOpen.value"
+        :message="confirmation.message.value"
+        :title="confirmation.title.value"
         @cancel="confirmation.handleCancel"
+        @confirm="confirmation.handleConfirm"
     />
 </template>
 
-<script setup lang="ts">
-    import {Input} from './ui/input';
-    import {Label} from './ui/label';
-    import {Textarea} from './ui/textarea';
-    import {Button} from './ui/button';
+<script lang="ts" setup>
+    import {Input} from '~/components/ui/input';
+    import {Label} from '~/components/ui/label';
+    import {Textarea} from '~/components/ui/textarea';
+    import {Button} from '~/components/ui/button';
     import {
         BookOpen,
         ChevronDown,
@@ -209,11 +219,11 @@
         Linkedin,
         Plus,
         Trash2,
-        Twitter
+        Twitter,
     } from 'lucide-vue-next';
-    import FormContainer from './FormContainer.vue';
-    import ConfirmationModal from './ConfirmationModal.vue';
-    import EditableHeader from './EditableHeader.vue';
+    import FormContainer from '~/components/elements/FormContainer.vue';
+    import ConfirmationModal from '~/components/elements/ConfirmationModal.vue';
+    import EditableHeader from '~/components/elements/EditableHeader.vue';
 
     const SOCIAL_PLATFORMS = [
         {value: 'linkedin', label: 'LinkedIn', icon: Linkedin},
@@ -224,7 +234,7 @@
         {value: 'medium', label: 'Medium', icon: BookOpen},
         {value: 'devto', label: 'Dev.to', icon: Edit3},
         {value: 'personal', label: 'Personal', icon: Globe},
-        {value: 'other', label: 'Other', icon: Link}
+        {value: 'other', label: 'Other', icon: Link},
     ];
 
     const resumeStore = useResumeStore();
@@ -240,7 +250,7 @@
             title: 'Delete Social Link',
             message: 'Are you sure you want to delete this social link? This action cannot be undone.',
             confirmText: 'Delete',
-            cancelText: 'Cancel'
+            cancelText: 'Cancel',
         });
 
         if (confirmed) {

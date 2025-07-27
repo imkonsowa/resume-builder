@@ -1,4 +1,4 @@
-<script setup lang="ts" generic="T extends ZodRawShape">
+<script generic="T extends ZodRawShape" lang="ts" setup>
     import type {ZodAny, ZodObject, ZodRawShape} from 'zod';
     import type {Config, ConfigItem, Shape} from './interface';
     import {Accordion, AccordionContent, AccordionItem, AccordionTrigger} from '@/components/ui/accordion';
@@ -52,11 +52,11 @@
 <template>
     <section>
         <slot v-bind="props">
-            <Accordion type="single" as-child class="w-full" collapsible :disabled="disabled">
+            <Accordion :disabled="disabled" as-child class="w-full" collapsible type="single">
                 <FormItem>
                     <AccordionItem :value="fieldName" class="border-none">
                         <AccordionTrigger>
-                            <AutoFormLabel class="text-base" :required="required">
+                            <AutoFormLabel :required="required" class="text-base">
                                 {{ schema?.description || beautifyObjectName(fieldName) }}
                             </AutoFormLabel>
                         </AccordionTrigger>

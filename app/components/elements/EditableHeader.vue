@@ -1,11 +1,14 @@
 <template>
     <div class="flex items-center gap-2">
-        <div v-if="isEditing" class="flex items-center gap-2 flex-1">
+        <div
+            v-if="isEditing"
+            class="flex items-center gap-2 flex-1"
+        >
             <input
                 ref="inputRef"
                 v-model="localValue"
-                class="flex-1 px-2 py-1 border rounded text-lg font-semibold"
                 autofocus
+                class="flex-1 px-2 py-1 border rounded text-lg font-semibold"
                 @keyup.enter="saveHeader"
                 @keyup.escape="cancelEdit"
             >
@@ -22,14 +25,17 @@
                 <X class="w-4 h-4"/>
             </button>
         </div>
-        <div v-else class="flex items-center gap-2">
+        <div
+            v-else
+            class="flex items-center gap-2"
+        >
             <h3 class="text-lg font-semibold text-gray-900">
                 {{ value }}
             </h3>
             <Button
-                variant="ghost"
-                size="sm"
                 class="p-1 h-auto opacity-50 hover:opacity-100"
+                size="sm"
+                variant="ghost"
                 @click="startEdit"
             >
                 <Edit2 class="w-4 h-4"/>
@@ -38,9 +44,9 @@
     </div>
 </template>
 
-<script setup lang="ts">
+<script lang="ts" setup>
     import {nextTick, ref} from 'vue';
-    import {Button} from './ui/button';
+    import {Button} from '~/components/ui/button';
     import {Check, Edit2, X} from 'lucide-vue-next';
 
     interface Props {

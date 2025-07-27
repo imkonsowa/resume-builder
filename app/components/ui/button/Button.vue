@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
     import type {HTMLAttributes} from 'vue';
     import {Primitive, type PrimitiveProps} from 'reka-ui';
     import {cn} from '~/lib/utils';
@@ -17,10 +17,10 @@
 
 <template>
     <Primitive
-        data-slot="button"
         :as="as"
         :as-child="asChild"
         :class="cn(buttonVariants({ variant, size }), props.class)"
+        data-slot="button"
     >
         <slot/>
     </Primitive>

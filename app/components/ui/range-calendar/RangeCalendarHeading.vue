@@ -18,8 +18,8 @@
 <template>
     <RangeCalendarHeading
         v-slot="{ headingValue }"
-        data-slot="range-calendar-heading"
         :class="cn('text-sm font-medium', props.class)"
+        data-slot="range-calendar-heading"
         v-bind="forwardedProps"
     >
         <slot :heading-value>

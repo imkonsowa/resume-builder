@@ -1,25 +1,25 @@
-<script setup lang="ts">
+<script lang="ts" setup>
     import {useResumeStore} from '~/stores/resume';
     import {EyeIcon} from 'lucide-vue-next';
     import {Button} from '~/components/ui/button';
-    import ResumeBuilderHeader from '~/components/ResumeBuilderHeader.vue';
-    import PersonalInfoForm from '~/components/PersonalInfoForm.vue';
-    import ExperienceForm from '~/components/ExperienceForm.vue';
-    import EducationForm from '~/components/EducationForm.vue';
-    import SkillsForm from '~/components/SkillsForm.vue';
-    import ProjectsForm from '~/components/ProjectsForm.vue';
-    import LanguagesForm from '~/components/LanguagesForm.vue';
-    import VolunteeringForm from '~/components/VolunteeringForm.vue';
-    import ResumePreview from '~/components/ResumePreview.vue';
+    import ResumeBuilderHeader from '~/components/elements/ResumeBuilderHeader.vue';
+    import PersonalInfoForm from '~/components/forms/PersonalInfoForm.vue';
+    import ExperienceForm from '~/components/forms/ExperienceForm.vue';
+    import EducationForm from '~/components/forms/EducationForm.vue';
+    import SkillsForm from '~/components/forms/SkillsForm.vue';
+    import ProjectsForm from '~/components/forms/ProjectsForm.vue';
+    import LanguagesForm from '~/components/forms/LanguagesForm.vue';
+    import VolunteeringForm from '~/components/forms/VolunteeringForm.vue';
+    import ResumePreview from '~/components/elements/ResumePreview.vue';
 
     useHead({
         title: 'Free Resume Builder - Create Professional Resumes Online',
         meta: [
             {
                 name: 'description',
-                content: 'Create professional resumes for free with our online resume builder. Features real-time preview, PDF export, and modern templates.'
-            }
-        ]
+                content: 'Create professional resumes for free with our online resume builder. Features real-time preview, PDF export, and modern templates.',
+            },
+        ],
     });
 
     // Stores
@@ -95,7 +95,8 @@
 
                 <!-- Right Panel - Preview (Desktop) -->
                 <div
-                    class="hidden lg:block fixed top-16 right-0 w-1/2 h-[calc(100vh-64px)] border-l border-gray-200 bg-gray-50 overflow-y-auto z-10">
+                    class="hidden lg:block fixed top-16 right-0 w-1/2 h-[calc(100vh-64px)] border-l border-gray-200 bg-gray-50 overflow-y-auto z-10"
+                >
                     <div class="p-4 lg:p-8 pt-[calc(2rem+4rem)]">
                         <ClientOnly>
                             <ResumePreview/>
@@ -117,17 +118,31 @@
                 <!-- Mobile Preview Modal -->
                 <div
                     v-if="showMobilePreview"
-                    class="lg:hidden fixed inset-0 z-50 overflow-y-auto bg-black bg-opacity-50">
+                    class="lg:hidden fixed inset-0 z-50 overflow-y-auto bg-black bg-opacity-50"
+                >
                     <div class="flex items-center justify-center min-h-screen p-4">
                         <div class="bg-white rounded-lg max-w-full w-full max-h-[90vh] overflow-y-auto">
                             <div class="p-4 border-b border-gray-200 flex justify-between items-center">
-                                <h3 class="text-lg font-medium">Resume Preview</h3>
-                                <button class="text-gray-400 hover:text-gray-600" @click="showMobilePreview = false">
+                                <h3 class="text-lg font-medium">
+                                    Resume Preview
+                                </h3>
+                                <button
+                                    class="text-gray-400 hover:text-gray-600"
+                                    @click="showMobilePreview = false"
+                                >
                                     <span class="sr-only">Close</span>
-                                    <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <svg
+                                        class="h-6 w-6"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        viewBox="0 0 24 24"
+                                    >
                                         <path
-                                            stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M6 18L18 6M6 6l12 12"/>
+                                            d="M6 18L18 6M6 6l12 12"
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            stroke-width="2"
+                                        />
                                     </svg>
                                 </button>
                             </div>

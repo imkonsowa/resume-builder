@@ -41,7 +41,7 @@ const formatDateToMonthYear = (date: string): string => {
         const dateObj = new Date(year, month);
         return dateObj.toLocaleDateString('en-US', {
             year: 'numeric',
-            month: 'long'
+            month: 'long',
         });
     }
 
@@ -88,7 +88,7 @@ export const convertGrid = (content: string[], columns = '(1fr, 1fr)', gutter = 
 )`;
 };
 
-export const convertSocialLinks = (links: Array<{ platform: string, url: string }>, separator = ' • '): string => {
+export const convertSocialLinks = (links: Array<{ platform: string; url: string }>, separator = ' • '): string => {
     const linkItems = links
         .filter(link => link.platform && link.url)
         .map(link => convertLink(link.url, link.platform));
@@ -97,7 +97,6 @@ export const convertSocialLinks = (links: Array<{ platform: string, url: string 
 
     return linkItems.join(separator);
 };
-
 
 export const renderTemplateHeader = (text: string, fontSize: number): string => {
     return convertHeader(text, `${fontSize + 2}pt`);

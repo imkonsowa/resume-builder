@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
     import type {PaginationFirstProps} from 'reka-ui';
     import {PaginationFirst, useForwardProps} from 'reka-ui';
     import type {HTMLAttributes} from 'vue';
@@ -20,8 +20,8 @@
 
 <template>
     <PaginationFirst
-        data-slot="pagination-first"
         :class="cn(buttonVariants({ variant: 'ghost', size }), 'gap-1 px-2.5 sm:pr-2.5', props.class)"
+        data-slot="pagination-first"
         v-bind="forwarded"
     >
         <slot>

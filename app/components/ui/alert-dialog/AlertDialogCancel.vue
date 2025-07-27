@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
     import type {HTMLAttributes} from 'vue';
     import {reactiveOmit} from '@vueuse/core';
     import {AlertDialogCancel, type AlertDialogCancelProps} from 'reka-ui';
@@ -12,12 +12,12 @@
 
 <template>
     <AlertDialogCancel
-        v-bind="delegatedProps"
         :class="cn(
             buttonVariants({ variant: 'outline' }),
             'mt-2 sm:mt-0',
             props.class,
         )"
+        v-bind="delegatedProps"
     >
         <slot/>
     </AlertDialogCancel>

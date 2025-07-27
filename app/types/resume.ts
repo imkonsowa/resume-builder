@@ -167,7 +167,7 @@ export const defaultResumeData: ResumeData = {
         volunteering: 4,
         socialLinks: 5,
         projects: 6,
-        languages: 7
+        languages: 7,
     },
     sectionHeaders: {
         personalInfo: 'Personal Information',
@@ -179,14 +179,14 @@ export const defaultResumeData: ResumeData = {
         experience: 'Employment History',
         education: 'Education',
         skills: 'Skills',
-        volunteering: 'Volunteering'
+        volunteering: 'Volunteering',
     },
     sectionPlacement: {
         skills: 'right',
         projects: 'right',
         volunteering: 'right',
-        languages: 'right'
-    }
+        languages: 'right',
+    },
 };
 
 export const defaultAppSettings: AppSettings = {
@@ -196,24 +196,24 @@ export const defaultAppSettings: AppSettings = {
     showDownloadMenu: false,
     showFontMenu: false,
     showTemplateMenu: false,
-    fontSize: 14
+    fontSize: 14,
 };
 
 export const availableFonts = [
     {name: 'Calibri', family: 'Calibri'},
     {name: 'Geist', family: 'Geist'},
-    {name: 'Roboto', family: 'Roboto'}
+    {name: 'Roboto', family: 'Roboto'},
 ];
 
 export const availableTemplates = [
     {
         id: 'default',
         name: 'Default',
-        description: 'Optimal for one or two pages resumes'
+        description: 'Optimal for one or two pages resumes',
     },
     {
         id: 'compact',
         name: 'Compact',
-        description: 'Single column template for longer resumes'
-    }
+        description: 'Single column template for longer resumes',
+    },
 ];

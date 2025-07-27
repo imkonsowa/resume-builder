@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
     import type {FieldProps} from './interface';
     import {FormControl, FormDescription, FormField, FormItem, FormMessage} from '@/components/ui/form';
     import {Input} from '@/components/ui/input';
@@ -22,8 +22,8 @@
             <FormControl>
                 <slot v-bind="slotProps">
                     <Input
-                        type="number" v-bind="{ ...slotProps.componentField, ...config?.inputProps }"
-                        :disabled="config?.inputProps?.disabled ?? disabled"/>
+                        :disabled="config?.inputProps?.disabled ?? disabled" type="number"
+                        v-bind="{ ...slotProps.componentField, ...config?.inputProps }"/>
                 </slot>
             </FormControl>
             <FormDescription v-if="config?.description">

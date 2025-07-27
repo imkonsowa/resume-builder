@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
     import type {HTMLAttributes} from 'vue';
     import {cn} from '~/lib/utils';
 
@@ -9,8 +9,8 @@
 
 <template>
     <h3
-        data-slot="card-title"
         :class="cn('leading-none font-semibold', props.class)"
+        data-slot="card-title"
     >
         <slot/>
     </h3>

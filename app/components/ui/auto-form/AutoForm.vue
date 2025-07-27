@@ -1,4 +1,4 @@
-<script setup lang="ts" generic="T extends ZodObjectOrWrapped">
+<script generic="T extends ZodObjectOrWrapped" lang="ts" setup>
     import type {FormContext, GenericObject} from 'vee-validate';
     import type {z, ZodAny} from 'zod';
     import type {Config, ConfigItem, Dependency, Shape} from './interface';
@@ -88,13 +88,13 @@
         :is="formComponent"
         v-bind="formComponentProps"
     >
-        <slot name="customAutoForm" :fields="fields">
+        <slot :fields="fields" name="customAutoForm">
             <template v-for="(shape, key) of shapes" :key="key">
                 <slot
-                    :shape="shape"
-                    :name="key.toString() as keyof z.infer<T>"
-                    :field-name="key.toString()"
                     :config="fieldConfig?.[key as keyof typeof fieldConfig] as ConfigItem"
+                    :field-name="key.toString()"
+                    :name="key.toString() as keyof z.infer<T>"
+                    :shape="shape"
                 >
                     <AutoFormField
                         :config="fieldConfig?.[key as keyof typeof fieldConfig] as ConfigItem"

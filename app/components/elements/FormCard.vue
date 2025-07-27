@@ -4,8 +4,8 @@
             <CardTitle class="flex justify-between items-center">
                 <span>{{ title }}</span>
                 <Button
-                    variant="outline"
                     size="sm"
+                    variant="outline"
                     @click="handleRemove"
                 >
                     <Trash2 class="w-4 h-4"/>
@@ -18,21 +18,21 @@
     </Card>
 
     <ConfirmationModal
-        :is-open="confirmation.isOpen.value"
-        :title="confirmation.title.value"
-        :message="confirmation.message.value"
-        :confirm-text="confirmation.confirmText.value"
         :cancel-text="confirmation.cancelText.value"
-        @confirm="confirmation.handleConfirm"
+        :confirm-text="confirmation.confirmText.value"
+        :is-open="confirmation.isOpen.value"
+        :message="confirmation.message.value"
+        :title="confirmation.title.value"
         @cancel="confirmation.handleCancel"
+        @confirm="confirmation.handleConfirm"
     />
 </template>
 
-<script setup lang="ts">
-    import {Card, CardContent, CardHeader, CardTitle} from './ui/card';
-    import {Button} from './ui/button';
+<script lang="ts" setup>
+    import {Card, CardContent, CardHeader, CardTitle} from '~/components/ui/card';
+    import {Button} from '~/components/ui/button';
     import {Trash2} from 'lucide-vue-next';
-    import ConfirmationModal from './ConfirmationModal.vue';
+    import ConfirmationModal from '~/components/elements/ConfirmationModal.vue';
 
     interface Props {
         title: string;
@@ -42,7 +42,7 @@
 
     const props = withDefaults(defineProps<Props>(), {
         confirmTitle: 'Delete Item',
-        confirmMessage: 'Are you sure you want to delete this item? This action cannot be undone.'
+        confirmMessage: 'Are you sure you want to delete this item? This action cannot be undone.',
     });
 
     const emit = defineEmits<{
@@ -56,7 +56,7 @@
             title: props.confirmTitle,
             message: props.confirmMessage,
             confirmText: 'Delete',
-            cancelText: 'Cancel'
+            cancelText: 'Cancel',
         });
 
         if (confirmed) {

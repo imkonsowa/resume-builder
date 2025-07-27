@@ -8,9 +8,9 @@
 
         <div class="flex items-center space-x-2">
             <Button
-                variant="outline"
-                size="sm"
                 class="flex items-center gap-2"
+                size="sm"
+                variant="outline"
                 @click="showStepper = true"
             >
                 <ListIcon class="h-4 w-4"/>
@@ -22,10 +22,10 @@
     <ResumeStepper v-model:show-stepper="showStepper"/>
 </template>
 
-<script setup lang="ts">
-    import {Button} from './ui/button';
+<script lang="ts" setup>
+    import {Button} from '~/components/ui/button';
     import {ListIcon} from 'lucide-vue-next';
-    import ResumeStepper from './ResumeStepper.vue';
+    import ResumeStepper from '~/components/elements/ResumeStepper.vue';
 
     const resumeStore = useResumeStore();
 

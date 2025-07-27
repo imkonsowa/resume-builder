@@ -49,6 +49,6 @@ export const useConfirmation = () => {
         cancelText: readonly(cancelText),
         confirm,
         handleConfirm,
-        handleCancel
+        handleCancel,
     };
 };

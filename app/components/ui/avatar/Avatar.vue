@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
     import type {HTMLAttributes} from 'vue';
     import {AvatarRoot} from 'reka-ui';
     import {cn} from '~/lib/utils';
@@ -10,8 +10,8 @@
 
 <template>
     <AvatarRoot
-        data-slot="avatar"
         :class="cn('relative flex size-8 shrink-0 overflow-hidden rounded-full', props.class)"
+        data-slot="avatar"
     >
         <slot/>
     </AvatarRoot>

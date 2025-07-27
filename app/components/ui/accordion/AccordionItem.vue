@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
     import type {HTMLAttributes} from 'vue';
     import {reactiveOmit} from '@vueuse/core';
     import {AccordionItem, type AccordionItemProps, useForwardProps} from 'reka-ui';
@@ -13,9 +13,9 @@
 
 <template>
     <AccordionItem
+        :class="cn('border-b last:border-b-0', props.class)"
         data-slot="accordion-item"
         v-bind="forwardedProps"
-        :class="cn('border-b last:border-b-0', props.class)"
     >
         <slot/>
     </AccordionItem>

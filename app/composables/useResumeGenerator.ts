@@ -7,7 +7,7 @@ export const useResumeGenerator = () => {
     const generateTypstContent = (
         resumeData: ResumeData,
         templateId = 'default',
-        font = 'Roboto'
+        font = 'Roboto',
     ): string => {
         const template = getTemplate(templateId);
         return template.parse(resumeData, font);
@@ -16,7 +16,7 @@ export const useResumeGenerator = () => {
     const generatePreview = async (
         resumeData: ResumeData,
         templateId = 'default',
-        font = 'Roboto'
+        font = 'Roboto',
     ): Promise<string> => {
         if (!typstReady.value) {
             throw new Error('Typst not ready');
@@ -34,7 +34,7 @@ export const useResumeGenerator = () => {
     const generatePDF = async (
         resumeData: ResumeData,
         templateId = 'default',
-        font = 'Roboto'
+        font = 'Roboto',
     ): Promise<Uint8Array> => {
         if (!typstReady.value) {
             throw new Error('Typst not ready');
@@ -58,7 +58,7 @@ export const useResumeGenerator = () => {
     const downloadPDF = async (
         resumeData: ResumeData,
         templateId = 'default',
-        font = 'Roboto'
+        font = 'Roboto',
     ): Promise<void> => {
         try {
             const pdfData = await generatePDF(resumeData, templateId, font);
@@ -89,6 +89,6 @@ export const useResumeGenerator = () => {
         generateTypstContent,
         generatePreview,
         generatePDF,
-        downloadPDF
+        downloadPDF,
     };
 };

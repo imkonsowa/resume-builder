@@ -1,18 +1,18 @@
 <template>
     <FormContainer
-        :title="resumeStore.resumeData.sectionHeaders.experience"
         :is-empty="resumeStore.resumeData.experiences.length === 0"
-        empty-message="No experience entries added yet. Click 'Add Experience' to get started."
+        :title="resumeStore.resumeData.sectionHeaders.experience"
         add-button-label="Add Experience"
+        empty-message="No experience entries added yet. Click 'Add Experience' to get started."
         @add="resumeStore.addExperience"
         @edit-title="(value) => resumeStore.updateSectionHeader('experience', value)"
     >
         <FormCard
             v-for="(experience, index) in resumeStore.resumeData.experiences"
             :key="index"
-            :title="`Experience ${index + 1}`"
-            :confirm-title="'Delete Experience'"
             :confirm-message="`Are you sure you want to delete this experience entry? This action cannot be undone.`"
+            :confirm-title="'Delete Experience'"
+            :title="`Experience ${index + 1}`"
             @remove="resumeStore.removeExperience(index)"
         >
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
@@ -63,9 +63,9 @@
                 </div>
                 <div class="space-y-2">
                     <MonthYearPicker
+                        :disabled="experience.isPresent"
                         :model-value="experience.endDate"
                         label="End Date"
-                        :disabled="experience.isPresent"
                         @update:model-value="(value) => resumeStore.updateExperience(index, 'endDate', value)"
                     />
                     <div class="flex items-center space-x-2 mt-2">
@@ -77,7 +77,10 @@
                                 if (value) resumeStore.updateExperience(index, 'endDate', '');
                             }"
                         />
-                        <Label :for="`present-${index}`" class="text-sm">Present</Label>
+                        <Label
+                            :for="`present-${index}`"
+                            class="text-sm"
+                        >Present</Label>
                     </div>
                 </div>
             </div>
@@ -86,8 +89,8 @@
                 <div class="flex justify-between items-center">
                     <Label>Achievements</Label>
                     <Button
-                        variant="outline"
                         size="sm"
+                        variant="outline"
                         @click="resumeStore.addExperienceAchievement(index)"
                     >
                         <Plus class="w-4 h-4 mr-2"/>
@@ -104,31 +107,31 @@
                         <div class="flex items-center space-x-2 md:space-x-2">
                             <Input
                                 :model-value="experience.achievements[achievementIndex].text"
-                                placeholder="Describe your key achievements and impact"
                                 class="flex-1"
+                                placeholder="Describe your key achievements and impact"
                                 @update:model-value="(value) => resumeStore.updateExperienceAchievement(index, achievementIndex, value)"
                                 @keydown.enter="resumeStore.addExperienceAchievement(index)"
                             />
                             <div class="hidden md:flex items-center space-x-1">
                                 <Button
-                                    variant="outline"
-                                    size="sm"
                                     :disabled="achievementIndex === 0"
+                                    size="sm"
+                                    variant="outline"
                                     @click="resumeStore.moveExperienceAchievement(index, achievementIndex, achievementIndex - 1)"
                                 >
                                     <ChevronUp class="w-4 h-4"/>
                                 </Button>
                                 <Button
-                                    variant="outline"
-                                    size="sm"
                                     :disabled="achievementIndex === experience.achievements.length - 1"
+                                    size="sm"
+                                    variant="outline"
                                     @click="resumeStore.moveExperienceAchievement(index, achievementIndex, achievementIndex + 1)"
                                 >
                                     <ChevronDown class="w-4 h-4"/>
                                 </Button>
                                 <Button
-                                    variant="outline"
                                     size="sm"
+                                    variant="outline"
                                     @click="resumeStore.removeExperienceAchievement(index, achievementIndex)"
                                 >
                                     <Trash2 class="w-4 h-4"/>
@@ -137,24 +140,24 @@
                         </div>
                         <div class="flex md:hidden items-center justify-center space-x-2">
                             <Button
-                                variant="outline"
-                                size="sm"
                                 :disabled="achievementIndex === 0"
+                                size="sm"
+                                variant="outline"
                                 @click="resumeStore.moveExperienceAchievement(index, achievementIndex, achievementIndex - 1)"
                             >
                                 <ChevronUp class="w-4 h-4"/>
                             </Button>
                             <Button
-                                variant="outline"
-                                size="sm"
                                 :disabled="achievementIndex === experience.achievements.length - 1"
+                                size="sm"
+                                variant="outline"
                                 @click="resumeStore.moveExperienceAchievement(index, achievementIndex, achievementIndex + 1)"
                             >
                                 <ChevronDown class="w-4 h-4"/>
                             </Button>
                             <Button
-                                variant="outline"
                                 size="sm"
+                                variant="outline"
                                 @click="resumeStore.removeExperienceAchievement(index, achievementIndex)"
                             >
                                 <Trash2 class="w-4 h-4"/>
@@ -167,15 +170,15 @@
     </FormContainer>
 </template>
 
-<script setup lang="ts">
-    import {Button} from './ui/button';
-    import {Input} from './ui/input';
-    import {Label} from './ui/label';
-    import {Checkbox} from './ui/checkbox';
+<script lang="ts" setup>
+    import {Button} from '~/components/ui/button';
+    import {Input} from '~/components/ui/input';
+    import {Label} from '~/components/ui/label';
+    import {Checkbox} from '~/components/ui/checkbox';
     import {ChevronDown, ChevronUp, Plus, Trash2} from 'lucide-vue-next';
-    import MonthYearPicker from './MonthYearPicker.vue';
-    import FormCard from './FormCard.vue';
-    import FormContainer from './FormContainer.vue';
+    import MonthYearPicker from '~/components/elements/MonthYearPicker.vue';
+    import FormCard from '~/components/elements/FormCard.vue';
+    import FormContainer from '~/components/elements/FormContainer.vue';
 
     // Use the store directly instead of prop drilling
     const resumeStore = useResumeStore();

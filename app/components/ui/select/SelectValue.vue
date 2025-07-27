@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
     import {SelectValue, type SelectValueProps} from 'reka-ui';
 
     const props = defineProps<SelectValueProps>();

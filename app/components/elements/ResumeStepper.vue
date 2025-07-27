@@ -15,8 +15,14 @@
                 @click.stop
             >
                 <div class="flex items-center justify-between mb-6">
-                    <h3 class="text-lg font-semibold">Resume Sections</h3>
-                    <Button variant="ghost" size="icon" @click="showStepper = false">
+                    <h3 class="text-lg font-semibold">
+                        Resume Sections
+                    </h3>
+                    <Button
+                        size="icon"
+                        variant="ghost"
+                        @click="showStepper = false"
+                    >
                         <XIcon class="h-4 w-4"/>
                     </Button>
                 </div>
@@ -26,28 +32,33 @@
                     <button
                         v-for="(section, index) in fixedSections"
                         :key="section.id"
-                        class="w-full flex items-center gap-3 p-3 rounded-md transition-colors hover:bg-accent hover:text-accent-foreground text-left"
                         :class="[
                             isCurrentSection(section.id)
                                 ? 'bg-primary text-primary-foreground'
-                                : 'text-muted-foreground'
+                                : 'text-muted-foreground',
                         ]"
+                        class="w-full flex items-center gap-3 p-3 rounded-md transition-colors hover:bg-accent hover:text-accent-foreground text-left"
                         @click="scrollToSection(section.id)"
                     >
                         <div class="flex-shrink-0">
                             <div
-                                class="w-8 h-8 rounded-full border-2 flex items-center justify-center text-sm font-medium"
                                 :class="[
                                     isCurrentSection(section.id)
                                         ? 'border-primary-foreground bg-primary-foreground text-primary'
-                                        : 'border-muted-foreground'
-                                ]">
+                                        : 'border-muted-foreground',
+                                ]"
+                                class="w-8 h-8 rounded-full border-2 flex items-center justify-center text-sm font-medium"
+                            >
                                 {{ index + 1 }}
                             </div>
                         </div>
                         <div class="flex-1 min-w-0">
-                            <div class="text-sm font-medium truncate">{{ section.title }}</div>
-                            <div class="text-xs opacity-75">{{ section.subtitle }}</div>
+                            <div class="text-sm font-medium truncate">
+                                {{ section.title }}
+                            </div>
+                            <div class="text-xs opacity-75">
+                                {{ section.subtitle }}
+                            </div>
                         </div>
                     </button>
 
@@ -63,38 +74,43 @@
                         />
 
                         <div
-                            :draggable="section.orderable"
-                            class="w-full flex items-center gap-3 p-3 rounded-md transition-colors hover:bg-accent hover:text-accent-foreground text-left cursor-move"
                             :class="[
                                 isCurrentSection(section.id)
                                     ? 'bg-primary text-primary-foreground'
                                     : 'text-muted-foreground',
                                 draggedIndex === index ? 'opacity-50' : '',
-                                dropZoneIndex === index && draggedIndex !== null && draggedIndex !== index ? 'transform translate-y-1' : ''
+                                dropZoneIndex === index && draggedIndex !== null && draggedIndex !== index ? 'transform translate-y-1' : '',
                             ]"
-                            @dragstart="onDragStart($event, index)"
-                            @dragover="onDragOver($event, index)"
-                            @drop="onDrop($event, index)"
-                            @dragend="onDragEnd"
+                            :draggable="section.orderable"
+                            class="w-full flex items-center gap-3 p-3 rounded-md transition-colors hover:bg-accent hover:text-accent-foreground text-left cursor-move"
                             @click="scrollToSection(section.id)"
+                            @dragend="onDragEnd"
+                            @dragover="onDragOver($event, index)"
+                            @dragstart="onDragStart($event, index)"
+                            @drop="onDrop($event, index)"
                         >
                             <div class="flex-shrink-0">
                                 <GripVertical class="w-4 h-4 text-gray-400"/>
                             </div>
                             <div class="flex-shrink-0">
                                 <div
-                                    class="w-8 h-8 rounded-full border-2 flex items-center justify-center text-sm font-medium"
                                     :class="[
                                         isCurrentSection(section.id)
                                             ? 'border-primary-foreground bg-primary-foreground text-primary'
-                                            : 'border-muted-foreground'
-                                    ]">
+                                            : 'border-muted-foreground',
+                                    ]"
+                                    class="w-8 h-8 rounded-full border-2 flex items-center justify-center text-sm font-medium"
+                                >
                                     {{ fixedSections.length + index + 1 }}
                                 </div>
                             </div>
                             <div class="flex-1 min-w-0">
-                                <div class="text-sm font-medium truncate">{{ section.title }}</div>
-                                <div class="text-xs opacity-75">{{ section.subtitle }}</div>
+                                <div class="text-sm font-medium truncate">
+                                    {{ section.title }}
+                                </div>
+                                <div class="text-xs opacity-75">
+                                    {{ section.subtitle }}
+                                </div>
                             </div>
                         </div>
 
@@ -122,7 +138,7 @@
     </div>
 </template>
 
-<script setup lang="ts">
+<script lang="ts" setup>
     import {useResumeStore} from '~/stores/resume';
     import {Button} from '~/components/ui/button';
     import {GripVertical, XIcon} from 'lucide-vue-next';
@@ -134,7 +150,6 @@
         orderable?: boolean;
     }
 
-
     const resumeStore = useResumeStore();
 
     // Fixed sections (non-orderable)
@@ -143,8 +158,8 @@
             id: 'personal-info',
             title: 'Personal Info',
             subtitle: `${resumeStore.resumeData.firstName || 'Your'} details`,
-            orderable: false
-        }
+            orderable: false,
+        },
     ]);
 
     // Orderable sections with their current order
@@ -156,43 +171,43 @@
                 title: 'Experience',
                 subtitle: `${resumeStore.resumeData.experiences.length} ${resumeStore.resumeData.experiences.length === 1 ? 'job' : 'jobs'}`,
                 orderable: true,
-                order: sectionOrder.experience
+                order: sectionOrder.experience,
             },
             {
                 id: 'education',
                 title: 'Education',
                 subtitle: `${resumeStore.resumeData.education.length} ${resumeStore.resumeData.education.length === 1 ? 'degree' : 'degrees'}`,
                 orderable: true,
-                order: sectionOrder.education
+                order: sectionOrder.education,
             },
             {
                 id: 'skills',
                 title: 'Skills',
                 subtitle: `${resumeStore.resumeData.skills.length} ${resumeStore.resumeData.skills.length === 1 ? 'skill' : 'skills'}`,
                 orderable: true,
-                order: sectionOrder.skills
+                order: sectionOrder.skills,
             },
             {
                 id: 'projects',
                 title: 'Projects',
                 subtitle: `${resumeStore.resumeData.projects.length} ${resumeStore.resumeData.projects.length === 1 ? 'project' : 'projects'}`,
                 orderable: true,
-                order: sectionOrder.projects ?? 6
+                order: sectionOrder.projects ?? 6,
             },
             {
                 id: 'languages',
                 title: 'Languages',
                 subtitle: `${resumeStore.resumeData.languages.length} ${resumeStore.resumeData.languages.length === 1 ? 'language' : 'languages'}`,
                 orderable: true,
-                order: sectionOrder.languages ?? 7
+                order: sectionOrder.languages ?? 7,
             },
             {
                 id: 'volunteering',
                 title: 'Volunteering',
                 subtitle: `${resumeStore.resumeData.volunteering.length} ${resumeStore.resumeData.volunteering.length === 1 ? 'role' : 'roles'}`,
                 orderable: true,
-                order: sectionOrder.volunteering
-            }
+                order: sectionOrder.volunteering,
+            },
         ];
 
         return sectionsData.sort((a, b) => a.order - b.order);
@@ -201,7 +216,7 @@
     // Combined sections for display
     const sections = computed<Section[]>(() => [
         ...fixedSections.value,
-        ...orderableSections.value
+        ...orderableSections.value,
     ]);
 
     const currentSection = ref<string>('personal-info');
@@ -212,7 +227,7 @@
             element.scrollIntoView({
                 behavior: 'smooth',
                 block: 'start',
-                inline: 'nearest'
+                inline: 'nearest',
             });
             currentSection.value = sectionId;
             showStepper.value = false;
@@ -299,8 +314,8 @@
             },
             {
                 threshold: [0.1, 0.5, 0.9],
-                rootMargin: '-20% 0px -20% 0px'
-            }
+                rootMargin: '-20% 0px -20% 0px',
+            },
         );
 
         sections.value.forEach((section) => {

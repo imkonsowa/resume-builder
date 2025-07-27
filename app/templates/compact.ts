@@ -8,10 +8,9 @@ import {
     renderTemplateDate,
     renderTemplateDateWithLink,
     renderTemplateHeader,
-    renderTemplateSubHeader
+    renderTemplateSubHeader,
 } from '~/utils/typstUtils';
 import {useSettingsStore} from '~/stores/settings';
-
 
 export interface Template {
     id: string;
@@ -61,20 +60,20 @@ const renderHeaderRightColumn = (data: ResumeData, fontSize: number): string[] =
 
     const socialLinks = (data?.socialLinks || [])
         .filter(link => link.platform && link.url && link.url.trim() !== '')
-        .map(link => {
+        .map((link) => {
             let linkText = '';
             if (link.platform === 'other' && link.customLabel) {
                 linkText = link.customLabel;
             } else {
                 const platformLabels = {
-                    'linkedin': 'LinkedIn',
-                    'github': 'GitHub',
-                    'twitter': 'Twitter',
-                    'portfolio': 'Portfolio',
-                    'dribbble': 'Dribbble',
-                    'medium': 'Medium',
-                    'devto': 'Dev.to',
-                    'personal': 'Personal'
+                    linkedin: 'LinkedIn',
+                    github: 'GitHub',
+                    twitter: 'Twitter',
+                    portfolio: 'Portfolio',
+                    dribbble: 'Dribbble',
+                    medium: 'Medium',
+                    devto: 'Dev.to',
+                    personal: 'Personal',
                 };
                 linkText = platformLabels[link.platform as keyof typeof platformLabels] || link.platform;
             }
@@ -102,13 +101,13 @@ const convertResumeHeader = (data: ResumeData, fontSize: number) => {
     headerParts.push('    align: (left, left),');
 
     headerParts.push('    [');
-    leftColumnRows.forEach(row => {
+    leftColumnRows.forEach((row) => {
         headerParts.push(`        ${row}`);
     });
     headerParts.push('    ],');
 
     headerParts.push('    [');
-    rightColumnRows.forEach(row => {
+    rightColumnRows.forEach((row) => {
         headerParts.push(`        ${row}`);
     });
     headerParts.push('    ]');
@@ -117,9 +116,9 @@ const convertResumeHeader = (data: ResumeData, fontSize: number) => {
     headerParts.push('#block(above: 1em, below: 1em)[#line(length: 100%, stroke: 2pt + black)]');
 
     if (data?.summary) {
-        headerParts.push('#block(above: 0em)[' +
-            `#text(size: ${fontSize}pt)[${escapeTypstText(data.summary)}]` +
-            ']');
+        headerParts.push('#block(above: 0em)['
+            + `#text(size: ${fontSize}pt)[${escapeTypstText(data.summary)}]`
+            + ']');
     }
 
     return headerParts.join('\n');
@@ -181,7 +180,7 @@ const renderSkillsCompact = (data: ResumeData, fontSize: number) => {
     if (data?.skills && data.skills.length > 0) {
         const skillItems = data.skills
             .filter(skill => skill.title.trim() || skill.description.trim())
-            .map(skill => {
+            .map((skill) => {
                 if (!skill.title.trim()) return escapeTypstText(skill.description);
                 if (!skill.description.trim()) return `*${escapeTypstText(skill.title)}*`;
                 return `*${escapeTypstText(skill.title)}:* ${escapeTypstText(skill.description)}`;
@@ -209,7 +208,7 @@ const renderProjectsCompact = (data: ResumeData, fontSize: number) => {
 
     const projectItems = data.projects
         .filter(project => project.title.trim() || project.description.trim())
-        .map(project => {
+        .map((project) => {
             let content = '';
 
             if (project.title.trim()) {
@@ -262,7 +261,7 @@ const renderLanguagesCompact = (data: ResumeData, fontSize: number) => {
 
     const languageItems = data.languages
         .filter(language => language.name.trim())
-        .map(language => {
+        .map((language) => {
             let content = `*${escapeTypstText(language.name)}*`;
 
             if (language.proficiency.trim()) {
@@ -287,12 +286,12 @@ const parse = (data: ResumeData, font: string): string => {
     const fontSize = settingsStore.fontSize;
 
     const sectionRenderers: Record<string, () => string> = {
-        'education': () => renderEducationCompact(data, fontSize),
-        'experience': () => renderEmploymentHistoryCompact(data, fontSize),
-        'skills': () => renderSkillsCompact(data, fontSize),
-        'projects': () => renderProjectsCompact(data, fontSize),
-        'volunteering': () => renderVolunteeringCompact(data, fontSize),
-        'languages': () => renderLanguagesCompact(data, fontSize)
+        education: () => renderEducationCompact(data, fontSize),
+        experience: () => renderEmploymentHistoryCompact(data, fontSize),
+        skills: () => renderSkillsCompact(data, fontSize),
+        projects: () => renderProjectsCompact(data, fontSize),
+        volunteering: () => renderVolunteeringCompact(data, fontSize),
+        languages: () => renderLanguagesCompact(data, fontSize),
     };
 
     const sectionsToRender = Object.keys(sectionRenderers);
@@ -326,7 +325,7 @@ export const compactTemplate: Template = {
     description: 'Single column template for comprehensive resumes with more information',
     layoutConfig: {
         isTwoColumn: false,
-        movableSections: []
+        movableSections: [],
     },
-    parse
+    parse,
 };

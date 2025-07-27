@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
     import type {HTMLAttributes} from 'vue';
     import {cn} from '@/lib/utils';
 
@@ -7,8 +7,8 @@
 
 <template>
     <div
-        data-slot="dialog-footer"
         :class="cn('flex flex-col-reverse gap-2 sm:flex-row sm:justify-end', props.class)"
+        data-slot="dialog-footer"
     >
         <slot/>
     </div>

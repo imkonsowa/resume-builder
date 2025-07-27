@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
     import type {FieldProps} from './interface';
     import {Checkbox} from '@/components/ui/checkbox';
     import {FormControl, FormDescription, FormField, FormItem, FormMessage} from '@/components/ui/form';
@@ -21,8 +21,8 @@
                         <component
                             :is="booleanComponent"
                             :disabled="maybeBooleanishToBoolean(config?.inputProps?.disabled) ?? disabled"
-                            :name="slotProps.componentField.name"
                             :model-value="slotProps.componentField.modelValue"
+                            :name="slotProps.componentField.name"
                             @update:model-value="slotProps.componentField['onUpdate:modelValue']"
                         />
                     </slot>

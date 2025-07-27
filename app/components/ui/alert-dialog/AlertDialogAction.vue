@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
     import type {HTMLAttributes} from 'vue';
     import {reactiveOmit} from '@vueuse/core';
     import {AlertDialogAction, type AlertDialogActionProps} from 'reka-ui';
@@ -11,7 +11,7 @@
 </script>
 
 <template>
-    <AlertDialogAction v-bind="delegatedProps" :class="cn(buttonVariants(), props.class)">
+    <AlertDialogAction :class="cn(buttonVariants(), props.class)" v-bind="delegatedProps">
         <slot/>
     </AlertDialogAction>
 </template>

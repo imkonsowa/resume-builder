@@ -12,13 +12,13 @@
 
 <template>
     <Label
-        data-slot="form-label"
-        :data-error="!!error"
         :class="cn(
             'data-[error=true]:text-destructive-foreground',
             props.class,
         )"
+        :data-error="!!error"
         :for="formItemId"
+        data-slot="form-label"
     >
         <slot/>
     </Label>

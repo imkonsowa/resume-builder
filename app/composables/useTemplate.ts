@@ -40,6 +40,6 @@ export const useTemplate = () => {
         getCurrentLayoutConfig,
         isCurrentTemplateTwoColumn,
         getMovableSections,
-        canMoveSection
+        canMoveSection,
     };
 };

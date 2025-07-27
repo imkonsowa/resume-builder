@@ -8,15 +8,23 @@
                         :value="props.title"
                         @update="$emit('edit-title', $event)"
                     />
-                    <CardTitle v-else>{{ props.title }}</CardTitle>
+                    <CardTitle v-else>
+                        {{ props.title }}
+                    </CardTitle>
                 </div>
-                <div v-if="$slots['header-actions']" class="ml-4">
+                <div
+                    v-if="$slots['header-actions']"
+                    class="ml-4"
+                >
                     <slot name="header-actions"/>
                 </div>
             </div>
         </CardHeader>
         <CardContent class="px-4 md:px-6">
-            <div v-if="props.isEmpty" class="text-center py-8 text-muted-foreground">
+            <div
+                v-if="props.isEmpty"
+                class="text-center py-8 text-muted-foreground"
+            >
                 {{ props.emptyMessage }}
             </div>
 
@@ -25,7 +33,10 @@
             </div>
 
             <!-- Add Button at Bottom -->
-            <div v-if="props.showAddButton" class="mt-6">
+            <div
+                v-if="props.showAddButton"
+                class="mt-6"
+            >
                 <AddButton
                     :label="props.addButtonLabel"
                     @click="$emit('add')"
@@ -35,10 +46,10 @@
     </Card>
 </template>
 
-<script setup lang="ts">
-    import {Card, CardContent, CardHeader, CardTitle} from './ui/card';
-    import AddButton from './AddButton.vue';
-    import EditableHeader from './EditableHeader.vue';
+<script lang="ts" setup>
+    import {Card, CardContent, CardHeader, CardTitle} from '~/components/ui/card';
+    import AddButton from '~/components/elements/AddButton.vue';
+    import EditableHeader from '~/components/elements/EditableHeader.vue';
 
     interface Props {
         title: string;
@@ -51,12 +62,11 @@
 
     const props = withDefaults(defineProps<Props>(), {
         showAddButton: true,
-        editable: true
+        editable: true,
     });
 
     const _emit = defineEmits<{
-        add: [];
+        'add': [];
         'edit-title': [value: string];
     }>();
-
 </script>

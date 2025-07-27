@@ -14,9 +14,9 @@
 <template>
     <ErrorMessage
         :id="formMessageId"
-        data-slot="form-message"
-        as="p"
-        :name="toValue(name)"
         :class="cn('text-destructive-foreground text-sm', props.class)"
+        :name="toValue(name)"
+        as="p"
+        data-slot="form-message"
     />
 </template>

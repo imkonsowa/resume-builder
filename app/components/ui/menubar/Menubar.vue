@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
     import type {HTMLAttributes} from 'vue';
     import {reactiveOmit} from '@vueuse/core';
     import {MenubarRoot, type MenubarRootEmits, type MenubarRootProps, useForwardPropsEmits} from 'reka-ui';
@@ -14,14 +14,14 @@
 
 <template>
     <MenubarRoot
-        data-slot="menubar"
-        v-bind="forwarded"
         :class="
             cn(
                 'bg-background flex h-9 items-center gap-1 rounded-md border p-1',
                 props.class,
             )
         "
+        data-slot="menubar"
+        v-bind="forwarded"
     >
         <slot/>
     </MenubarRoot>

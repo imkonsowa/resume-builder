@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
     import type {HTMLAttributes} from 'vue';
     import {reactiveOmit} from '@vueuse/core';
     import {PaginationListItem, type PaginationListItemProps} from 'reka-ui';
@@ -18,14 +18,14 @@
 
 <template>
     <PaginationListItem
-        data-slot="pagination-item"
-        v-bind="delegatedProps"
         :class="cn(
             buttonVariants({
                 variant: isActive ? 'outline' : 'ghost',
                 size,
             }),
             props.class)"
+        data-slot="pagination-item"
+        v-bind="delegatedProps"
     >
         <slot/>
     </PaginationListItem>

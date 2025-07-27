@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
     import type {HTMLAttributes} from 'vue';
     import {reactiveOmit} from '@vueuse/core';
     import {AccordionContent, type AccordionContentProps} from 'reka-ui';
@@ -11,9 +11,9 @@
 
 <template>
     <AccordionContent
+        class="data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down overflow-hidden text-sm"
         data-slot="accordion-content"
         v-bind="delegatedProps"
-        class="data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down overflow-hidden text-sm"
     >
         <div :class="cn('pt-0 pb-4', props.class)">
             <slot/>

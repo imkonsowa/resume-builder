@@ -14,7 +14,7 @@ class TypstLoader {
         isLoading: false,
         isReady: false,
         error: null,
-        hasInitialized: false
+        hasInitialized: false,
     };
 
     private listeners = new Set<(state: TypstLoaderState) => void>();
@@ -25,23 +25,6 @@ class TypstLoader {
             TypstLoader.instance = new TypstLoader();
         }
         return TypstLoader.instance;
-    }
-
-    private setState(newState: Partial<TypstLoaderState>) {
-        this.state = {...this.state, ...newState};
-        this.notifyListeners();
-    }
-
-    private notifyListeners() {
-        setTimeout(() => {
-            this.listeners.forEach(listener => {
-                try {
-                    listener({...this.state});
-                } catch (error) {
-                    console.error('Error in typst loader listener:', error);
-                }
-            });
-        }, 0);
     }
 
     getState(): TypstLoaderState {
@@ -81,24 +64,56 @@ class TypstLoader {
                 isLoading: false,
                 isReady: true,
                 error: null,
-                hasInitialized: true
+                hasInitialized: true,
             });
 
             // @ts-expect-error - Window object doesn't have $typst property in TypeScript definitions
             window.$typst = $typst;
-
         } catch (error) {
             const errorMessage = error instanceof Error ? error.message : 'Failed to initialize Typst';
             this.setState({
                 isLoading: false,
                 isReady: false,
                 error: errorMessage,
-                hasInitialized: false
+                hasInitialized: false,
             });
             throw error;
         } finally {
             this.initPromise = null;
         }
+    }
+
+    reset() {
+        this.state = {
+            isLoading: false,
+            isReady: false,
+            error: null,
+            hasInitialized: false,
+        };
+        this.initPromise = null;
+        this.notifyListeners();
+    }
+
+    async retry(): Promise<void> {
+        this.setState({hasInitialized: false, error: null});
+        await this.initialize();
+    }
+
+    private setState(newState: Partial<TypstLoaderState>) {
+        this.state = {...this.state, ...newState};
+        this.notifyListeners();
+    }
+
+    private notifyListeners() {
+        setTimeout(() => {
+            this.listeners.forEach((listener) => {
+                try {
+                    listener({...this.state});
+                } catch (error) {
+                    console.error('Error in typst loader listener:', error);
+                }
+            });
+        }, 0);
     }
 
     private async performInitialization(): Promise<void> {
@@ -121,9 +136,9 @@ class TypstLoader {
                         '/fonts/calibri-regular.ttf',
                         '/fonts/calibri-bold.ttf',
                         '/fonts/geist-bold.ttf',
-                        '/fonts/geist-regular.ttf'
-                    ], {assets: false})
-                ]
+                        '/fonts/geist-regular.ttf',
+                    ], {assets: false}),
+                ],
             });
 
             $typst.setRendererInitOptions({
@@ -134,7 +149,7 @@ class TypstLoader {
                         throw new Error(`Failed to fetch renderer WASM: ${wasmResponse.status}`);
                     }
                     return await wasmResponse.arrayBuffer();
-                }
+                },
             });
 
             console.log('Typst initialized successfully');
@@ -142,22 +157,6 @@ class TypstLoader {
             console.error('Failed to initialize Typst:', error);
             throw error;
         }
-    }
-
-    reset() {
-        this.state = {
-            isLoading: false,
-            isReady: false,
-            error: null,
-            hasInitialized: false
-        };
-        this.initPromise = null;
-        this.notifyListeners();
-    }
-
-    async retry(): Promise<void> {
-        this.setState({hasInitialized: false, error: null});
-        await this.initialize();
     }
 }
 

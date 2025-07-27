@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
     import type {HTMLAttributes} from 'vue';
     import {reactiveOmit} from '@vueuse/core';
     import {DialogOverlay, type DialogOverlayProps} from 'reka-ui';
@@ -11,9 +11,9 @@
 
 <template>
     <DialogOverlay
+        :class="cn('data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 fixed inset-0 z-50 bg-black/80', props.class)"
         data-slot="dialog-overlay"
         v-bind="delegatedProps"
-        :class="cn('data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 fixed inset-0 z-50 bg-black/80', props.class)"
     >
         <slot/>
     </DialogOverlay>

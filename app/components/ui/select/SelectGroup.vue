@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
     import {SelectGroup, type SelectGroupProps} from 'reka-ui';
 
     const props = defineProps<SelectGroupProps>();

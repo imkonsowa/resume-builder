@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
     import type {HTMLAttributes} from 'vue';
     import {reactiveOmit} from '@vueuse/core';
     import {MoreHorizontal} from 'lucide-vue-next';
@@ -12,9 +12,9 @@
 
 <template>
     <PaginationEllipsis
+        :class="cn('flex size-9 items-center justify-center', props.class)"
         data-slot="pagination-ellipsis"
         v-bind="delegatedProps"
-        :class="cn('flex size-9 items-center justify-center', props.class)"
     >
         <slot>
             <MoreHorizontal class="size-4"/>

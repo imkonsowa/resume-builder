@@ -1,4 +1,4 @@
-<script setup lang="ts" generic="T extends z.ZodAny">
+<script generic="T extends z.ZodAny" lang="ts" setup>
     import type {Config, ConfigItem} from './interface';
     import {Accordion, AccordionContent, AccordionItem, AccordionTrigger} from '@/components/ui/accordion';
     import {Button} from '@/components/ui/button';
@@ -55,13 +55,13 @@
 </script>
 
 <template>
-    <FieldArray v-slot="{ fields, remove, push }" as="section" :name="fieldName">
+    <FieldArray v-slot="{ fields, remove, push }" :name="fieldName" as="section">
         <slot v-bind="props">
-            <Accordion type="multiple" class="w-full" collapsible :disabled="disabled" as-child>
+            <Accordion :disabled="disabled" as-child class="w-full" collapsible type="multiple">
                 <FormItem>
                     <AccordionItem :value="fieldName" class="border-none">
                         <AccordionTrigger>
-                            <AutoFormLabel class="text-base" :required="required">
+                            <AutoFormLabel :required="required" class="text-base">
                                 {{ schema?.description || beautifyObjectName(fieldName) }}
                             </AutoFormLabel>
                         </AccordionTrigger>
@@ -70,16 +70,16 @@
                             <template v-for="(field, index) of fields" :key="field.key">
                                 <div class="mb-4 p-1">
                                     <AutoFormField
+                                        :config="config as ConfigItem"
                                         :field-name="`${fieldName}[${index}]`"
                                         :label="fieldName"
                                         :shape="itemShape!"
-                                        :config="config as ConfigItem"
                                     />
 
                                     <div class="!my-4 flex justify-end">
                                         <Button
-                                            type="button"
                                             size="icon"
+                                            type="button"
                                             variant="secondary"
                                             @click="remove(index)"
                                         >
@@ -91,12 +91,12 @@
                             </template>
 
                             <Button
+                                class="mt-4 flex items-center"
                                 type="button"
                                 variant="secondary"
-                                class="mt-4 flex items-center"
                                 @click="push(null)"
                             >
-                                <PlusIcon class="mr-2" :size="16"/>
+                                <PlusIcon :size="16" class="mr-2"/>
                                 Add
                             </Button>
                         </AccordionContent>

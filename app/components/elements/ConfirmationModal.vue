@@ -21,7 +21,9 @@
                         </div>
                     </div>
                     <div class="flex-1">
-                        <h3 class="text-lg font-semibold text-gray-900">{{ title }}</h3>
+                        <h3 class="text-lg font-semibold text-gray-900">
+                            {{ title }}
+                        </h3>
                     </div>
                 </div>
 
@@ -33,15 +35,15 @@
                 <!-- Actions -->
                 <div class="flex gap-3 pt-4">
                     <Button
-                        variant="destructive"
                         class="flex-1"
+                        variant="destructive"
                         @click="handleConfirm"
                     >
                         {{ confirmText }}
                     </Button>
                     <Button
-                        variant="outline"
                         class="flex-1"
+                        variant="outline"
                         @click="handleCancel"
                     >
                         {{ cancelText }}
@@ -52,8 +54,8 @@
     </div>
 </template>
 
-<script setup lang="ts">
-    import {Button} from './ui/button';
+<script lang="ts" setup>
+    import {Button} from '~/components/ui/button';
     import {AlertTriangle} from 'lucide-vue-next';
 
     interface Props {
@@ -68,7 +70,7 @@
         title: 'Confirm Action',
         message: 'Are you sure you want to proceed?',
         confirmText: 'Confirm',
-        cancelText: 'Cancel'
+        cancelText: 'Cancel',
     });
 
     const emit = defineEmits<{

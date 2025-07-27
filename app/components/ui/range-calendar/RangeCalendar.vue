@@ -34,8 +34,8 @@
 <template>
     <RangeCalendarRoot
         v-slot="{ grid, weekDays }"
-        data-slot="range-calendar"
         :class="cn('p-3', props.class)"
+        data-slot="range-calendar"
         v-bind="forwarded"
     >
         <RangeCalendarHeader>

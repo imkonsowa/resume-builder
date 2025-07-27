@@ -5,13 +5,13 @@ export function escapeTypstText(text: string): string {
 
     cleaned = cleaned
         .replace(/[""]/g, '"')
-        .replace(/['']/g, "'");
+        .replace(/['']/g, '\'');
 
     return cleaned
         .replace(/\\/g, '\\\\')
         .replace(/\$/g, '\\$')
         .replace(/"/g, '\\"')
-        .replace(/'/g, "\\'")
+        .replace(/'/g, '\\\'')
         .replace(/#/g, '\\#')
         .replace(/\{/g, '\\{')
         .replace(/\}/g, '\\}')

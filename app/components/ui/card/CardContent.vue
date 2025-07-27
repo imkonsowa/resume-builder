@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
     import type {HTMLAttributes} from 'vue';
     import {cn} from '~/lib/utils';
 
@@ -9,8 +9,8 @@
 
 <template>
     <div
-        data-slot="card-content"
         :class="cn('px-6', props.class)"
+        data-slot="card-content"
     >
         <slot/>
     </div>

@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
     import type {PaginationPrevProps} from 'reka-ui';
     import {PaginationPrev, useForwardProps} from 'reka-ui';
     import type {HTMLAttributes} from 'vue';
@@ -20,8 +20,8 @@
 
 <template>
     <PaginationPrev
-        data-slot="pagination-previous"
         :class="cn(buttonVariants({ variant: 'ghost', size }), 'gap-1 px-2.5 sm:pr-2.5', props.class)"
+        data-slot="pagination-previous"
         v-bind="forwarded"
     >
         <slot>

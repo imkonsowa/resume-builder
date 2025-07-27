@@ -11,7 +11,7 @@ import type {
     SectionPlacement,
     SkillItem,
     SocialLink,
-    Volunteering
+    Volunteering,
 } from '~/types/resume';
 import {defaultResumeData} from '~/types/resume';
 
@@ -29,7 +29,7 @@ export const useResumeStore = defineStore('resume', {
         activeResumeId: null,
         nextId: 1,
         isLoading: false,
-        error: null
+        error: null,
     }),
 
     persist: true,
@@ -48,7 +48,7 @@ export const useResumeStore = defineStore('resume', {
 
         resumesList: (state): Resume[] => {
             return Object.values(state.resumes).sort((a, b) =>
-                new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
+                new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime(),
             );
         },
 
@@ -74,8 +74,8 @@ export const useResumeStore = defineStore('resume', {
         hasPersonalInfo: (state): boolean => {
             const resumeData = state.activeResumeId ? state.resumes[state.activeResumeId]?.data : null;
             if (!resumeData) return false;
-            return Boolean(resumeData.firstName || resumeData.lastName ||
-                resumeData.email || resumeData.phone);
+            return Boolean(resumeData.firstName || resumeData.lastName
+                || resumeData.email || resumeData.phone);
         },
 
         sectionsWithData: (state): string[] => {
@@ -93,7 +93,7 @@ export const useResumeStore = defineStore('resume', {
             return sections;
         },
 
-        orderedSections: (state): Array<{ key: string, order: number }> => {
+        orderedSections: (state): Array<{ key: string; order: number }> => {
             const resumeData = state.activeResumeId ? state.resumes[state.activeResumeId]?.data : null;
             if (!resumeData) return [];
             const sections = [
@@ -104,15 +104,15 @@ export const useResumeStore = defineStore('resume', {
                 {key: 'volunteering', order: resumeData.sectionOrder.volunteering},
                 {key: 'socialLinks', order: resumeData.sectionOrder.socialLinks},
                 {key: 'projects', order: resumeData.sectionOrder.projects ?? 6},
-                {key: 'languages', order: resumeData.sectionOrder.languages ?? 7}
+                {key: 'languages', order: resumeData.sectionOrder.languages ?? 7},
             ];
             return sections.sort((a, b) => a.order - b.order);
-        }
+        },
     },
 
     actions: {
         initialize() {
-            Object.keys(this.resumes).forEach(resumeId => {
+            Object.keys(this.resumes).forEach((resumeId) => {
                 const resume = this.resumes[resumeId];
                 if (resume.data.sectionOrder) {
                     if (resume.data.sectionOrder.projects === undefined) {
@@ -142,7 +142,7 @@ export const useResumeStore = defineStore('resume', {
                 name: name || `Resume ${this.nextId}`,
                 data: {...defaultResumeData},
                 createdAt: timestamp,
-                updatedAt: timestamp
+                updatedAt: timestamp,
             };
 
             this.resumes[id] = newResume;
@@ -205,7 +205,7 @@ export const useResumeStore = defineStore('resume', {
                     name: customName || `${originalResume.name} (Copy)`,
                     data: {...originalResume.data},
                     createdAt: timestamp,
-                    updatedAt: timestamp
+                    updatedAt: timestamp,
                 };
                 this.nextId++;
 
@@ -233,7 +233,7 @@ export const useResumeStore = defineStore('resume', {
                     startDate: '',
                     endDate: '',
                     isPresent: false,
-                    achievements: [{text: ''}]
+                    achievements: [{text: ''}],
                 }];
                 this.updateResumeData(this.activeResumeId, {experiences: newExperiences});
             }
@@ -276,7 +276,7 @@ export const useResumeStore = defineStore('resume', {
                     const newExperiences = [...currentData.experiences];
                     newExperiences[experienceIndex] = {
                         ...newExperiences[experienceIndex],
-                        achievements: [...newExperiences[experienceIndex].achievements, {text: achievement}]
+                        achievements: [...newExperiences[experienceIndex].achievements, {text: achievement}],
                     };
                     this.updateResumeData(this.activeResumeId, {experiences: newExperiences});
                 }
@@ -292,7 +292,7 @@ export const useResumeStore = defineStore('resume', {
                     newAchievements[achievementIndex] = {text: achievement};
                     newExperiences[experienceIndex] = {
                         ...newExperiences[experienceIndex],
-                        achievements: newAchievements
+                        achievements: newAchievements,
                     };
                     this.updateResumeData(this.activeResumeId, {experiences: newExperiences});
                 }
@@ -308,7 +308,7 @@ export const useResumeStore = defineStore('resume', {
                     newAchievements.splice(achievementIndex, 1);
                     newExperiences[experienceIndex] = {
                         ...newExperiences[experienceIndex],
-                        achievements: newAchievements
+                        achievements: newAchievements,
                     };
                     this.updateResumeData(this.activeResumeId, {experiences: newExperiences});
                 }
@@ -325,7 +325,7 @@ export const useResumeStore = defineStore('resume', {
                     newAchievements.splice(toIndex, 0, item);
                     newExperiences[experienceIndex] = {
                         ...newExperiences[experienceIndex],
-                        achievements: newAchievements
+                        achievements: newAchievements,
                     };
                     this.updateResumeData(this.activeResumeId, {experiences: newExperiences});
                 }
@@ -344,7 +344,7 @@ export const useResumeStore = defineStore('resume', {
                     endDate: '',
                     isPresent: false,
                     description: '',
-                    graduationScore: ''
+                    graduationScore: '',
                 }];
                 this.updateResumeData(this.activeResumeId, {education: newEducation});
             }
@@ -390,7 +390,7 @@ export const useResumeStore = defineStore('resume', {
                     startDate: '',
                     endDate: '',
                     isPresent: false,
-                    achievements: []
+                    achievements: [],
                 }];
                 this.updateResumeData(this.activeResumeId, {volunteering: newVolunteering});
             }
@@ -433,7 +433,7 @@ export const useResumeStore = defineStore('resume', {
                     const newVolunteering = [...currentData.volunteering];
                     newVolunteering[volunteeringIndex] = {
                         ...newVolunteering[volunteeringIndex],
-                        achievements: [...newVolunteering[volunteeringIndex].achievements, {text: achievement}]
+                        achievements: [...newVolunteering[volunteeringIndex].achievements, {text: achievement}],
                     };
                     this.updateResumeData(this.activeResumeId, {volunteering: newVolunteering});
                 }
@@ -449,7 +449,7 @@ export const useResumeStore = defineStore('resume', {
                     newAchievements[achievementIndex] = {text: achievement};
                     newVolunteering[volunteeringIndex] = {
                         ...newVolunteering[volunteeringIndex],
-                        achievements: newAchievements
+                        achievements: newAchievements,
                     };
                     this.updateResumeData(this.activeResumeId, {volunteering: newVolunteering});
                 }
@@ -465,7 +465,7 @@ export const useResumeStore = defineStore('resume', {
                     newAchievements.splice(achievementIndex, 1);
                     newVolunteering[volunteeringIndex] = {
                         ...newVolunteering[volunteeringIndex],
-                        achievements: newAchievements
+                        achievements: newAchievements,
                     };
                     this.updateResumeData(this.activeResumeId, {volunteering: newVolunteering});
                 }
@@ -482,7 +482,7 @@ export const useResumeStore = defineStore('resume', {
                     newAchievements.splice(toIndex, 0, item);
                     newVolunteering[volunteeringIndex] = {
                         ...newVolunteering[volunteeringIndex],
-                        achievements: newAchievements
+                        achievements: newAchievements,
                     };
                     this.updateResumeData(this.activeResumeId, {volunteering: newVolunteering});
                 }
@@ -494,7 +494,7 @@ export const useResumeStore = defineStore('resume', {
                 const currentData = this.resumes[this.activeResumeId].data;
                 const newSkills = [...currentData.skills, {
                     title: '',
-                    description: ''
+                    description: '',
                 }];
                 this.updateResumeData(this.activeResumeId, {skills: newSkills});
             }
@@ -536,7 +536,7 @@ export const useResumeStore = defineStore('resume', {
                 const newSocialLinks = [...currentData.socialLinks, {
                     platform: 'linkedin',
                     url: '',
-                    customLabel: ''
+                    customLabel: '',
                 }];
                 this.updateResumeData(this.activeResumeId, {socialLinks: newSocialLinks});
             }
@@ -578,7 +578,7 @@ export const useResumeStore = defineStore('resume', {
                 const newProjects = [...currentData.projects, {
                     title: '',
                     url: '',
-                    description: ''
+                    description: '',
                 }];
                 this.updateResumeData(this.activeResumeId, {projects: newProjects});
             }
@@ -619,7 +619,7 @@ export const useResumeStore = defineStore('resume', {
                 const currentData = this.resumes[this.activeResumeId].data;
                 const newLanguages = [...currentData.languages, {
                     name: '',
-                    proficiency: ''
+                    proficiency: '',
                 }];
                 this.updateResumeData(this.activeResumeId, {languages: newLanguages});
             }
@@ -683,7 +683,7 @@ export const useResumeStore = defineStore('resume', {
                 const currentOrder = currentData.sectionOrder[sectionKey];
                 if (currentOrder > 0) {
                     const targetSection = Object.keys(currentData.sectionOrder).find(key =>
-                        currentData.sectionOrder[key as keyof SectionOrder] === currentOrder - 1
+                        currentData.sectionOrder[key as keyof SectionOrder] === currentOrder - 1,
                     ) as keyof SectionOrder;
 
                     if (targetSection) {
@@ -704,7 +704,7 @@ export const useResumeStore = defineStore('resume', {
 
                 if (currentOrder < maxOrder) {
                     const targetSection = Object.keys(currentData.sectionOrder).find(key =>
-                        currentData.sectionOrder[key as keyof SectionOrder] === currentOrder + 1
+                        currentData.sectionOrder[key as keyof SectionOrder] === currentOrder + 1,
                     ) as keyof SectionOrder;
 
                     if (targetSection) {
@@ -744,6 +744,6 @@ export const useResumeStore = defineStore('resume', {
                 this.error = 'Failed to import data. Please check the file format.';
                 return false;
             }
-        }
-    }
+        },
+    },
 });

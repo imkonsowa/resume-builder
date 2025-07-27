@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
     import {Button} from '~/components/ui/button';
     import {Input} from '~/components/ui/input';
     import {Label} from '~/components/ui/label';
@@ -6,7 +6,6 @@
 
     interface Props {
         isOpen: boolean;
-        resumeName: string;
     }
 
     interface Emits {
@@ -18,19 +17,19 @@
     const props = defineProps<Props>();
     const emit = defineEmits<Emits>();
 
-    const copyResumeName = ref('');
+    const newResumeName = ref('');
     const navigateToBuilder = ref(true);
 
-    // Reset form when modal opens and set initial name
+    // Reset form when modal opens
     watch(() => props.isOpen, (isOpen) => {
         if (isOpen) {
-            copyResumeName.value = props.resumeName;
+            newResumeName.value = '';
             navigateToBuilder.value = true;
         }
     });
 
     const handleConfirm = () => {
-        emit('confirm', copyResumeName.value, navigateToBuilder.value);
+        emit('confirm', newResumeName.value, navigateToBuilder.value);
     };
 
     const handleCancel = () => {
@@ -59,34 +58,46 @@
             @click.stop
         >
             <div class="space-y-4">
-                <h3 class="text-lg font-semibold text-gray-900">Copy Resume</h3>
+                <h3 class="text-lg font-semibold text-gray-900">
+                    Create New Resume
+                </h3>
 
                 <div class="space-y-2">
-                    <Label for="copy-resume-name">Resume Name</Label>
+                    <Label for="resume-name">Resume Name</Label>
                     <Input
-                        id="copy-resume-name"
-                        v-model="copyResumeName"
-                        placeholder="Enter resume name"
+                        id="resume-name"
+                        v-model="newResumeName"
                         autofocus
+                        placeholder="Enter resume name"
                         @keydown="handleEnter"
                     />
                 </div>
 
                 <div class="flex items-center space-x-2 pt-2">
                     <Checkbox
-                        id="copy-navigate-to-builder"
+                        id="navigate-to-builder"
                         v-model="navigateToBuilder"
                     />
-                    <Label for="copy-navigate-to-builder" class="text-sm font-normal">
-                        Navigate to the builder after copying
+                    <Label
+                        class="text-sm font-normal"
+                        for="navigate-to-builder"
+                    >
+                        Navigate to the builder after creating
                     </Label>
                 </div>
 
                 <div class="flex gap-3 pt-4">
-                    <Button class="flex-1" @click="handleConfirm">
-                        Copy Resume
+                    <Button
+                        class="flex-1"
+                        @click="handleConfirm"
+                    >
+                        Create Resume
                     </Button>
-                    <Button variant="outline" class="flex-1" @click="handleCancel">
+                    <Button
+                        class="flex-1"
+                        variant="outline"
+                        @click="handleCancel"
+                    >
                         Cancel
                     </Button>
                 </div>

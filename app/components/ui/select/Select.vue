@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
     import type {SelectRootEmits, SelectRootProps} from 'reka-ui';
     import {SelectRoot, useForwardPropsEmits} from 'reka-ui';
 

@@ -1,32 +1,39 @@
 <template>
     <FormContainer
-        :title="resumeStore.resumeData.sectionHeaders.volunteering"
         :is-empty="resumeStore.resumeData.volunteering.length === 0"
-        empty-message="No volunteering entries added yet. Click 'Add Volunteering' to get started."
+        :title="resumeStore.resumeData.sectionHeaders.volunteering"
         add-button-label="Add Volunteering"
+        empty-message="No volunteering entries added yet. Click 'Add Volunteering' to get started."
         @add="resumeStore.addVolunteering"
         @edit-title="(value) => resumeStore.updateSectionHeader('volunteering', value)"
     >
         <!-- Column Placement Control -->
         <template #header-actions>
-            <div v-if="templateConfig.canMoveSection('volunteering')" class="flex items-center gap-2">
+            <div
+                v-if="templateConfig.canMoveSection('volunteering')"
+                class="flex items-center gap-2"
+            >
                 <span class="text-sm text-gray-600">Column:</span>
                 <select
                     :value="resumeStore.resumeData.sectionPlacement.volunteering"
                     class="px-2 py-1 text-sm border rounded focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                     @change="(e) => resumeStore.updateSectionPlacement('volunteering', (e.target as HTMLSelectElement).value as 'left' | 'right')"
                 >
-                    <option value="left">Left</option>
-                    <option value="right">Right</option>
+                    <option value="left">
+                        Left
+                    </option>
+                    <option value="right">
+                        Right
+                    </option>
                 </select>
             </div>
         </template>
         <FormCard
             v-for="(volunteering, index) in resumeStore.resumeData.volunteering"
             :key="index"
-            :title="`Volunteering ${index + 1}`"
-            :confirm-title="'Delete Volunteering'"
             :confirm-message="`Are you sure you want to delete this volunteering entry? This action cannot be undone.`"
+            :confirm-title="'Delete Volunteering'"
+            :title="`Volunteering ${index + 1}`"
             @remove="resumeStore.removeVolunteering(index)"
         >
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
@@ -64,9 +71,9 @@
                 />
                 <div class="space-y-2">
                     <MonthYearPicker
+                        :disabled="volunteering.isPresent"
                         :model-value="volunteering.endDate"
                         label="End Date"
-                        :disabled="volunteering.isPresent"
                         @update:model-value="(value) => resumeStore.updateVolunteering(index, 'endDate', value)"
                     />
                     <div class="flex items-center space-x-2">
@@ -78,7 +85,10 @@
                                 if (value) resumeStore.updateVolunteering(index, 'endDate', '');
                             }"
                         />
-                        <Label :for="`vol-present-${index}`" class="text-sm">Present</Label>
+                        <Label
+                            :for="`vol-present-${index}`"
+                            class="text-sm"
+                        >Present</Label>
                     </div>
                 </div>
             </div>
@@ -87,8 +97,8 @@
                 <div class="flex justify-between items-center">
                     <Label>Volunteer Achievements</Label>
                     <Button
-                        variant="outline"
                         size="sm"
+                        variant="outline"
                         @click="resumeStore.addVolunteeringAchievement(index)"
                     >
                         <Plus class="w-4 h-4 mr-2"/>
@@ -105,31 +115,31 @@
                         <div class="flex items-center space-x-2 md:space-x-2">
                             <Input
                                 :model-value="volunteering.achievements[achievementIndex].text"
-                                placeholder="Describe your volunteer achievements and impact"
                                 class="flex-1"
+                                placeholder="Describe your volunteer achievements and impact"
                                 @update:model-value="(value) => resumeStore.updateVolunteeringAchievement(index, achievementIndex, value)"
                                 @keydown.enter="resumeStore.addVolunteeringAchievement(index)"
                             />
                             <div class="hidden md:flex items-center space-x-1">
                                 <Button
-                                    variant="outline"
-                                    size="sm"
                                     :disabled="achievementIndex === 0"
+                                    size="sm"
+                                    variant="outline"
                                     @click="resumeStore.moveVolunteeringAchievement(index, achievementIndex, achievementIndex - 1)"
                                 >
                                     <ChevronUp class="w-4 h-4"/>
                                 </Button>
                                 <Button
-                                    variant="outline"
-                                    size="sm"
                                     :disabled="achievementIndex === volunteering.achievements.length - 1"
+                                    size="sm"
+                                    variant="outline"
                                     @click="resumeStore.moveVolunteeringAchievement(index, achievementIndex, achievementIndex + 1)"
                                 >
                                     <ChevronDown class="w-4 h-4"/>
                                 </Button>
                                 <Button
-                                    variant="outline"
                                     size="sm"
+                                    variant="outline"
                                     @click="resumeStore.removeVolunteeringAchievement(index, achievementIndex)"
                                 >
                                     <Trash2 class="w-4 h-4"/>
@@ -138,24 +148,24 @@
                         </div>
                         <div class="flex md:hidden items-center justify-center space-x-2">
                             <Button
-                                variant="outline"
-                                size="sm"
                                 :disabled="achievementIndex === 0"
+                                size="sm"
+                                variant="outline"
                                 @click="resumeStore.moveVolunteeringAchievement(index, achievementIndex, achievementIndex - 1)"
                             >
                                 <ChevronUp class="w-4 h-4"/>
                             </Button>
                             <Button
-                                variant="outline"
-                                size="sm"
                                 :disabled="achievementIndex === volunteering.achievements.length - 1"
+                                size="sm"
+                                variant="outline"
                                 @click="resumeStore.moveVolunteeringAchievement(index, achievementIndex, achievementIndex + 1)"
                             >
                                 <ChevronDown class="w-4 h-4"/>
                             </Button>
                             <Button
-                                variant="outline"
                                 size="sm"
+                                variant="outline"
                                 @click="resumeStore.removeVolunteeringAchievement(index, achievementIndex)"
                             >
                                 <Trash2 class="w-4 h-4"/>
@@ -168,15 +178,15 @@
     </FormContainer>
 </template>
 
-<script setup lang="ts">
-    import {Button} from './ui/button';
-    import {Input} from './ui/input';
-    import {Label} from './ui/label';
-    import {Checkbox} from './ui/checkbox';
+<script lang="ts" setup>
+    import {Button} from '~/components/ui/button';
+    import {Input} from '~/components/ui/input';
+    import {Label} from '~/components/ui/label';
+    import {Checkbox} from '~/components/ui/checkbox';
     import {ChevronDown, ChevronUp, Plus, Trash2} from 'lucide-vue-next';
-    import MonthYearPicker from './MonthYearPicker.vue';
-    import FormCard from './FormCard.vue';
-    import FormContainer from './FormContainer.vue';
+    import MonthYearPicker from '~/components/elements/MonthYearPicker.vue';
+    import FormCard from '~/components/elements/FormCard.vue';
+    import FormContainer from '~/components/elements/FormContainer.vue';
 
     // Use the store directly instead of props
     const resumeStore = useResumeStore();

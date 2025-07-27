@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
     import type {FieldProps} from './interface';
     import {cn} from '~/lib/utils';
     import {Button} from '@/components/ui/button';
@@ -29,14 +29,14 @@
                     <div>
                         <Popover>
                             <PopoverTrigger
-                                as-child
-                                :disabled="maybeBooleanishToBoolean(config?.inputProps?.disabled) ?? disabled">
+                                :disabled="maybeBooleanishToBoolean(config?.inputProps?.disabled) ?? disabled"
+                                as-child>
                                 <Button
-                                    variant="outline"
                                     :class="cn(
                                         'w-full justify-start text-left font-normal',
                                         !slotProps.componentField.modelValue && 'text-muted-foreground',
                                     )"
+                                    variant="outline"
                                 >
                                     <CalendarIcon class="mr-2 h-4 w-4"/>
                                     {{

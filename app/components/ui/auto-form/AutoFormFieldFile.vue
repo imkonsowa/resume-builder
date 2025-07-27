@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
     import type {FieldProps} from './interface';
     import {Button} from '@/components/ui/button';
     import {FormControl, FormDescription, FormField, FormItem, FormMessage} from '@/components/ui/form';
@@ -38,9 +38,9 @@
                 <slot v-bind="slotProps">
                     <Input
                         v-if="!inputFile"
+                        :disabled="config?.inputProps?.disabled ?? disabled"
                         type="file"
                         v-bind="{ ...config?.inputProps }"
-                        :disabled="config?.inputProps?.disabled ?? disabled"
                         @change="async (ev: InputEvent) => {
                             const file = (ev.target as HTMLInputElement).files?.[0]
                             inputFile = file
@@ -55,8 +55,8 @@
                         <Button
                             :size="'icon'"
                             :variant="'ghost'"
-                            class="h-[26px] w-[26px]"
                             aria-label="Remove file"
+                            class="h-[26px] w-[26px]"
                             type="button"
                             @click="() => {
                                 inputFile = undefined
