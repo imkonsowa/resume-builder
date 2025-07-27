@@ -1,5 +1,5 @@
-import type { ResumeData, TemplateLayoutConfig } from '~/types/resume';
-import { escapeTypstText } from '~/utils/stringUtils';
+import type {ResumeData, TemplateLayoutConfig} from '~/types/resume';
+import {escapeTypstText} from '~/utils/stringUtils';
 import {
     convertDateRange,
     convertEmail,
@@ -11,7 +11,7 @@ import {
     renderTemplateHeader,
     renderTemplateSubHeader,
 } from '~/utils/typstUtils';
-import { useSettingsStore } from '~/stores/settings';
+import {useSettingsStore} from '~/stores/settings';
 
 export interface Template {
     id: string;
@@ -64,8 +64,7 @@ const renderSocialLinks = (data: ResumeData, fontSize: number) => {
         let linkText = '';
         if (link.platform === 'other' && link.customLabel) {
             linkText = link.customLabel;
-        }
-        else {
+        } else {
             const platformLabels = {
                 linkedin: 'LinkedIn',
                 github: 'GitHub',
@@ -112,7 +111,7 @@ const renderEmploymentHistory = (data: ResumeData, fontSize: number) => {
 ${dateAndLinkSection}
 
 ${convertList(achievements)}`;
-    }).join('\n\n');
+    }).map(item => `#block(below: 1.5em)[${item}]`).join('');
 
     const headerText = data?.sectionHeaders?.experience || 'Employment History';
     return `${renderTemplateHeader(headerText, fontSize)}
@@ -142,7 +141,7 @@ ${renderTemplateDate(dateRange, fontSize)}`;
         }
 
         return content;
-    }).join('\n\n');
+    }).map(item => `#block(below: 1.5em)[${item}]`).join('');
 
     const headerText = data?.sectionHeaders?.education || 'Education';
     return `${renderTemplateHeader(headerText, fontSize)}
@@ -159,7 +158,7 @@ const renderTechnicalSkills = (data: ResumeData, fontSize: number) => {
                 if (!skill.description.trim()) return `*${escapeTypstText(skill.title)}*`;
                 return `*${escapeTypstText(skill.title)}:* ${escapeTypstText(skill.description)}`;
             })
-            .map(content => `#block(below: 0.6em)[${content}]`)
+            .map(content => `#block(below: 0.8em)[${content}]`)
             .join('');
 
         if (!skillItems) return '';
@@ -196,7 +195,7 @@ const renderVolunteering = (data: ResumeData, fontSize: number) => {
 ${renderTemplateDate(dateRange, fontSize)}
 
 ${convertList(achievements)}`;
-    }).join('\n\n');
+    }).map(item => `#block(below: 1.5em)[${item}]`).join('');
 
     const headerText = data?.sectionHeaders?.volunteering || 'Volunteering';
     return `${renderTemplateHeader(headerText, fontSize)}
@@ -217,8 +216,7 @@ const renderProjects = (data: ResumeData, fontSize: number) => {
             if (project.title.trim()) {
                 if (project.url.trim()) {
                     content += convertLink(project.url, project.title);
-                }
-                else {
+                } else {
                     content += `*${escapeTypstText(project.title)}*`;
                 }
             }
@@ -271,7 +269,7 @@ ${languageItems}`;
 };
 
 const parse = (data: ResumeData, font: string): string => {
-    const settings: TemplateSettings = { font };
+    const settings: TemplateSettings = {font};
     const settingsStore = useSettingsStore();
     const fontSize = settingsStore.fontSize;
 
@@ -298,17 +296,14 @@ const parse = (data: ResumeData, font: string): string => {
             const placement = data.sectionPlacement?.skills || 'right';
             if (placement === 'left') {
                 leftSections.push(section);
-            }
-            else {
+            } else {
                 rightSections.push(section);
             }
-        }
-        else {
+        } else {
             const placement = data.sectionPlacement?.[section as keyof typeof data.sectionPlacement] || 'right';
             if (placement === 'left') {
                 leftSections.push(section);
-            }
-            else {
+            } else {
                 rightSections.push(section);
             }
         }
@@ -334,7 +329,8 @@ const parse = (data: ResumeData, font: string): string => {
         .sort((a, b) => (leftSectionOrder[a] || 999) - (leftSectionOrder[b] || 999))
         .map(section => allSections[section]())
         .filter(content => content.trim() !== '')
-        .join('\n\n');
+        .map(content => `#block(below: 1.5em)[${content}]`)
+        .join('');
 
     const dynamicRightContent = rightSections
         .sort((a, b) => (rightSectionOrder[a] || 999) - (rightSectionOrder[b] || 999))
@@ -346,7 +342,9 @@ const parse = (data: ResumeData, font: string): string => {
         allSections['socialLinks'](),
     ].filter(content => content.trim() !== '');
 
-    const rightContent = [...staticRightContent, ...dynamicRightContent].join('\n\n');
+    const rightContent = [...staticRightContent, ...dynamicRightContent]
+        .map(content => `#block(below: 1.5em)[${content}]`)
+        .join('');
 
     const headerAndLeftContent = `${convertResumeHeader(data, fontSize)}
 

@@ -1,5 +1,5 @@
-import type { ResumeData, SectionOrder, TemplateLayoutConfig } from '~/types/resume';
-import { escapeTypstText } from '~/utils/stringUtils';
+import type {ResumeData, SectionOrder, TemplateLayoutConfig} from '~/types/resume';
+import {escapeTypstText} from '~/utils/stringUtils';
 import {
     convertDateRange,
     convertEmail,
@@ -10,7 +10,7 @@ import {
     renderTemplateHeader,
     renderTemplateSubHeader,
 } from '~/utils/typstUtils';
-import { useSettingsStore } from '~/stores/settings';
+import {useSettingsStore} from '~/stores/settings';
 
 export interface Template {
     id: string;
@@ -64,8 +64,7 @@ const renderHeaderRightColumn = (data: ResumeData, fontSize: number): string[] =
             let linkText = '';
             if (link.platform === 'other' && link.customLabel) {
                 linkText = link.customLabel;
-            }
-            else {
+            } else {
                 const platformLabels = {
                     linkedin: 'LinkedIn',
                     github: 'GitHub',
@@ -145,7 +144,7 @@ const renderEducationCompact = (data: ResumeData, fontSize: number) => {
         }
 
         return content;
-    }).join('\n\n');
+    }).map(item => `#block(below: 1.5em)[${item}]`).join('');
 
     const headerText = data?.sectionHeaders?.education || 'Education';
     return `${renderTemplateHeader(headerText, fontSize)}\n\n${educationItems}`;
@@ -171,7 +170,7 @@ const renderEmploymentHistoryCompact = (data: ResumeData, fontSize: number) => {
             .map(achievement => achievement.text);
 
         return `${renderTemplateSubHeader(title, fontSize)}\n${dateAndLinkSection}\n${convertList(achievements)}`;
-    }).join('\n\n');
+    }).map(item => `#block(below: 1.5em)[${item}]`).join('');
 
     const headerText = data?.sectionHeaders?.experience || 'Employment Experience';
     return `${renderTemplateHeader(headerText, fontSize)}\n\n${experienceItems}`;
@@ -186,7 +185,7 @@ const renderSkillsCompact = (data: ResumeData, fontSize: number) => {
                 if (!skill.description.trim()) return `*${escapeTypstText(skill.title)}*`;
                 return `*${escapeTypstText(skill.title)}:* ${escapeTypstText(skill.description)}`;
             })
-            .map(content => `#block(below: 0.6em)[${content}]`)
+            .map(content => `#block(below: 0.8em)[${content}]`)
             .join('');
 
         if (!skillItems) return '';
@@ -215,8 +214,7 @@ const renderProjectsCompact = (data: ResumeData, fontSize: number) => {
             if (project.title.trim()) {
                 if (project.url.trim()) {
                     content += convertLink(project.url, project.title);
-                }
-                else {
+                } else {
                     content += `*${escapeTypstText(project.title)}*`;
                 }
             }
@@ -229,7 +227,7 @@ const renderProjectsCompact = (data: ResumeData, fontSize: number) => {
             return content;
         })
         .filter(content => content.trim())
-        .join('\n\n');
+        .map(item => `#block(below: 1.5em)[${item}]`).join('');
 
     if (!projectItems) return '';
 
@@ -250,7 +248,7 @@ const renderVolunteeringCompact = (data: ResumeData, fontSize: number) => {
             .map(achievement => achievement.text);
 
         return `${renderTemplateSubHeader(title, fontSize)}\n${renderTemplateDate(dateRange, fontSize)}\n${convertList(achievements)}`;
-    }).join('\n\n');
+    }).map(item => `#block(below: 1.5em)[${item}]`).join('');
 
     const headerText = data?.sectionHeaders?.volunteering || 'Volunteering';
     return `${renderTemplateHeader(headerText, fontSize)}\n\n${volunteeringItems}`;
@@ -283,7 +281,7 @@ const renderLanguagesCompact = (data: ResumeData, fontSize: number) => {
 };
 
 const parse = (data: ResumeData, font: string): string => {
-    const settings: TemplateSettings = { font };
+    const settings: TemplateSettings = {font};
     const settingsStore = useSettingsStore();
     const fontSize = settingsStore.fontSize;
 
@@ -306,9 +304,10 @@ const parse = (data: ResumeData, font: string): string => {
 
     const sections = sortedSections
         .map(section => sectionRenderers[section]())
-        .filter(content => content.trim() !== '');
+        .filter(content => content.trim() !== '')
+        .map(content => `#block(below: 1.5em)[${content}]`);
 
-    const sectionsContent = sections.join('\n\n');
+    const sectionsContent = sections.join('');
 
     const fullContent = `${convertResumeHeader(data, fontSize)}${sectionsContent ? `\n\n${sectionsContent}` : ''}`;
 
