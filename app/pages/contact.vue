@@ -24,10 +24,10 @@
 </template>
 
 <script lang="ts" setup>
-    import {Card, CardContent} from '~/components/ui/card';
+import { Card, CardContent } from '~/components/ui/card';
 
-    // Set page title
-    useHead({
-        title: 'Contact Us - Resume Builder',
-    });
+// Set page title
+useHead({
+    title: 'Contact Us - Resume Builder',
+});
 </script>

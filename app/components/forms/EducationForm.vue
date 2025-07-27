@@ -10,10 +10,14 @@
         <FormCard
             v-for="(education, index) in resumeStore.resumeData.education"
             :key="index"
+            :can-move-down="index < resumeStore.resumeData.education.length - 1"
+            :can-move-up="index > 0"
             :confirm-message="`Are you sure you want to delete this education entry? This action cannot be undone.`"
             :confirm-title="'Delete Education'"
             :title="`Education ${index + 1}`"
             @remove="resumeStore.removeEducation(index)"
+            @move-up="resumeStore.moveEducation(index, index - 1)"
+            @move-down="resumeStore.moveEducation(index, index + 1)"
         >
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                 <div class="space-y-2">
@@ -99,14 +103,14 @@
 </template>
 
 <script lang="ts" setup>
-    import {Input} from '~/components/ui/input';
-    import {Label} from '~/components/ui/label';
-    import {Textarea} from '~/components/ui/textarea';
-    import {Checkbox} from '~/components/ui/checkbox';
-    import MonthYearPicker from '~/components/elements/MonthYearPicker.vue';
-    import FormCard from '~/components/elements/FormCard.vue';
-    import FormContainer from '~/components/elements/FormContainer.vue';
+import { Input } from '~/components/ui/input';
+import { Label } from '~/components/ui/label';
+import { Textarea } from '~/components/ui/textarea';
+import { Checkbox } from '~/components/ui/checkbox';
+import MonthYearPicker from '~/components/elements/MonthYearPicker.vue';
+import FormCard from '~/components/elements/FormCard.vue';
+import FormContainer from '~/components/elements/FormContainer.vue';
 
-    // Use the store directly instead of props
-    const resumeStore = useResumeStore();
+// Use the store directly instead of props
+const resumeStore = useResumeStore();
 </script>

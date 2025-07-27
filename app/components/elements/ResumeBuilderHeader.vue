@@ -13,21 +13,21 @@
                 variant="outline"
                 @click="showStepper = true"
             >
-                <ListIcon class="h-4 w-4"/>
+                <ListIcon class="h-4 w-4" />
                 Sections
             </Button>
         </div>
     </div>
 
-    <ResumeStepper v-model:show-stepper="showStepper"/>
+    <ResumeStepper v-model:show-stepper="showStepper" />
 </template>
 
 <script lang="ts" setup>
-    import {Button} from '~/components/ui/button';
-    import {ListIcon} from 'lucide-vue-next';
-    import ResumeStepper from '~/components/elements/ResumeStepper.vue';
+import { Button } from '~/components/ui/button';
+import { ListIcon } from 'lucide-vue-next';
+import ResumeStepper from '~/components/elements/ResumeStepper.vue';
 
-    const resumeStore = useResumeStore();
+const resumeStore = useResumeStore();
 
-    const showStepper = ref<boolean>(false);
+const showStepper = ref<boolean>(false);
 </script>

@@ -16,7 +16,7 @@
                     v-if="$slots['header-actions']"
                     class="ml-4"
                 >
-                    <slot name="header-actions"/>
+                    <slot name="header-actions" />
                 </div>
             </div>
         </CardHeader>
@@ -29,7 +29,7 @@
             </div>
 
             <div v-else>
-                <slot/>
+                <slot />
             </div>
 
             <!-- Add Button at Bottom -->
@@ -47,26 +47,26 @@
 </template>
 
 <script lang="ts" setup>
-    import {Card, CardContent, CardHeader, CardTitle} from '~/components/ui/card';
-    import AddButton from '~/components/elements/AddButton.vue';
-    import EditableHeader from '~/components/elements/EditableHeader.vue';
+import { Card, CardContent, CardHeader, CardTitle } from '~/components/ui/card';
+import AddButton from '~/components/elements/AddButton.vue';
+import EditableHeader from '~/components/elements/EditableHeader.vue';
 
-    interface Props {
-        title: string;
-        isEmpty: boolean;
-        emptyMessage: string;
-        addButtonLabel: string;
-        showAddButton?: boolean;
-        editable?: boolean;
-    }
+interface Props {
+    title: string;
+    isEmpty: boolean;
+    emptyMessage: string;
+    addButtonLabel: string;
+    showAddButton?: boolean;
+    editable?: boolean;
+}
 
-    const props = withDefaults(defineProps<Props>(), {
-        showAddButton: true,
-        editable: true,
-    });
+const props = withDefaults(defineProps<Props>(), {
+    showAddButton: true,
+    editable: true,
+});
 
-    const _emit = defineEmits<{
-        'add': [];
-        'edit-title': [value: string];
-    }>();
+const _emit = defineEmits<{
+    'add': [];
+    'edit-title': [value: string];
+}>();
 </script>

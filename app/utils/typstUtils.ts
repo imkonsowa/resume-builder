@@ -1,4 +1,4 @@
-import {escapeTypstText} from './stringUtils';
+import { escapeTypstText } from './stringUtils';
 
 export const convertEmail = (email: string): string => {
     if (!email) return '';
@@ -55,7 +55,8 @@ export const convertDateRange = (startDate: string, endDate?: string, isPresent?
 
     if (isPresent) {
         dateText += ' - Present';
-    } else if (endDate) {
+    }
+    else if (endDate) {
         const formattedEndDate = formatDateToMonthYear(endDate);
         dateText += ` - ${formattedEndDate}`;
     }

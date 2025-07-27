@@ -17,7 +17,7 @@
                                 variant="outline"
                             >
                                 <span>{{ (availableTemplates?.find(t => t.id === selectedTemplate).name || 'Default') }} Template</span>
-                                <ChevronDown class="w-4 h-4 ml-2"/>
+                                <ChevronDown class="w-4 h-4 ml-2" />
                             </Button>
                         </PopoverTrigger>
                         <PopoverContent class="w-80">
@@ -48,7 +48,7 @@
                         variant="outline"
                         @click="showSettingsModal = true"
                     >
-                        <SlidersHorizontal class="w-4 h-4 mr-2"/>
+                        <SlidersHorizontal class="w-4 h-4 mr-2" />
                         Settings
                     </Button>
 
@@ -57,7 +57,7 @@
                         size="sm"
                         @click="handleDownload"
                     >
-                        <Download class="w-4 h-4 mr-2"/>
+                        <Download class="w-4 h-4 mr-2" />
                         Download PDF
                     </Button>
                 </div>
@@ -68,7 +68,7 @@
                         size="sm"
                         @click="handleDownload"
                     >
-                        <Download class="w-4 h-4 mr-2"/>
+                        <Download class="w-4 h-4 mr-2" />
                         Download
                     </Button>
                     <Button
@@ -76,7 +76,7 @@
                         variant="outline"
                         @click="showSettingsModal = true"
                     >
-                        <Settings class="w-4 h-4"/>
+                        <Settings class="w-4 h-4" />
                     </Button>
                 </div>
             </div>
@@ -195,128 +195,131 @@
             </Card>
 
             <!-- Settings Modal -->
-            <SettingsModal v-model="showSettingsModal"/>
+            <SettingsModal v-model="showSettingsModal" />
         </div>
     </ClientOnly>
 </template>
 
 <script lang="ts" setup>
-    import {Card, CardContent} from '~/components/ui/card';
-    import {Button} from '~/components/ui/button';
-    import {Popover, PopoverContent, PopoverTrigger} from '~/components/ui/popover';
-    import {ChevronDown, Download, Settings, SlidersHorizontal} from 'lucide-vue-next';
-    import {availableTemplates} from '~/types/resume';
-    import {useResumeGenerator} from '~/composables/useResumeGenerator';
-    import {useDebounceFn} from '@vueuse/core';
-    import SettingsModal from '~/components/elements/SettingsModal.vue';
-    import {useSettingsStore} from '~/stores/settings';
-    import {useResumeStore} from '~/stores/resume';
-    import {storeToRefs} from 'pinia';
+import { Card, CardContent } from '~/components/ui/card';
+import { Button } from '~/components/ui/button';
+import { Popover, PopoverContent, PopoverTrigger } from '~/components/ui/popover';
+import { ChevronDown, Download, Settings, SlidersHorizontal } from 'lucide-vue-next';
+import { availableTemplates } from '~/types/resume';
+import { useResumeGenerator } from '~/composables/useResumeGenerator';
+import { useDebounceFn } from '@vueuse/core';
+import SettingsModal from '~/components/elements/SettingsModal.vue';
+import { useSettingsStore } from '~/stores/settings';
+import { useResumeStore } from '~/stores/resume';
+import { storeToRefs } from 'pinia';
 
-    // No props needed - we'll use stores directly
+// No props needed - we'll use stores directly
 
-    const {generatePreview, downloadPDF} = useResumeGenerator();
-    const {isReady: typstReady} = useTypstLoader();
+const { generatePreview, downloadPDF } = useResumeGenerator();
+const { isReady: typstReady } = useTypstLoader();
 
-    // Store instances
-    const settingsStore = useSettingsStore();
-    const resumeStore = useResumeStore();
+// Store instances
+const settingsStore = useSettingsStore();
+const resumeStore = useResumeStore();
 
-    // Reactive store data
-    const {resumeData} = storeToRefs(resumeStore);
-    const {selectedFont, selectedTemplate, fontSize} = storeToRefs(settingsStore);
+// Reactive store data
+const { resumeData } = storeToRefs(resumeStore);
+const { selectedFont, selectedTemplate, fontSize } = storeToRefs(settingsStore);
 
-    // State for preview
-    const isLoading = ref(false);
-    const error = ref<string | null>(null);
-    const previewContent = ref<string>('');
+// State for preview
+const isLoading = ref(false);
+const error = ref<string | null>(null);
+const previewContent = ref<string>('');
 
-    // State for popover menus
-    const showTemplateMenu = ref(false);
+// State for popover menus
+const showTemplateMenu = ref(false);
 
-    // State for settings modal
-    const showSettingsModal = ref(false);
+// State for settings modal
+const showSettingsModal = ref(false);
 
-    // Handler functions to close popovers after selection
-    const handleTemplateSelect = (template: string) => {
-        settingsStore.setSelectedTemplate(template);
-        showTemplateMenu.value = false;
-    };
+// Handler functions to close popovers after selection
+const handleTemplateSelect = (template: string) => {
+    settingsStore.setSelectedTemplate(template);
+    showTemplateMenu.value = false;
+};
 
-    // Generate preview when data changes
-    const generatePreviewInternal = async () => {
-        if (!resumeData.value) return;
+// Generate preview when data changes
+const generatePreviewInternal = async () => {
+    if (!resumeData.value) return;
 
-        isLoading.value = true;
-        error.value = null;
+    isLoading.value = true;
+    error.value = null;
 
-        try {
-            // Wait for Typst to be ready
-            if (!typstReady.value) {
-                // Wait for initialization to complete
-                await new Promise((resolve) => {
-                    const unwatch = watch(
-                        typstReady,
-                        (ready) => {
-                            if (ready) {
-                                unwatch();
-                                resolve(void 0);
-                            }
-                        },
-                    );
-                });
-            }
-
-            if (!typstReady.value) {
-                return;
-            }
-
-            previewContent.value = await generatePreview(
-                resumeData.value,
-                selectedTemplate.value || 'default',
-                selectedFont.value || 'Calibri',
-            );
-        } catch (err) {
-            console.error(err);
-            error.value = err instanceof Error ? err.message : 'Failed to generate preview';
-        } finally {
-            isLoading.value = false;
+    try {
+        // Wait for Typst to be ready
+        if (!typstReady.value) {
+            // Wait for initialization to complete
+            await new Promise((resolve) => {
+                const unwatch = watch(
+                    typstReady,
+                    (ready) => {
+                        if (ready) {
+                            unwatch();
+                            resolve(void 0);
+                        }
+                    },
+                );
+            });
         }
-    };
 
-    // Handle PDF download
-    const handleDownload = async () => {
-        if (!resumeData.value) return;
-
-        try {
-            await downloadPDF(
-                resumeData.value,
-                selectedTemplate.value || 'default',
-                selectedFont.value || 'Calibri',
-            );
-        } catch (err) {
-            error.value = err instanceof Error ? err.message : 'Failed to download PDF';
-            console.error('PDF download error:', err);
+        if (!typstReady.value) {
+            return;
         }
-    };
 
-    // Watch for changes and regenerate preview with debounce
-    const debouncedGeneratePreview = useDebounceFn(() => {
-        generatePreviewInternal();
-    }, 100);
+        previewContent.value = await generatePreview(
+            resumeData.value,
+            selectedTemplate.value || 'default',
+            selectedFont.value || 'Calibri',
+        );
+    }
+    catch (err) {
+        console.error(err);
+        error.value = err instanceof Error ? err.message : 'Failed to generate preview';
+    }
+    finally {
+        isLoading.value = false;
+    }
+};
 
-    watch(
-        [resumeData, selectedTemplate, selectedFont, fontSize],
-        () => {
-            debouncedGeneratePreview();
-        },
-        {deep: true, immediate: true},
-    );
+// Handle PDF download
+const handleDownload = async () => {
+    if (!resumeData.value) return;
 
-    // Expose generatePreview for error retry
-    defineExpose({
-        generatePreview: generatePreviewInternal,
-    });
+    try {
+        await downloadPDF(
+            resumeData.value,
+            selectedTemplate.value || 'default',
+            selectedFont.value || 'Calibri',
+        );
+    }
+    catch (err) {
+        error.value = err instanceof Error ? err.message : 'Failed to download PDF';
+        console.error('PDF download error:', err);
+    }
+};
+
+// Watch for changes and regenerate preview with debounce
+const debouncedGeneratePreview = useDebounceFn(() => {
+    generatePreviewInternal();
+}, 100);
+
+watch(
+    [resumeData, selectedTemplate, selectedFont, fontSize],
+    () => {
+        debouncedGeneratePreview();
+    },
+    { deep: true, immediate: true },
+);
+
+// Expose generatePreview for error retry
+defineExpose({
+    generatePreview: generatePreviewInternal,
+});
 </script>
 
 <style scoped>

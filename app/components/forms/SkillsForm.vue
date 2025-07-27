@@ -31,10 +31,14 @@
         <FormCard
             v-for="(skill, index) in resumeStore.resumeData.skills"
             :key="index"
+            :can-move-down="index < resumeStore.resumeData.skills.length - 1"
+            :can-move-up="index > 0"
             :confirm-message="`Are you sure you want to delete this skill entry? This action cannot be undone.`"
             :confirm-title="'Delete Skill'"
             :title="`Skill ${index + 1}`"
             @remove="resumeStore.removeSkill(index)"
+            @move-up="resumeStore.moveSkill(index, index - 1)"
+            @move-down="resumeStore.moveSkill(index, index + 1)"
         >
             <div class="space-y-4">
                 <div class="space-y-2">
@@ -61,13 +65,13 @@
 </template>
 
 <script lang="ts" setup>
-    import {Input} from '~/components/ui/input';
-    import {Label} from '~/components/ui/label';
-    import {Textarea} from '~/components/ui/textarea';
-    import FormCard from '~/components/elements/FormCard.vue';
-    import FormContainer from '~/components/elements/FormContainer.vue';
+import { Input } from '~/components/ui/input';
+import { Label } from '~/components/ui/label';
+import { Textarea } from '~/components/ui/textarea';
+import FormCard from '~/components/elements/FormCard.vue';
+import FormContainer from '~/components/elements/FormContainer.vue';
 
-    // Use the store directly instead of props
-    const resumeStore = useResumeStore();
-    const templateConfig = useTemplate();
+// Use the store directly instead of props
+const resumeStore = useResumeStore();
+const templateConfig = useTemplate();
 </script>

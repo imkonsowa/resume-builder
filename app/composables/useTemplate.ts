@@ -1,6 +1,6 @@
-import type {Template, TemplateLayoutConfig} from '~/templates/default';
-import {defaultTemplate} from '~/templates/default';
-import {compactTemplate} from '~/templates/compact';
+import type { Template, TemplateLayoutConfig } from '~/templates/default';
+import { defaultTemplate } from '~/templates/default';
+import { compactTemplate } from '~/templates/compact';
 
 export const useTemplate = () => {
     const settingsStore = useSettingsStore();

@@ -10,10 +10,14 @@
         <FormCard
             v-for="(experience, index) in resumeStore.resumeData.experiences"
             :key="index"
+            :can-move-down="index < resumeStore.resumeData.experiences.length - 1"
+            :can-move-up="index > 0"
             :confirm-message="`Are you sure you want to delete this experience entry? This action cannot be undone.`"
             :confirm-title="'Delete Experience'"
             :title="`Experience ${index + 1}`"
             @remove="resumeStore.removeExperience(index)"
+            @move-up="resumeStore.moveExperience(index, index - 1)"
+            @move-down="resumeStore.moveExperience(index, index + 1)"
         >
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                 <div class="space-y-2">
@@ -93,7 +97,7 @@
                         variant="outline"
                         @click="resumeStore.addExperienceAchievement(index)"
                     >
-                        <Plus class="w-4 h-4 mr-2"/>
+                        <Plus class="w-4 h-4 mr-2" />
                         Add Achievement
                     </Button>
                 </div>
@@ -119,7 +123,7 @@
                                     variant="outline"
                                     @click="resumeStore.moveExperienceAchievement(index, achievementIndex, achievementIndex - 1)"
                                 >
-                                    <ChevronUp class="w-4 h-4"/>
+                                    <ChevronUp class="w-4 h-4" />
                                 </Button>
                                 <Button
                                     :disabled="achievementIndex === experience.achievements.length - 1"
@@ -127,14 +131,14 @@
                                     variant="outline"
                                     @click="resumeStore.moveExperienceAchievement(index, achievementIndex, achievementIndex + 1)"
                                 >
-                                    <ChevronDown class="w-4 h-4"/>
+                                    <ChevronDown class="w-4 h-4" />
                                 </Button>
                                 <Button
                                     size="sm"
                                     variant="outline"
                                     @click="resumeStore.removeExperienceAchievement(index, achievementIndex)"
                                 >
-                                    <Trash2 class="w-4 h-4"/>
+                                    <Trash2 class="w-4 h-4" />
                                 </Button>
                             </div>
                         </div>
@@ -145,7 +149,7 @@
                                 variant="outline"
                                 @click="resumeStore.moveExperienceAchievement(index, achievementIndex, achievementIndex - 1)"
                             >
-                                <ChevronUp class="w-4 h-4"/>
+                                <ChevronUp class="w-4 h-4" />
                             </Button>
                             <Button
                                 :disabled="achievementIndex === experience.achievements.length - 1"
@@ -153,14 +157,14 @@
                                 variant="outline"
                                 @click="resumeStore.moveExperienceAchievement(index, achievementIndex, achievementIndex + 1)"
                             >
-                                <ChevronDown class="w-4 h-4"/>
+                                <ChevronDown class="w-4 h-4" />
                             </Button>
                             <Button
                                 size="sm"
                                 variant="outline"
                                 @click="resumeStore.removeExperienceAchievement(index, achievementIndex)"
                             >
-                                <Trash2 class="w-4 h-4"/>
+                                <Trash2 class="w-4 h-4" />
                             </Button>
                         </div>
                     </div>
@@ -171,15 +175,15 @@
 </template>
 
 <script lang="ts" setup>
-    import {Button} from '~/components/ui/button';
-    import {Input} from '~/components/ui/input';
-    import {Label} from '~/components/ui/label';
-    import {Checkbox} from '~/components/ui/checkbox';
-    import {ChevronDown, ChevronUp, Plus, Trash2} from 'lucide-vue-next';
-    import MonthYearPicker from '~/components/elements/MonthYearPicker.vue';
-    import FormCard from '~/components/elements/FormCard.vue';
-    import FormContainer from '~/components/elements/FormContainer.vue';
+import { Button } from '~/components/ui/button';
+import { Input } from '~/components/ui/input';
+import { Label } from '~/components/ui/label';
+import { Checkbox } from '~/components/ui/checkbox';
+import { ChevronDown, ChevronUp, Plus, Trash2 } from 'lucide-vue-next';
+import MonthYearPicker from '~/components/elements/MonthYearPicker.vue';
+import FormCard from '~/components/elements/FormCard.vue';
+import FormContainer from '~/components/elements/FormContainer.vue';
 
-    // Use the store directly instead of prop drilling
-    const resumeStore = useResumeStore();
+// Use the store directly instead of prop drilling
+const resumeStore = useResumeStore();
 </script>

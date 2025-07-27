@@ -5,7 +5,7 @@
         @click="handleCancel"
     >
         <!-- Backdrop -->
-        <div class="absolute inset-0 bg-black/50"/>
+        <div class="absolute inset-0 bg-black/50" />
 
         <!-- Modal Content -->
         <div
@@ -17,7 +17,7 @@
                 <div class="flex items-center space-x-3">
                     <div class="flex-shrink-0">
                         <div class="w-10 h-10 bg-red-100 rounded-full flex items-center justify-center">
-                            <AlertTriangle class="w-6 h-6 text-red-600"/>
+                            <AlertTriangle class="w-6 h-6 text-red-600" />
                         </div>
                     </div>
                     <div class="flex-1">
@@ -55,34 +55,34 @@
 </template>
 
 <script lang="ts" setup>
-    import {Button} from '~/components/ui/button';
-    import {AlertTriangle} from 'lucide-vue-next';
+import { Button } from '~/components/ui/button';
+import { AlertTriangle } from 'lucide-vue-next';
 
-    interface Props {
-        isOpen: boolean;
-        title?: string;
-        message?: string;
-        confirmText?: string;
-        cancelText?: string;
-    }
+interface Props {
+    isOpen: boolean;
+    title?: string;
+    message?: string;
+    confirmText?: string;
+    cancelText?: string;
+}
 
-    const _props = withDefaults(defineProps<Props>(), {
-        title: 'Confirm Action',
-        message: 'Are you sure you want to proceed?',
-        confirmText: 'Confirm',
-        cancelText: 'Cancel',
-    });
+const _props = withDefaults(defineProps<Props>(), {
+    title: 'Confirm Action',
+    message: 'Are you sure you want to proceed?',
+    confirmText: 'Confirm',
+    cancelText: 'Cancel',
+});
 
-    const emit = defineEmits<{
-        confirm: [];
-        cancel: [];
-    }>();
+const emit = defineEmits<{
+    confirm: [];
+    cancel: [];
+}>();
 
-    const handleConfirm = () => {
-        emit('confirm');
-    };
+const handleConfirm = () => {
+    emit('confirm');
+};
 
-    const handleCancel = () => {
-        emit('cancel');
-    };
+const handleCancel = () => {
+    emit('cancel');
+};
 </script>

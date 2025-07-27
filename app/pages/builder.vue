@@ -1,46 +1,46 @@
 <script lang="ts" setup>
-    import {useResumeStore} from '~/stores/resume';
-    import {EyeIcon} from 'lucide-vue-next';
-    import {Button} from '~/components/ui/button';
-    import ResumeBuilderHeader from '~/components/elements/ResumeBuilderHeader.vue';
-    import PersonalInfoForm from '~/components/forms/PersonalInfoForm.vue';
-    import ExperienceForm from '~/components/forms/ExperienceForm.vue';
-    import EducationForm from '~/components/forms/EducationForm.vue';
-    import SkillsForm from '~/components/forms/SkillsForm.vue';
-    import ProjectsForm from '~/components/forms/ProjectsForm.vue';
-    import LanguagesForm from '~/components/forms/LanguagesForm.vue';
-    import VolunteeringForm from '~/components/forms/VolunteeringForm.vue';
-    import ResumePreview from '~/components/elements/ResumePreview.vue';
+import { useResumeStore } from '~/stores/resume';
+import { EyeIcon } from 'lucide-vue-next';
+import { Button } from '~/components/ui/button';
+import ResumeBuilderHeader from '~/components/elements/ResumeBuilderHeader.vue';
+import PersonalInfoForm from '~/components/forms/PersonalInfoForm.vue';
+import ExperienceForm from '~/components/forms/ExperienceForm.vue';
+import EducationForm from '~/components/forms/EducationForm.vue';
+import SkillsForm from '~/components/forms/SkillsForm.vue';
+import ProjectsForm from '~/components/forms/ProjectsForm.vue';
+import LanguagesForm from '~/components/forms/LanguagesForm.vue';
+import VolunteeringForm from '~/components/forms/VolunteeringForm.vue';
+import ResumePreview from '~/components/elements/ResumePreview.vue';
 
-    useHead({
-        title: 'Free Resume Builder - Create Professional Resumes Online',
-        meta: [
-            {
-                name: 'description',
-                content: 'Create professional resumes for free with our online resume builder. Features real-time preview, PDF export, and modern templates.',
-            },
-        ],
-    });
+useHead({
+    title: 'Free Resume Builder - Create Professional Resumes Online',
+    meta: [
+        {
+            name: 'description',
+            content: 'Create professional resumes for free with our online resume builder. Features real-time preview, PDF export, and modern templates.',
+        },
+    ],
+});
 
-    // Stores
-    const resumeStore = useResumeStore();
+// Stores
+const resumeStore = useResumeStore();
 
-    // Initialize Typst loader
-    useTypstLoader();
+// Initialize Typst loader
+useTypstLoader();
 
-    // Initialize store on mount
-    onMounted(() => {
-        resumeStore.initialize();
+// Initialize store on mount
+onMounted(() => {
+    resumeStore.initialize();
 
-        // If no resumes exist and user accessed builder directly, create "Your Resume"
-        if (resumeStore.resumeCount === 0) {
-            const newResumeId = resumeStore.createResume('Your Resume');
-            resumeStore.setActiveResume(newResumeId);
-        }
-    });
+    // If no resumes exist and user accessed builder directly, create "Your Resume"
+    if (resumeStore.resumeCount === 0) {
+        const newResumeId = resumeStore.createResume('Your Resume');
+        resumeStore.setActiveResume(newResumeId);
+    }
+});
 
-    // Mobile preview modal state
-    const showMobilePreview = ref(false);
+// Mobile preview modal state
+const showMobilePreview = ref(false);
 </script>
 
 <template>
@@ -51,43 +51,43 @@
                 <div class="w-full lg:w-1/2 min-h-screen">
                     <div class="p-4 lg:p-8 pb-32">
                         <!-- Header -->
-                        <ResumeBuilderHeader/>
+                        <ResumeBuilderHeader />
 
                         <!-- Form Content -->
                         <div class="space-y-6">
                             <!-- Personal Information -->
                             <div id="personal-info">
-                                <PersonalInfoForm/>
+                                <PersonalInfoForm />
                             </div>
 
                             <!-- Experience -->
                             <div id="experience">
-                                <ExperienceForm/>
+                                <ExperienceForm />
                             </div>
 
                             <!-- Education -->
                             <div id="education">
-                                <EducationForm/>
+                                <EducationForm />
                             </div>
 
                             <!-- Skills -->
                             <div id="skills">
-                                <SkillsForm/>
+                                <SkillsForm />
                             </div>
 
                             <!-- Projects -->
                             <div id="projects">
-                                <ProjectsForm/>
+                                <ProjectsForm />
                             </div>
 
                             <!-- Languages -->
                             <div id="languages">
-                                <LanguagesForm/>
+                                <LanguagesForm />
                             </div>
 
                             <!-- Volunteering -->
                             <div id="volunteering">
-                                <VolunteeringForm/>
+                                <VolunteeringForm />
                             </div>
                         </div>
                     </div>
@@ -99,7 +99,7 @@
                 >
                     <div class="p-4 lg:p-8 pt-[calc(2rem+4rem)]">
                         <ClientOnly>
-                            <ResumePreview/>
+                            <ResumePreview />
                         </ClientOnly>
                     </div>
                 </div>
@@ -111,7 +111,7 @@
                     size="default"
                     @click="showMobilePreview = true"
                 >
-                    <EyeIcon class="h-5 w-5"/>
+                    <EyeIcon class="h-5 w-5" />
                     <span class="text-sm font-medium">Preview</span>
                 </Button>
 
@@ -147,7 +147,7 @@
                                 </button>
                             </div>
                             <div class="p-4">
-                                <ResumePreview/>
+                                <ResumePreview />
                             </div>
                         </div>
                     </div>

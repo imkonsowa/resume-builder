@@ -1,5 +1,5 @@
-import type {ResumeData, TemplateLayoutConfig} from '~/types/resume';
-import {escapeTypstText} from '~/utils/stringUtils';
+import type { ResumeData, TemplateLayoutConfig } from '~/types/resume';
+import { escapeTypstText } from '~/utils/stringUtils';
 import {
     convertDateRange,
     convertEmail,
@@ -11,7 +11,7 @@ import {
     renderTemplateHeader,
     renderTemplateSubHeader,
 } from '~/utils/typstUtils';
-import {useSettingsStore} from '~/stores/settings';
+import { useSettingsStore } from '~/stores/settings';
 
 export interface Template {
     id: string;
@@ -64,7 +64,8 @@ const renderSocialLinks = (data: ResumeData, fontSize: number) => {
         let linkText = '';
         if (link.platform === 'other' && link.customLabel) {
             linkText = link.customLabel;
-        } else {
+        }
+        else {
             const platformLabels = {
                 linkedin: 'LinkedIn',
                 github: 'GitHub',
@@ -216,7 +217,8 @@ const renderProjects = (data: ResumeData, fontSize: number) => {
             if (project.title.trim()) {
                 if (project.url.trim()) {
                     content += convertLink(project.url, project.title);
-                } else {
+                }
+                else {
                     content += `*${escapeTypstText(project.title)}*`;
                 }
             }
@@ -269,7 +271,7 @@ ${languageItems}`;
 };
 
 const parse = (data: ResumeData, font: string): string => {
-    const settings: TemplateSettings = {font};
+    const settings: TemplateSettings = { font };
     const settingsStore = useSettingsStore();
     const fontSize = settingsStore.fontSize;
 
@@ -296,14 +298,17 @@ const parse = (data: ResumeData, font: string): string => {
             const placement = data.sectionPlacement?.skills || 'right';
             if (placement === 'left') {
                 leftSections.push(section);
-            } else {
+            }
+            else {
                 rightSections.push(section);
             }
-        } else {
+        }
+        else {
             const placement = data.sectionPlacement?.[section as keyof typeof data.sectionPlacement] || 'right';
             if (placement === 'left') {
                 leftSections.push(section);
-            } else {
+            }
+            else {
                 rightSections.push(section);
             }
         }
