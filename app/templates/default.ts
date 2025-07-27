@@ -3,6 +3,7 @@ import {escapeTypstText} from '~/utils/stringUtils';
 import {
     convertDateRange,
     convertEmail,
+    convertExternalLinkIcon,
     convertGrid,
     convertLink,
     convertList,
@@ -106,7 +107,7 @@ const renderEmploymentHistory = (data: ResumeData, fontSize: number) => {
         const dateRange = convertDateRange(experience.startDate, experience.endDate, experience.isPresent);
 
         const companyLink = experience.companyUrl && experience.companyUrl.trim()
-            ? convertLink(experience.companyUrl, 'Website')
+            ? convertExternalLinkIcon(experience.companyUrl)
             : '';
 
         const dateAndLinkSection = renderTemplateDateWithLink(dateRange, companyLink, fontSize);
@@ -235,7 +236,7 @@ const renderProjects = (data: ResumeData, fontSize: number) => {
             if (project.title.trim()) {
                 content += `*${escapeTypstText(project.title)}*`;
                 if (project.url.trim()) {
-                    content += ` • ${convertLink(project.url, 'Website')}`;
+                    content += ` • ${convertExternalLinkIcon(project.url)}`;
                 }
             }
 
@@ -294,6 +295,7 @@ const parse = (data: ResumeData, font: string): string => {
     const settings: TemplateSettings = {font};
     const settingsStore = useSettingsStore();
     const fontSize = settingsStore.fontSize;
+
 
     const allSections = {
         experiences: () => renderEmploymentHistory(data, fontSize),

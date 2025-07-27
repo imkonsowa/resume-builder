@@ -22,7 +22,7 @@ export const convertLinkWithColor = (url: string, text: string, color = 'blue'):
 
 export const convertExternalLinkIcon = (url: string): string => {
     if (!url) return '';
-    return `#link("${escapeTypstText(url)}")[#text(fill: gray, size: 10pt)[↗]]`;
+    return `#link("${escapeTypstText(url)}")[#text(size: 10pt, weight: "semibold", fill: blue)[↗]]`;
 };
 
 export const convertHeader = (title: string, size = '16pt'): string => {
