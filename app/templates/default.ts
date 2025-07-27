@@ -233,10 +233,9 @@ const renderProjects = (data: ResumeData, fontSize: number) => {
             let content = '';
 
             if (project.title.trim()) {
+                content += `*${escapeTypstText(project.title)}*`;
                 if (project.url.trim()) {
-                    content += convertLink(project.url, project.title);
-                } else {
-                    content += `*${escapeTypstText(project.title)}*`;
+                    content += ` • ${convertLink(project.url, 'Website')}`;
                 }
             }
 
