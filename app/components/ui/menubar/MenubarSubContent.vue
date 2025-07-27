@@ -1,21 +1,21 @@
 <script setup lang="ts">
-import type { HTMLAttributes } from 'vue';
-import { reactiveOmit } from '@vueuse/core';
-import {
-    MenubarPortal,
-    MenubarSubContent,
-    type MenubarSubContentEmits,
-    type MenubarSubContentProps,
-    useForwardPropsEmits
-} from 'reka-ui';
-import { cn } from '~/lib/utils';
+    import type {HTMLAttributes} from 'vue';
+    import {reactiveOmit} from '@vueuse/core';
+    import {
+        MenubarPortal,
+        MenubarSubContent,
+        type MenubarSubContentEmits,
+        type MenubarSubContentProps,
+        useForwardPropsEmits
+    } from 'reka-ui';
+    import {cn} from '~/lib/utils';
 
-const props = defineProps<MenubarSubContentProps & { class?: HTMLAttributes['class'] }>();
-const emits = defineEmits<MenubarSubContentEmits>();
+    const props = defineProps<MenubarSubContentProps & { class?: HTMLAttributes['class'] }>();
+    const emits = defineEmits<MenubarSubContentEmits>();
 
-const delegatedProps = reactiveOmit(props, 'class');
+    const delegatedProps = reactiveOmit(props, 'class');
 
-const forwarded = useForwardPropsEmits(delegatedProps, emits);
+    const forwarded = useForwardPropsEmits(delegatedProps, emits);
 </script>
 
 <template>
@@ -30,7 +30,7 @@ const forwarded = useForwardPropsEmits(delegatedProps, emits);
                 )
             "
         >
-            <slot />
+            <slot/>
         </MenubarSubContent>
     </MenubarPortal>
 </template>

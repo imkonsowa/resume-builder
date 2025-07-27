@@ -1,17 +1,34 @@
 <script lang="ts" setup>
-import type { HTMLAttributes } from 'vue';
-import { reactiveOmit } from '@vueuse/core';
-import { RangeCalendarRoot, type RangeCalendarRootEmits, type RangeCalendarRootProps, useForwardPropsEmits } from 'reka-ui';
-import { cn } from '~/lib/utils';
-import { RangeCalendarCell, RangeCalendarCellTrigger, RangeCalendarGrid, RangeCalendarGridBody, RangeCalendarGridHead, RangeCalendarGridRow, RangeCalendarHeadCell, RangeCalendarHeader, RangeCalendarHeading, RangeCalendarNextButton, RangeCalendarPrevButton } from './index';
+    import type {HTMLAttributes} from 'vue';
+    import {reactiveOmit} from '@vueuse/core';
+    import {
+        RangeCalendarRoot,
+        type RangeCalendarRootEmits,
+        type RangeCalendarRootProps,
+        useForwardPropsEmits
+    } from 'reka-ui';
+    import {cn} from '~/lib/utils';
+    import {
+        RangeCalendarCell,
+        RangeCalendarCellTrigger,
+        RangeCalendarGrid,
+        RangeCalendarGridBody,
+        RangeCalendarGridHead,
+        RangeCalendarGridRow,
+        RangeCalendarHeadCell,
+        RangeCalendarHeader,
+        RangeCalendarHeading,
+        RangeCalendarNextButton,
+        RangeCalendarPrevButton
+    } from './index';
 
-const props = defineProps<RangeCalendarRootProps & { class?: HTMLAttributes['class'] }>();
+    const props = defineProps<RangeCalendarRootProps & { class?: HTMLAttributes['class'] }>();
 
-const emits = defineEmits<RangeCalendarRootEmits>();
+    const emits = defineEmits<RangeCalendarRootEmits>();
 
-const delegatedProps = reactiveOmit(props, 'class');
+    const delegatedProps = reactiveOmit(props, 'class');
 
-const forwarded = useForwardPropsEmits(delegatedProps, emits);
+    const forwarded = useForwardPropsEmits(delegatedProps, emits);
 </script>
 
 <template>
@@ -22,11 +39,11 @@ const forwarded = useForwardPropsEmits(delegatedProps, emits);
         v-bind="forwarded"
     >
         <RangeCalendarHeader>
-            <RangeCalendarHeading />
+            <RangeCalendarHeading/>
 
             <div class="flex items-center gap-1">
-                <RangeCalendarPrevButton />
-                <RangeCalendarNextButton />
+                <RangeCalendarPrevButton/>
+                <RangeCalendarNextButton/>
             </div>
         </RangeCalendarHeader>
 
@@ -42,7 +59,9 @@ const forwarded = useForwardPropsEmits(delegatedProps, emits);
                     </RangeCalendarGridRow>
                 </RangeCalendarGridHead>
                 <RangeCalendarGridBody>
-                    <RangeCalendarGridRow v-for="(weekDates, index) in month.rows" :key="`weekDate-${index}`" class="mt-2 w-full">
+                    <RangeCalendarGridRow
+                        v-for="(weekDates, index) in month.rows" :key="`weekDate-${index}`"
+                        class="mt-2 w-full">
                         <RangeCalendarCell
                             v-for="weekDate in weekDates"
                             :key="weekDate.toString()"

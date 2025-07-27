@@ -1,17 +1,17 @@
 <script lang="ts" setup>
-import type { HTMLAttributes } from 'vue';
-import { reactiveOmit } from '@vueuse/core';
-import { CalendarCellTrigger, type CalendarCellTriggerProps, useForwardProps } from 'reka-ui';
-import { cn } from '~/lib/utils';
-import { buttonVariants } from '@/components/ui/button';
+    import type {HTMLAttributes} from 'vue';
+    import {reactiveOmit} from '@vueuse/core';
+    import {CalendarCellTrigger, type CalendarCellTriggerProps, useForwardProps} from 'reka-ui';
+    import {cn} from '~/lib/utils';
+    import {buttonVariants} from '@/components/ui/button';
 
-const props = withDefaults(defineProps<CalendarCellTriggerProps & { class?: HTMLAttributes['class'] }>(), {
-    as: 'button'
-});
+    const props = withDefaults(defineProps<CalendarCellTriggerProps & { class?: HTMLAttributes['class'] }>(), {
+        as: 'button'
+    });
 
-const delegatedProps = reactiveOmit(props, 'class');
+    const delegatedProps = reactiveOmit(props, 'class');
 
-const forwardedProps = useForwardProps(delegatedProps);
+    const forwardedProps = useForwardProps(delegatedProps);
 </script>
 
 <template>
@@ -33,6 +33,6 @@ const forwardedProps = useForwardProps(delegatedProps);
         )"
         v-bind="forwardedProps"
     >
-        <slot />
+        <slot/>
     </CalendarCellTrigger>
 </template>

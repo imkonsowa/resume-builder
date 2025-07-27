@@ -1,10 +1,10 @@
-import type { Ref } from 'vue';
+import type {Ref} from 'vue';
+import {computed, ref, watch} from 'vue';
 import type * as z from 'zod';
-import { createContext } from 'reka-ui';
-import { useFieldValue, useFormValues } from 'vee-validate';
-import { computed, ref, watch } from 'vue';
-import { type Dependency, DependencyType, type EnumValues } from './interface';
-import { getFromPath, getIndexIfArray } from './utils';
+import {createContext} from 'reka-ui';
+import {useFieldValue, useFormValues} from 'vee-validate';
+import {type Dependency, DependencyType, type EnumValues} from './interface';
+import {getFromPath, getIndexIfArray} from './utils';
 
 export const [injectDependencies, provideDependencies] = createContext<Ref<Dependency<z.infer<z.ZodObject<any>>>[] | undefined>>('AutoFormDependencies');
 
@@ -81,7 +81,7 @@ export default function useDependencies(
                     break;
             }
         });
-    }, { immediate: true, deep: true });
+    }, {immediate: true, deep: true});
 
     return {
         isDisabled,

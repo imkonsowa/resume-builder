@@ -17,7 +17,9 @@
   ],
   "compilerOptions": {
     "paths": {
-      "@/*": ["./app/*"]
+      "@/*": [
+        "./app/*"
+      ]
     },
     // Strict TypeScript settings
     "strict": true,

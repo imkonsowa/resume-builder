@@ -1,6 +1,6 @@
-import type { Template } from './default';
-import { defaultTemplate } from './default';
-import { compactTemplate } from './compact';
+import type {Template} from './default';
+import {defaultTemplate} from './default';
+import {compactTemplate} from './compact';
 
 export const templates: Record<string, Template> = {
     default: defaultTemplate,

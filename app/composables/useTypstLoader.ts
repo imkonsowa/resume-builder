@@ -1,5 +1,5 @@
-import { typstLoader } from '~/utils/typstLoader';
-import type { TypstLoaderState } from '~/utils/typstLoader';
+import type {TypstLoaderState} from '~/utils/typstLoader';
+import {typstLoader} from '~/utils/typstLoader';
 
 export const useTypstLoader = () => {
     const state = ref<TypstLoaderState>(typstLoader.getState());

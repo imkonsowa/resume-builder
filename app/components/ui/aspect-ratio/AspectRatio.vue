@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { AspectRatio, type AspectRatioProps } from 'reka-ui';
+    import {AspectRatio, type AspectRatioProps} from 'reka-ui';
 
-const props = defineProps<AspectRatioProps>();
+    const props = defineProps<AspectRatioProps>();
 </script>
 
 <template>
@@ -9,6 +9,6 @@ const props = defineProps<AspectRatioProps>();
         data-slot="aspect-ratio"
         v-bind="props"
     >
-        <slot />
+        <slot/>
     </AspectRatio>
 </template>

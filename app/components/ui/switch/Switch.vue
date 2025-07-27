@@ -1,22 +1,16 @@
 <script setup lang="ts">
-import type { HTMLAttributes } from 'vue';
-import { reactiveOmit } from '@vueuse/core';
-import {
-    SwitchRoot,
-    type SwitchRootEmits,
-    type SwitchRootProps,
-    SwitchThumb,
-    useForwardPropsEmits
-} from 'reka-ui';
-import { cn } from '~/lib/utils';
+    import type {HTMLAttributes} from 'vue';
+    import {reactiveOmit} from '@vueuse/core';
+    import {SwitchRoot, type SwitchRootEmits, type SwitchRootProps, SwitchThumb, useForwardPropsEmits} from 'reka-ui';
+    import {cn} from '~/lib/utils';
 
-const props = defineProps<SwitchRootProps & { class?: HTMLAttributes['class'] }>();
+    const props = defineProps<SwitchRootProps & { class?: HTMLAttributes['class'] }>();
 
-const emits = defineEmits<SwitchRootEmits>();
+    const emits = defineEmits<SwitchRootEmits>();
 
-const delegatedProps = reactiveOmit(props, 'class');
+    const delegatedProps = reactiveOmit(props, 'class');
 
-const forwarded = useForwardPropsEmits(delegatedProps, emits);
+    const forwarded = useForwardPropsEmits(delegatedProps, emits);
 </script>
 
 <template>
@@ -32,7 +26,7 @@ const forwarded = useForwardPropsEmits(delegatedProps, emits);
             data-slot="switch-thumb"
             :class="cn('bg-background dark:data-[state=unchecked]:bg-foreground dark:data-[state=checked]:bg-primary-foreground pointer-events-none block size-4 rounded-full ring-0 transition-transform data-[state=checked]:translate-x-[calc(100%-2px)] data-[state=unchecked]:translate-x-0')"
         >
-            <slot name="thumb" />
+            <slot name="thumb"/>
         </SwitchThumb>
     </SwitchRoot>
 </template>

@@ -1,6 +1,7 @@
 import tailwindcss from '@tailwindcss/vite';
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
+// eslint-disable-next-line no-undef
 export default defineNuxtConfig({
     nitro: {
         preset: 'cloudflare'
@@ -9,7 +10,7 @@ export default defineNuxtConfig({
     future: {
         compatibilityVersion: 4
     },
-    devtools: { enabled: false },
+    devtools: {enabled: false},
     modules: [
         'shadcn-nuxt',
         '@pinia/nuxt',
@@ -18,10 +19,20 @@ export default defineNuxtConfig({
         '@vite-pwa/nuxt'
     ],
 
+    eslint: {
+        config: {
+            stylistic: {
+                indent: 4,
+                semi: true,
+                quotes: 'single'
+            }
+        }
+    },
+
     app: {
         head: {
             link: [
-                { rel: 'icon', type: 'image/svg+xml', href: '/favicon.svg' }
+                {rel: 'icon', type: 'image/svg+xml', href: '/favicon.svg'}
             ]
         }
     },

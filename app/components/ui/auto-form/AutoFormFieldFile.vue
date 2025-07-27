@@ -1,30 +1,31 @@
 <script setup lang="ts">
-import type { FieldProps } from './interface';
-import { Button } from '@/components/ui/button';
-import { FormControl, FormDescription, FormField, FormItem, FormMessage } from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
-import { Trash } from 'lucide-vue-next';
-import { ref } from 'vue';
-import AutoFormLabel from './AutoFormLabel.vue';
-import { beautifyObjectName } from './utils';
+    import type {FieldProps} from './interface';
+    import {Button} from '@/components/ui/button';
+    import {FormControl, FormDescription, FormField, FormItem, FormMessage} from '@/components/ui/form';
+    import {Input} from '@/components/ui/input';
+    import {Trash} from 'lucide-vue-next';
+    import {ref} from 'vue';
+    import AutoFormLabel from './AutoFormLabel.vue';
+    import {beautifyObjectName} from './utils';
 
-defineProps<FieldProps>();
+    defineProps<FieldProps>();
 
-const inputFile = ref<File>();
-async function parseFileAsString(file: File | undefined): Promise<string> {
-    return new Promise((resolve, reject) => {
-        if (file) {
-            const reader = new FileReader();
-            reader.onloadend = () => {
-                resolve(reader.result as string);
-            };
-            reader.onerror = (err) => {
-                reject(err);
-            };
-            reader.readAsDataURL(file);
-        }
-    });
-}
+    const inputFile = ref<File>();
+
+    async function parseFileAsString(file: File | undefined): Promise<string> {
+        return new Promise((resolve, reject) => {
+            if (file) {
+                const reader = new FileReader();
+                reader.onloadend = () => {
+                    resolve(reader.result as string);
+                };
+                reader.onerror = (err) => {
+                    reject(err);
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+    }
 </script>
 
 <template>
@@ -47,7 +48,9 @@ async function parseFileAsString(file: File | undefined): Promise<string> {
                             slotProps.componentField.onInput(parsed)
                         }"
                     />
-                    <div v-else class="flex h-9 w-full items-center justify-between rounded-md border border-input bg-transparent pl-3 pr-1 py-1 text-sm transition-colors">
+                    <div
+                        v-else
+                        class="flex h-9 w-full items-center justify-between rounded-md border border-input bg-transparent pl-3 pr-1 py-1 text-sm transition-colors">
                         <p>{{ inputFile?.name }}</p>
                         <Button
                             :size="'icon'"
@@ -60,7 +63,7 @@ async function parseFileAsString(file: File | undefined): Promise<string> {
                                 slotProps.componentField.onInput(undefined)
                             }"
                         >
-                            <Trash />
+                            <Trash/>
                         </Button>
                     </div>
                 </slot>
@@ -68,7 +71,7 @@ async function parseFileAsString(file: File | undefined): Promise<string> {
             <FormDescription v-if="config?.description">
                 {{ config.description }}
             </FormDescription>
-            <FormMessage />
+            <FormMessage/>
         </FormItem>
     </FormField>
 </template>

@@ -54,13 +54,13 @@
 </template>
 
 <script setup lang="ts">
-import { Input } from './ui/input';
-import { Label } from './ui/label';
-import { Textarea } from './ui/textarea';
-import FormCard from './FormCard.vue';
-import FormContainer from './FormContainer.vue';
+    import {Input} from './ui/input';
+    import {Label} from './ui/label';
+    import {Textarea} from './ui/textarea';
+    import FormCard from './FormCard.vue';
+    import FormContainer from './FormContainer.vue';
 
-// Use the store directly instead of props
-const resumeStore = useResumeStore();
-const templateConfig = useTemplate();
+    // Use the store directly instead of props
+    const resumeStore = useResumeStore();
+    const templateConfig = useTemplate();
 </script>

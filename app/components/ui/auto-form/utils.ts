@@ -1,9 +1,9 @@
-import type { z } from 'zod';
+import type {z} from 'zod';
 
 // TODO: This should support recursive ZodEffects but TypeScript doesn't allow circular type definitions.
 export type ZodObjectOrWrapped =
-  | z.ZodObject<any, any>
-  | z.ZodEffects<z.ZodObject<any, any>>
+    | z.ZodObject<any, any>
+    | z.ZodEffects<z.ZodObject<any, any>>
 
 /**
  * Beautify a camelCase string.
@@ -36,7 +36,7 @@ export function getIndexIfArray(string: string) {
  * This will unpack optionals, refinements, etc.
  */
 export function getBaseSchema<
-  ChildType extends z.ZodAny | z.AnyZodObject = z.ZodAny,
+    ChildType extends z.ZodAny | z.AnyZodObject = z.ZodAny,
 >(schema: ChildType | z.ZodEffects<ChildType>): ChildType | null {
     if (!schema)
         return null;
@@ -63,20 +63,20 @@ export function getBaseType(schema: z.ZodAny) {
  */
 export function getDefaultValueInZodStack(schema: z.ZodAny): any {
     const typedSchema = schema as unknown as z.ZodDefault<
-    z.ZodNumber | z.ZodString
-  >;
+        z.ZodNumber | z.ZodString
+    >;
 
     if (typedSchema._def.typeName === 'ZodDefault')
         return typedSchema._def.defaultValue();
 
     if ('innerType' in typedSchema._def) {
         return getDefaultValueInZodStack(
-      typedSchema._def.innerType as unknown as z.ZodAny
+            typedSchema._def.innerType as unknown as z.ZodAny
         );
     }
     if ('schema' in typedSchema._def) {
         return getDefaultValueInZodStack(
-      (typedSchema._def as any).schema as z.ZodAny
+            (typedSchema._def as any).schema as z.ZodAny
         );
     }
 
@@ -96,6 +96,7 @@ export function getObjectFormSchema(
 function isIndex(value: unknown): value is number {
     return Number(value) >= 0;
 }
+
 /**
  * Constructs a path with dot paths for arrays to use brackets to be compatible with vee-validate path syntax
  */
@@ -118,18 +119,22 @@ export function normalizeFormPath(path: string): string {
 }
 
 type NestedRecord = Record<string, unknown> | { [k: string]: NestedRecord }
+
 /**
  * Checks if the path opted out of nested fields using `[fieldName]` syntax
  */
 export function isNotNestedPath(path: string) {
     return /^\[.+\]$/.test(path);
 }
+
 function isObject(obj: unknown): obj is Record<string, unknown> {
     return obj !== null && Boolean(obj) && typeof obj === 'object' && !Array.isArray(obj);
 }
+
 function isContainerValue(value: unknown): value is Record<string, unknown> {
     return isObject(value) || Array.isArray(value);
 }
+
 function cleanupNonNestedPath(path: string) {
     if (isNotNestedPath(path))
         return path.replace(/\[|\]/g, '');
@@ -142,9 +147,9 @@ function cleanupNonNestedPath(path: string) {
  */
 export function getFromPath<TValue = unknown>(object: NestedRecord | undefined, path: string): TValue | undefined
 export function getFromPath<TValue = unknown, TFallback = TValue>(
-  object: NestedRecord | undefined,
-  path: string,
-  fallback?: TFallback,
+    object: NestedRecord | undefined,
+    path: string,
+    fallback?: TFallback,
 ): TValue | TFallback
 export function getFromPath<TValue = unknown, TFallback = TValue>(
     object: NestedRecord | undefined,

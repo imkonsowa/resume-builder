@@ -1,48 +1,46 @@
 <script setup lang="ts">
-import { useResumeStore } from '~/stores/resume';
-import { useSettingsStore } from '~/stores/settings';
-import { EyeIcon } from 'lucide-vue-next';
-import { Button } from '~/components/ui/button';
-import ResumeBuilderHeader from '~/components/ResumeBuilderHeader.vue';
-import PersonalInfoForm from '~/components/PersonalInfoForm.vue';
-import ExperienceForm from '~/components/ExperienceForm.vue';
-import EducationForm from '~/components/EducationForm.vue';
-import SkillsForm from '~/components/SkillsForm.vue';
-import ProjectsForm from '~/components/ProjectsForm.vue';
-import LanguagesForm from '~/components/LanguagesForm.vue';
-import VolunteeringForm from '~/components/VolunteeringForm.vue';
-import ResumePreview from '~/components/ResumePreview.vue';
+    import {useResumeStore} from '~/stores/resume';
+    import {EyeIcon} from 'lucide-vue-next';
+    import {Button} from '~/components/ui/button';
+    import ResumeBuilderHeader from '~/components/ResumeBuilderHeader.vue';
+    import PersonalInfoForm from '~/components/PersonalInfoForm.vue';
+    import ExperienceForm from '~/components/ExperienceForm.vue';
+    import EducationForm from '~/components/EducationForm.vue';
+    import SkillsForm from '~/components/SkillsForm.vue';
+    import ProjectsForm from '~/components/ProjectsForm.vue';
+    import LanguagesForm from '~/components/LanguagesForm.vue';
+    import VolunteeringForm from '~/components/VolunteeringForm.vue';
+    import ResumePreview from '~/components/ResumePreview.vue';
 
-useHead({
-    title: 'Free Resume Builder - Create Professional Resumes Online',
-    meta: [
-        {
-            name: 'description',
-            content: 'Create professional resumes for free with our online resume builder. Features real-time preview, PDF export, and modern templates.'
+    useHead({
+        title: 'Free Resume Builder - Create Professional Resumes Online',
+        meta: [
+            {
+                name: 'description',
+                content: 'Create professional resumes for free with our online resume builder. Features real-time preview, PDF export, and modern templates.'
+            }
+        ]
+    });
+
+    // Stores
+    const resumeStore = useResumeStore();
+
+    // Initialize Typst loader
+    useTypstLoader();
+
+    // Initialize store on mount
+    onMounted(() => {
+        resumeStore.initialize();
+
+        // If no resumes exist and user accessed builder directly, create "Your Resume"
+        if (resumeStore.resumeCount === 0) {
+            const newResumeId = resumeStore.createResume('Your Resume');
+            resumeStore.setActiveResume(newResumeId);
         }
-    ]
-});
+    });
 
-// Stores
-const resumeStore = useResumeStore();
-const settingsStore = useSettingsStore();
-
-// Initialize Typst loader
-useTypstLoader();
-
-// Initialize store on mount
-onMounted(() => {
-    resumeStore.initialize();
-
-    // If no resumes exist and user accessed builder directly, create "Your Resume"
-    if (resumeStore.resumeCount === 0) {
-        const newResumeId = resumeStore.createResume('Your Resume');
-        resumeStore.setActiveResume(newResumeId);
-    }
-});
-
-// Mobile preview modal state
-const showMobilePreview = ref(false);
+    // Mobile preview modal state
+    const showMobilePreview = ref(false);
 </script>
 
 <template>
@@ -100,7 +98,7 @@ const showMobilePreview = ref(false);
                     class="hidden lg:block fixed top-16 right-0 w-1/2 h-[calc(100vh-64px)] border-l border-gray-200 bg-gray-50 overflow-y-auto z-10">
                     <div class="p-4 lg:p-8 pt-[calc(2rem+4rem)]">
                         <ClientOnly>
-                            <ResumePreview />
+                            <ResumePreview/>
                         </ClientOnly>
                     </div>
                 </div>
@@ -134,7 +132,7 @@ const showMobilePreview = ref(false);
                                 </button>
                             </div>
                             <div class="p-4">
-                                <ResumePreview />
+                                <ResumePreview/>
                             </div>
                         </div>
                     </div>

@@ -1,27 +1,27 @@
 <script setup lang="ts" generic="U extends ZodAny">
-import type { ZodAny } from 'zod';
-import type { Config, ConfigItem, Shape } from './interface';
-import { computed } from 'vue';
-import { DEFAULT_ZOD_HANDLERS, INPUT_COMPONENTS } from './constant';
-import useDependencies from './dependencies';
+    import type {ZodAny} from 'zod';
+    import type {Config, ConfigItem, Shape} from './interface';
+    import {computed} from 'vue';
+    import {DEFAULT_ZOD_HANDLERS, INPUT_COMPONENTS} from './constant';
+    import useDependencies from './dependencies';
 
-const props = defineProps<{
-    fieldName: string
-    shape: Shape
-    config?: ConfigItem | Config<U>
-}>();
+    const props = defineProps<{
+        fieldName: string
+        shape: Shape
+        config?: ConfigItem | Config<U>
+    }>();
 
-function isValidConfig(config: any): config is ConfigItem {
-    return Boolean(config?.component);
-}
+    function isValidConfig(config: any): config is ConfigItem {
+        return Boolean(config?.component);
+    }
 
-const delegatedProps = computed(() => {
-    if (['ZodObject', 'ZodArray'].includes(props.shape?.type))
-        return { schema: props.shape?.schema };
-    return undefined;
-});
+    const delegatedProps = computed(() => {
+        if (['ZodObject', 'ZodArray'].includes(props.shape?.type))
+            return {schema: props.shape?.schema};
+        return undefined;
+    });
 
-const { isDisabled, isHidden, isRequired, overrideOptions } = useDependencies(props.fieldName);
+    const {isDisabled, isHidden, isRequired, overrideOptions} = useDependencies(props.fieldName);
 </script>
 
 <template>
@@ -40,6 +40,6 @@ const { isDisabled, isHidden, isRequired, overrideOptions } = useDependencies(pr
         :config="config"
         v-bind="delegatedProps"
     >
-        <slot />
+        <slot/>
     </component>
 </template>

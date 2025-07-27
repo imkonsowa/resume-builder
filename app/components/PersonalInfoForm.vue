@@ -101,7 +101,7 @@
                     size="sm"
                     @click="resumeStore.addSocialLink"
                 >
-                    <Plus class="w-4 h-4 mr-2" />
+                    <Plus class="w-4 h-4 mr-2"/>
                     Add Link
                 </Button>
             </div>
@@ -114,7 +114,7 @@
                 >
                     <!-- Platform Icon -->
                     <div class="flex-none">
-                        <component :is="getPlatformIcon(link.platform)" class="w-5 h-5 text-gray-600" />
+                        <component :is="getPlatformIcon(link.platform)" class="w-5 h-5 text-gray-600"/>
                     </div>
 
                     <!-- Platform Dropdown -->
@@ -157,7 +157,7 @@
                             :disabled="linkIndex === 0"
                             @click="resumeStore.moveSocialLink(linkIndex, linkIndex - 1)"
                         >
-                            <ChevronUp class="w-4 h-4" />
+                            <ChevronUp class="w-4 h-4"/>
                         </Button>
                         <Button
                             variant="outline"
@@ -165,14 +165,14 @@
                             :disabled="linkIndex === resumeStore.resumeData.socialLinks.length - 1"
                             @click="resumeStore.moveSocialLink(linkIndex, linkIndex + 1)"
                         >
-                            <ChevronDown class="w-4 h-4" />
+                            <ChevronDown class="w-4 h-4"/>
                         </Button>
                         <Button
                             variant="outline"
                             size="sm"
                             @click="handleRemoveSocialLink(linkIndex)"
                         >
-                            <Trash2 class="w-4 h-4" />
+                            <Trash2 class="w-4 h-4"/>
                         </Button>
                     </div>
                 </div>
@@ -193,45 +193,58 @@
 </template>
 
 <script setup lang="ts">
-import { Input } from './ui/input';
-import { Label } from './ui/label';
-import { Textarea } from './ui/textarea';
-import { Button } from './ui/button';
-import { Plus, Trash2, ChevronUp, ChevronDown, Linkedin, Github, Twitter, Globe, Dribbble, BookOpen, Edit3, Link } from 'lucide-vue-next';
-import FormContainer from './FormContainer.vue';
-import ConfirmationModal from './ConfirmationModal.vue';
-import EditableHeader from './EditableHeader.vue';
+    import {Input} from './ui/input';
+    import {Label} from './ui/label';
+    import {Textarea} from './ui/textarea';
+    import {Button} from './ui/button';
+    import {
+        BookOpen,
+        ChevronDown,
+        ChevronUp,
+        Dribbble,
+        Edit3,
+        Github,
+        Globe,
+        Link,
+        Linkedin,
+        Plus,
+        Trash2,
+        Twitter
+    } from 'lucide-vue-next';
+    import FormContainer from './FormContainer.vue';
+    import ConfirmationModal from './ConfirmationModal.vue';
+    import EditableHeader from './EditableHeader.vue';
 
-const SOCIAL_PLATFORMS = [
-    { value: 'linkedin', label: 'LinkedIn', icon: Linkedin },
-    { value: 'github', label: 'GitHub', icon: Github },
-    { value: 'twitter', label: 'Twitter', icon: Twitter },
-    { value: 'portfolio', label: 'Portfolio', icon: Globe },
-    { value: 'dribbble', label: 'Dribbble', icon: Dribbble },
-    { value: 'medium', label: 'Medium', icon: BookOpen },
-    { value: 'devto', label: 'Dev.to', icon: Edit3 },
-    { value: 'personal', label: 'Personal', icon: Globe },
-    { value: 'other', label: 'Other', icon: Link }
-];
+    const SOCIAL_PLATFORMS = [
+        {value: 'linkedin', label: 'LinkedIn', icon: Linkedin},
+        {value: 'github', label: 'GitHub', icon: Github},
+        {value: 'twitter', label: 'Twitter', icon: Twitter},
+        {value: 'portfolio', label: 'Portfolio', icon: Globe},
+        {value: 'dribbble', label: 'Dribbble', icon: Dribbble},
+        {value: 'medium', label: 'Medium', icon: BookOpen},
+        {value: 'devto', label: 'Dev.to', icon: Edit3},
+        {value: 'personal', label: 'Personal', icon: Globe},
+        {value: 'other', label: 'Other', icon: Link}
+    ];
 
-const resumeStore = useResumeStore();
-const confirmation = useConfirmation();
+    const resumeStore = useResumeStore();
+    const confirmation = useConfirmation();
 
-const getPlatformIcon = (platform: string) => {
-    const found = SOCIAL_PLATFORMS.find(p => p.value === platform);
-    return found?.icon || Link;
-};
+    const getPlatformIcon = (platform: string) => {
+        const found = SOCIAL_PLATFORMS.find(p => p.value === platform);
+        return found?.icon || Link;
+    };
 
-const handleRemoveSocialLink = async (index: number) => {
-    const confirmed = await confirmation.confirm({
-        title: 'Delete Social Link',
-        message: 'Are you sure you want to delete this social link? This action cannot be undone.',
-        confirmText: 'Delete',
-        cancelText: 'Cancel'
-    });
+    const handleRemoveSocialLink = async (index: number) => {
+        const confirmed = await confirmation.confirm({
+            title: 'Delete Social Link',
+            message: 'Are you sure you want to delete this social link? This action cannot be undone.',
+            confirmText: 'Delete',
+            cancelText: 'Cancel'
+        });
 
-    if (confirmed) {
-        resumeStore.removeSocialLink(index);
-    }
-};
+        if (confirmed) {
+            resumeStore.removeSocialLink(index);
+        }
+    };
 </script>

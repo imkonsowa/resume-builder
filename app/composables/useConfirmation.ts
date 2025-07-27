@@ -1,8 +1,8 @@
 export interface ConfirmationOptions {
-  title?: string;
-  message?: string;
-  confirmText?: string;
-  cancelText?: string;
+    title?: string;
+    message?: string;
+    confirmText?: string;
+    cancelText?: string;
 }
 
 export const useConfirmation = () => {

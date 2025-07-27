@@ -7,7 +7,7 @@
                     Customize your resume appearance
                 </DialogDescription>
             </DialogHeader>
-            
+
             <div class="space-y-6 py-4">
                 <!-- Template Selection -->
                 <div class="space-y-2">
@@ -19,9 +19,9 @@
                             </SelectValue>
                         </SelectTrigger>
                         <SelectContent>
-                            <SelectItem 
-                                v-for="template in availableTemplates" 
-                                :key="template.id" 
+                            <SelectItem
+                                v-for="template in availableTemplates"
+                                :key="template.id"
                                 :value="template.id"
                             >
                                 <div class="flex flex-col space-y-1">
@@ -41,12 +41,12 @@
                     <Label for="font-family">Font Family</Label>
                     <Select v-model="selectedFont" @update:model-value="updateFont">
                         <SelectTrigger id="font-family">
-                            <SelectValue placeholder="Select a font" />
+                            <SelectValue placeholder="Select a font"/>
                         </SelectTrigger>
                         <SelectContent>
-                            <SelectItem 
-                                v-for="font in availableFonts" 
-                                :key="font.family" 
+                            <SelectItem
+                                v-for="font in availableFonts"
+                                :key="font.family"
                                 :value="font.family"
                             >
                                 {{ font.name }}
@@ -57,7 +57,7 @@
                         Choose the font family for your resume
                     </p>
                 </div>
-                
+
                 <!-- Font Size Control -->
                 <div class="space-y-2">
                     <Label for="font-size">Font Size</Label>
@@ -78,7 +78,7 @@
                     </p>
                 </div>
             </div>
-            
+
             <DialogFooter>
                 <Button variant="outline" @click="resetToDefaults">
                     Reset to Defaults
@@ -92,93 +92,87 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, watch } from 'vue';
-import {
-    Dialog,
-    DialogContent,
-    DialogDescription,
-    DialogFooter,
-    DialogHeader,
-    DialogTitle,
-} from '~/components/ui/dialog';
-import { Button } from '~/components/ui/button';
-import { Label } from '~/components/ui/label';
-import { Slider } from '~/components/ui/slider';
-import {
-    Select,
-    SelectContent,
-    SelectItem,
-    SelectTrigger,
-    SelectValue,
-} from '~/components/ui/select';
-import { useSettingsStore } from '~/stores/settings';
-import { availableFonts, availableTemplates } from '~/types/resume';
+    import {computed, ref, watch} from 'vue';
+    import {
+        Dialog,
+        DialogContent,
+        DialogDescription,
+        DialogFooter,
+        DialogHeader,
+        DialogTitle
+    } from '~/components/ui/dialog';
+    import {Button} from '~/components/ui/button';
+    import {Label} from '~/components/ui/label';
+    import {Slider} from '~/components/ui/slider';
+    import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '~/components/ui/select';
+    import {useSettingsStore} from '~/stores/settings';
+    import {availableFonts, availableTemplates} from '~/types/resume';
 
-// Props
-const props = defineProps<{
-    modelValue: boolean;
-}>();
+    // Props
+    const props = defineProps<{
+        modelValue: boolean;
+    }>();
 
-// Emits
-const emit = defineEmits<{
-    'update:modelValue': [value: boolean];
-}>();
+    // Emits
+    const emit = defineEmits<{
+        'update:modelValue': [value: boolean];
+    }>();
 
-// Store
-const settingsStore = useSettingsStore();
+    // Store
+    const settingsStore = useSettingsStore();
 
-// Local state
-const fontSize = ref([settingsStore.fontSize]);
-const selectedFont = ref(settingsStore.selectedFont);
-const selectedTemplate = ref(settingsStore.selectedTemplate);
+    // Local state
+    const fontSize = ref([settingsStore.fontSize]);
+    const selectedFont = ref(settingsStore.selectedFont);
+    const selectedTemplate = ref(settingsStore.selectedTemplate);
 
-// Computed
-const isOpen = computed({
-    get: () => props.modelValue,
-    set: (value) => emit('update:modelValue', value)
-});
+    // Computed
+    const isOpen = computed({
+        get: () => props.modelValue,
+        set: (value) => emit('update:modelValue', value)
+    });
 
-const selectedTemplateName = computed(() => {
-    const template = availableTemplates.find(t => t.id === selectedTemplate.value);
-    return template ? template.name : '';
-});
+    const selectedTemplateName = computed(() => {
+        const template = availableTemplates.find(t => t.id === selectedTemplate.value);
+        return template ? template.name : '';
+    });
 
-// Watch for external changes
-watch(() => settingsStore.fontSize, (newSize) => {
-    fontSize.value = [newSize];
-});
+    // Watch for external changes
+    watch(() => settingsStore.fontSize, (newSize) => {
+        fontSize.value = [newSize];
+    });
 
-watch(() => settingsStore.selectedFont, (newFont) => {
-    selectedFont.value = newFont;
-});
+    watch(() => settingsStore.selectedFont, (newFont) => {
+        selectedFont.value = newFont;
+    });
 
-watch(() => settingsStore.selectedTemplate, (newTemplate) => {
-    selectedTemplate.value = newTemplate;
-});
+    watch(() => settingsStore.selectedTemplate, (newTemplate) => {
+        selectedTemplate.value = newTemplate;
+    });
 
-// Methods
-const updateFontSize = (value: number[]) => {
-    settingsStore.setFontSize(value[0]);
-};
+    // Methods
+    const updateFontSize = (value: number[]) => {
+        settingsStore.setFontSize(value[0]);
+    };
 
-const updateFont = (value: string) => {
-    settingsStore.setSelectedFont(value);
-};
+    const updateFont = (value: string) => {
+        settingsStore.setSelectedFont(value);
+    };
 
-const updateTemplate = (value: string) => {
-    settingsStore.setSelectedTemplate(value);
-};
+    const updateTemplate = (value: string) => {
+        settingsStore.setSelectedTemplate(value);
+    };
 
-const resetToDefaults = () => {
-    fontSize.value = [14];
-    selectedFont.value = 'Calibri';
-    selectedTemplate.value = 'default';
-    settingsStore.setFontSize(14);
-    settingsStore.setSelectedFont('Calibri');
-    settingsStore.setSelectedTemplate('default');
-};
+    const resetToDefaults = () => {
+        fontSize.value = [14];
+        selectedFont.value = 'Calibri';
+        selectedTemplate.value = 'default';
+        settingsStore.setFontSize(14);
+        settingsStore.setSelectedFont('Calibri');
+        settingsStore.setSelectedTemplate('default');
+    };
 
-const close = () => {
-    isOpen.value = false;
-};
+    const close = () => {
+        isOpen.value = false;
+    };
 </script>

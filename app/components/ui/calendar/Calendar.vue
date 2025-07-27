@@ -1,16 +1,28 @@
 <script lang="ts" setup>
-import type { HTMLAttributes } from 'vue';
-import { reactiveOmit } from '@vueuse/core';
-import { CalendarRoot, type CalendarRootEmits, type CalendarRootProps, useForwardPropsEmits } from 'reka-ui';
-import { cn } from '~/lib/utils';
-import { CalendarCell, CalendarCellTrigger, CalendarGrid, CalendarGridBody, CalendarGridHead, CalendarGridRow, CalendarHeadCell, CalendarHeader, CalendarHeading, CalendarNextButton, CalendarPrevButton } from './index';
+    import type {HTMLAttributes} from 'vue';
+    import {reactiveOmit} from '@vueuse/core';
+    import {CalendarRoot, type CalendarRootEmits, type CalendarRootProps, useForwardPropsEmits} from 'reka-ui';
+    import {cn} from '~/lib/utils';
+    import {
+        CalendarCell,
+        CalendarCellTrigger,
+        CalendarGrid,
+        CalendarGridBody,
+        CalendarGridHead,
+        CalendarGridRow,
+        CalendarHeadCell,
+        CalendarHeader,
+        CalendarHeading,
+        CalendarNextButton,
+        CalendarPrevButton
+    } from './index';
 
-const props = defineProps<CalendarRootProps & { class?: HTMLAttributes['class'] }>();
-const emits = defineEmits<CalendarRootEmits>();
+    const props = defineProps<CalendarRootProps & { class?: HTMLAttributes['class'] }>();
+    const emits = defineEmits<CalendarRootEmits>();
 
-const delegatedProps = reactiveOmit(props, 'class');
+    const delegatedProps = reactiveOmit(props, 'class');
 
-const forwarded = useForwardPropsEmits(delegatedProps, emits);
+    const forwarded = useForwardPropsEmits(delegatedProps, emits);
 </script>
 
 <template>
@@ -21,11 +33,11 @@ const forwarded = useForwardPropsEmits(delegatedProps, emits);
         v-bind="forwarded"
     >
         <CalendarHeader>
-            <CalendarHeading />
+            <CalendarHeading/>
 
             <div class="flex items-center gap-1">
-                <CalendarPrevButton />
-                <CalendarNextButton />
+                <CalendarPrevButton/>
+                <CalendarNextButton/>
             </div>
         </CalendarHeader>
 
@@ -41,7 +53,9 @@ const forwarded = useForwardPropsEmits(delegatedProps, emits);
                     </CalendarGridRow>
                 </CalendarGridHead>
                 <CalendarGridBody>
-                    <CalendarGridRow v-for="(weekDates, index) in month.rows" :key="`weekDate-${index}`" class="mt-2 w-full">
+                    <CalendarGridRow
+                        v-for="(weekDates, index) in month.rows" :key="`weekDate-${index}`"
+                        class="mt-2 w-full">
                         <CalendarCell
                             v-for="weekDate in weekDates"
                             :key="weekDate.toString()"

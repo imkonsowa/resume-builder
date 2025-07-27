@@ -1,33 +1,33 @@
 <script setup lang="ts">
-import type { HTMLAttributes } from 'vue';
-import { reactiveOmit } from '@vueuse/core';
-import {
-    SelectContent,
-    type SelectContentEmits,
-    type SelectContentProps,
-    SelectPortal,
-    SelectViewport,
-    useForwardPropsEmits
-} from 'reka-ui';
-import { cn } from '~/lib/utils';
-import { SelectScrollDownButton, SelectScrollUpButton } from './index';
+    import type {HTMLAttributes} from 'vue';
+    import {reactiveOmit} from '@vueuse/core';
+    import {
+        SelectContent,
+        type SelectContentEmits,
+        type SelectContentProps,
+        SelectPortal,
+        SelectViewport,
+        useForwardPropsEmits
+    } from 'reka-ui';
+    import {cn} from '~/lib/utils';
+    import {SelectScrollDownButton, SelectScrollUpButton} from './index';
 
-const props = withDefaults(
-    defineProps<SelectContentProps & { class?: HTMLAttributes['class'] }>(),
-    {
-        position: 'popper'
-    }
-);
+    const props = withDefaults(
+        defineProps<SelectContentProps & { class?: HTMLAttributes['class'] }>(),
+        {
+            position: 'popper'
+        }
+    );
 
-const emits = defineEmits<SelectContentEmits>();
+    const emits = defineEmits<SelectContentEmits>();
 
-defineOptions({
-    inheritAttrs: false
-});
+    defineOptions({
+        inheritAttrs: false
+    });
 
-const delegatedProps = reactiveOmit(props, 'class');
+    const delegatedProps = reactiveOmit(props, 'class');
 
-const forwarded = useForwardPropsEmits(delegatedProps, emits);
+    const forwarded = useForwardPropsEmits(delegatedProps, emits);
 </script>
 
 <template>
@@ -43,11 +43,12 @@ const forwarded = useForwardPropsEmits(delegatedProps, emits);
             )
             "
         >
-            <SelectScrollUpButton />
-            <SelectViewport :class="cn('p-1', position === 'popper' && 'h-[var(--reka-select-trigger-height)] w-full min-w-[var(--reka-select-trigger-width)] scroll-my-1')">
-                <slot />
+            <SelectScrollUpButton/>
+            <SelectViewport
+                :class="cn('p-1', position === 'popper' && 'h-[var(--reka-select-trigger-height)] w-full min-w-[var(--reka-select-trigger-width)] scroll-my-1')">
+                <slot/>
             </SelectViewport>
-            <SelectScrollDownButton />
+            <SelectScrollDownButton/>
         </SelectContent>
     </SelectPortal>
 </template>

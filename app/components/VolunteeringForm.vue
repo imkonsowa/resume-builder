@@ -91,7 +91,7 @@
                         size="sm"
                         @click="resumeStore.addVolunteeringAchievement(index)"
                     >
-                        <Plus class="w-4 h-4 mr-2" />
+                        <Plus class="w-4 h-4 mr-2"/>
                         Add Achievement
                     </Button>
                 </div>
@@ -117,7 +117,7 @@
                                     :disabled="achievementIndex === 0"
                                     @click="resumeStore.moveVolunteeringAchievement(index, achievementIndex, achievementIndex - 1)"
                                 >
-                                    <ChevronUp class="w-4 h-4" />
+                                    <ChevronUp class="w-4 h-4"/>
                                 </Button>
                                 <Button
                                     variant="outline"
@@ -125,14 +125,14 @@
                                     :disabled="achievementIndex === volunteering.achievements.length - 1"
                                     @click="resumeStore.moveVolunteeringAchievement(index, achievementIndex, achievementIndex + 1)"
                                 >
-                                    <ChevronDown class="w-4 h-4" />
+                                    <ChevronDown class="w-4 h-4"/>
                                 </Button>
                                 <Button
                                     variant="outline"
                                     size="sm"
                                     @click="resumeStore.removeVolunteeringAchievement(index, achievementIndex)"
                                 >
-                                    <Trash2 class="w-4 h-4" />
+                                    <Trash2 class="w-4 h-4"/>
                                 </Button>
                             </div>
                         </div>
@@ -143,7 +143,7 @@
                                 :disabled="achievementIndex === 0"
                                 @click="resumeStore.moveVolunteeringAchievement(index, achievementIndex, achievementIndex - 1)"
                             >
-                                <ChevronUp class="w-4 h-4" />
+                                <ChevronUp class="w-4 h-4"/>
                             </Button>
                             <Button
                                 variant="outline"
@@ -151,14 +151,14 @@
                                 :disabled="achievementIndex === volunteering.achievements.length - 1"
                                 @click="resumeStore.moveVolunteeringAchievement(index, achievementIndex, achievementIndex + 1)"
                             >
-                                <ChevronDown class="w-4 h-4" />
+                                <ChevronDown class="w-4 h-4"/>
                             </Button>
                             <Button
                                 variant="outline"
                                 size="sm"
                                 @click="resumeStore.removeVolunteeringAchievement(index, achievementIndex)"
                             >
-                                <Trash2 class="w-4 h-4" />
+                                <Trash2 class="w-4 h-4"/>
                             </Button>
                         </div>
                     </div>
@@ -169,16 +169,16 @@
 </template>
 
 <script setup lang="ts">
-import { Button } from './ui/button';
-import { Input } from './ui/input';
-import { Label } from './ui/label';
-import { Checkbox } from './ui/checkbox';
-import { Plus, Trash2, ChevronUp, ChevronDown } from 'lucide-vue-next';
-import MonthYearPicker from './MonthYearPicker.vue';
-import FormCard from './FormCard.vue';
-import FormContainer from './FormContainer.vue';
+    import {Button} from './ui/button';
+    import {Input} from './ui/input';
+    import {Label} from './ui/label';
+    import {Checkbox} from './ui/checkbox';
+    import {ChevronDown, ChevronUp, Plus, Trash2} from 'lucide-vue-next';
+    import MonthYearPicker from './MonthYearPicker.vue';
+    import FormCard from './FormCard.vue';
+    import FormContainer from './FormContainer.vue';
 
-// Use the store directly instead of props
-const resumeStore = useResumeStore();
-const templateConfig = useTemplate();
+    // Use the store directly instead of props
+    const resumeStore = useResumeStore();
+    const templateConfig = useTemplate();
 </script>

@@ -96,14 +96,6 @@
         }
     };
 
-    // Duplicate resume (legacy function for direct duplication)
-    const duplicateResume = (id: string) => {
-        const newResumeId = resumeStore.duplicateResume(id);
-        if (newResumeId) {
-            resumeStore.setActiveResume(newResumeId);
-            router.push('/builder');
-        }
-    };
 
     // Delete resume
     const deleteResume = async (id: string) => {

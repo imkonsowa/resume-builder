@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
-<svg fill="#000000" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
-	 viewBox="0 0 480 480" xml:space="preserve">
+<svg fill="#000000" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"
+     viewBox="0 0 480 480" xml:space="preserve">
 <g>
 	<g>
 		<path d="M413.648,74.336L341.664,2.352C340.216,0.896,338.216,0,336,0H104C81.944,0,64,17.944,64,40v344c0,22.056,17.944,40,40,40
@@ -11,7 +11,7 @@
 			c0,4.424,3.584,8,8,8h64V384z"/>
 	</g>
 </g>
-<g>
+    <g>
 	<g>
 		<path d="M224,48H112c-4.416,0-8,3.576-8,8v112c0,4.424,3.584,8,8,8h32h48h32c4.416,0,8-3.576,8-8V56C232,51.576,228.416,48,224,48
 			z M184,160h-32v-16c0-8.824,7.176-16,16-16c8.824,0,16,7.176,16,16V160z M160,104c0-4.416,3.592-8,8-8s8,3.584,8,8s-3.592,8-8,8
@@ -20,102 +20,102 @@
 			V160z"/>
 	</g>
 </g>
-<g>
+    <g>
 	<g>
 		<rect x="248" y="72" width="40" height="16"/>
 	</g>
 </g>
-<g>
+    <g>
 	<g>
 		<rect x="248" y="104" width="48" height="16"/>
 	</g>
 </g>
-<g>
+    <g>
 	<g>
 		<rect x="312" y="104" width="40" height="16"/>
 	</g>
 </g>
-<g>
+    <g>
 	<g>
 		<rect x="248" y="136" width="104" height="16"/>
 	</g>
 </g>
-<g>
+    <g>
 	<g>
 		<rect x="144" y="200" width="64" height="16"/>
 	</g>
 </g>
-<g>
+    <g>
 	<g>
 		<rect x="224" y="200" width="48" height="16"/>
 	</g>
 </g>
-<g>
+    <g>
 	<g>
 		<rect x="288" y="200" width="80" height="16"/>
 	</g>
 </g>
-<g>
+    <g>
 	<g>
 		<rect x="112" y="232" width="64" height="16"/>
 	</g>
 </g>
-<g>
+    <g>
 	<g>
 		<rect x="192" y="232" width="128" height="16"/>
 	</g>
 </g>
-<g>
+    <g>
 	<g>
 		<rect x="336" y="232" width="32" height="16"/>
 	</g>
 </g>
-<g>
+    <g>
 	<g>
 		<rect x="112" y="264" width="32" height="16"/>
 	</g>
 </g>
-<g>
+    <g>
 	<g>
 		<rect x="160" y="264" width="96" height="16"/>
 	</g>
 </g>
-<g>
+    <g>
 	<g>
 		<rect x="272" y="264" width="96" height="16"/>
 	</g>
 </g>
-<g>
+    <g>
 	<g>
 		<rect x="112" y="296" width="32" height="16"/>
 	</g>
 </g>
-<g>
+    <g>
 	<g>
 		<rect x="160" y="296" width="96" height="16"/>
 	</g>
 </g>
-<g>
+    <g>
 	<g>
 		<rect x="272" y="296" width="96" height="16"/>
 	</g>
 </g>
-<g>
+    <g>
 	<g>
 		<rect x="112" y="328" width="72" height="16"/>
 	</g>
 </g>
-<g>
+    <g>
 	<g>
 		<rect x="200" y="328" width="112" height="16"/>
 	</g>
 </g>
-<g>
+    <g>
 	<g>
 		<rect x="112" y="360" width="32" height="16"/>
 	</g>
 </g>
-<g>
+    <g>
 	<g>
 		<rect x="160" y="360" width="136" height="16"/>
 	</g>

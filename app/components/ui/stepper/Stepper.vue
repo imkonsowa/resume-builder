@@ -1,16 +1,16 @@
 <script lang="ts" setup>
-import type { StepperRootEmits, StepperRootProps } from 'reka-ui';
-import type { HTMLAttributes } from 'vue';
-import { reactiveOmit } from '@vueuse/core';
-import { StepperRoot, useForwardPropsEmits } from 'reka-ui';
-import { cn } from '@/lib/utils';
+    import type {StepperRootEmits, StepperRootProps} from 'reka-ui';
+    import {StepperRoot, useForwardPropsEmits} from 'reka-ui';
+    import type {HTMLAttributes} from 'vue';
+    import {reactiveOmit} from '@vueuse/core';
+    import {cn} from '@/lib/utils';
 
-const props = defineProps<StepperRootProps & { class?: HTMLAttributes['class'] }>();
-const emits = defineEmits<StepperRootEmits>();
+    const props = defineProps<StepperRootProps & { class?: HTMLAttributes['class'] }>();
+    const emits = defineEmits<StepperRootEmits>();
 
-const delegatedProps = reactiveOmit(props, 'class');
+    const delegatedProps = reactiveOmit(props, 'class');
 
-const forwarded = useForwardPropsEmits(delegatedProps, emits);
+    const forwarded = useForwardPropsEmits(delegatedProps, emits);
 </script>
 
 <template>
@@ -22,6 +22,6 @@ const forwarded = useForwardPropsEmits(delegatedProps, emits);
         )"
         v-bind="forwarded"
     >
-        <slot v-bind="slotProps" />
+        <slot v-bind="slotProps"/>
     </StepperRoot>
 </template>

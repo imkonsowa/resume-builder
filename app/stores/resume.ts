@@ -183,11 +183,13 @@ export const useResumeStore = defineStore('resume', {
 
         deleteResume(id: string): void {
             if (this.resumes[id]) {
-                delete this.resumes[id];
+                // Create a new object without the deleted resume
+                const {[id]: deletedResume, ...remainingResumes} = this.resumes;
+                this.resumes = remainingResumes;
 
                 if (this.activeResumeId === id) {
-                    const remainingResumes = Object.keys(this.resumes);
-                    this.activeResumeId = remainingResumes.length > 0 ? remainingResumes[0] : null;
+                    const remainingIds = Object.keys(this.resumes);
+                    this.activeResumeId = remainingIds.length > 0 ? remainingIds[0] : null;
                 }
             }
         },

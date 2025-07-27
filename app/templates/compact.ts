@@ -1,18 +1,16 @@
-import type { ResumeData, TemplateLayoutConfig, SectionOrder } from '~/types/resume';
-import { escapeTypstText } from '~/utils/stringUtils';
+import type {ResumeData, SectionOrder, TemplateLayoutConfig} from '~/types/resume';
+import {escapeTypstText} from '~/utils/stringUtils';
 import {
-    convertEmail,
-    convertHeader,
-    convertSubHeader,
     convertDateRange,
-    convertList,
+    convertEmail,
     convertLink,
-    renderTemplateHeader,
-    renderTemplateSubHeader,
+    convertList,
     renderTemplateDate,
-    renderTemplateDateWithLink
+    renderTemplateDateWithLink,
+    renderTemplateHeader,
+    renderTemplateSubHeader
 } from '~/utils/typstUtils';
-import { useSettingsStore } from '~/stores/settings';
+import {useSettingsStore} from '~/stores/settings';
 
 
 export interface Template {
@@ -215,7 +213,7 @@ const renderProjectsCompact = (data: ResumeData, fontSize: number) => {
             let content = '';
 
             if (project.title.trim()) {
-                    if (project.url.trim()) {
+                if (project.url.trim()) {
                     content += convertLink(project.url, project.title);
                 } else {
                     content += `*${escapeTypstText(project.title)}*`;
@@ -284,7 +282,7 @@ const renderLanguagesCompact = (data: ResumeData, fontSize: number) => {
 };
 
 const parse = (data: ResumeData, font: string): string => {
-    const settings: TemplateSettings = { font };
+    const settings: TemplateSettings = {font};
     const settingsStore = useSettingsStore();
     const fontSize = settingsStore.fontSize;
 

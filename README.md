@@ -1,6 +1,7 @@
 # Resume Builder
 
-This repository contains the source code for **[https://resumeforfree.com](https://resumeforfree.com)** - a free online resume builder.
+This repository contains the source code for **[https://resumeforfree.com](https://resumeforfree.com)** - a free online
+resume builder.
 
 ## Tech Stack
 
@@ -16,5 +17,5 @@ This repository contains the source code for **[https://resumeforfree.com](https
 To run this project locally:
 
 1. Install dependencies: `npm install`
-2. Start development server: `npm run dev`  
+2. Start development server: `npm run dev`
 3. Open `http://localhost:3000`

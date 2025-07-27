@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { FileText, Github, HelpCircle, Edit, Mail } from 'lucide-vue-next';
+    import {Edit, FileText, Github, HelpCircle, Mail} from 'lucide-vue-next';
 </script>
 
 <template>
@@ -11,7 +11,8 @@ import { FileText, Github, HelpCircle, Edit, Mail } from 'lucide-vue-next';
                     <div class="flex items-center space-x-6">
                         <NuxtLink to="/">
                             <div class="flex items-center">
-                                <span class="ml-2 text-lg md:text-xl font-semibold text-black">Free Resume Builder</span>
+                                <span
+                                    class="ml-2 text-lg md:text-xl font-semibold text-black">Free Resume Builder</span>
                             </div>
                         </NuxtLink>
 
@@ -76,13 +77,20 @@ import { FileText, Github, HelpCircle, Edit, Mail } from 'lucide-vue-next';
             <div class="px-4 lg:px-8 py-6">
                 <div class="text-center space-y-3">
                     <p class="text-sm text-gray-600">
-                        Built by <a href="https://konsowa.com" target="_blank" rel="noopener noreferrer" class="font-medium text-gray-900 hover:text-blue-600 transition-colors">Ibrahim Konsowa</a>
+                        Built by <a
+                        href="https://konsowa.com" target="_blank" rel="noopener noreferrer"
+                        class="font-medium text-gray-900 hover:text-blue-600 transition-colors">Ibrahim
+                        Konsowa</a>
                     </p>
                     <div class="flex items-center justify-center space-x-2 text-xs text-gray-500">
                         <span>Powered by</span>
-                        <a href="https://github.com/Myriad-Dreamin/typst.ts" target="_blank" rel="noopener noreferrer" class="text-gray-700 hover:text-blue-600 transition-colors">Typst.ts</a>
+                        <a
+                            href="https://github.com/Myriad-Dreamin/typst.ts" target="_blank" rel="noopener noreferrer"
+                            class="text-gray-700 hover:text-blue-600 transition-colors">Typst.ts</a>
                         <span>&</span>
-                        <a href="https://nuxt.com" target="_blank" rel="noopener noreferrer" class="text-gray-700 hover:text-blue-600 transition-colors">Nuxt</a>
+                        <a
+                            href="https://nuxt.com" target="_blank" rel="noopener noreferrer"
+                            class="text-gray-700 hover:text-blue-600 transition-colors">Nuxt</a>
                     </div>
                 </div>
             </div>

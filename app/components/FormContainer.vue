@@ -36,27 +36,27 @@
 </template>
 
 <script setup lang="ts">
-import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
-import AddButton from './AddButton.vue';
-import EditableHeader from './EditableHeader.vue';
+    import {Card, CardContent, CardHeader, CardTitle} from './ui/card';
+    import AddButton from './AddButton.vue';
+    import EditableHeader from './EditableHeader.vue';
 
-interface Props {
-    title: string;
-    isEmpty: boolean;
-    emptyMessage: string;
-    addButtonLabel: string;
-    showAddButton?: boolean;
-    editable?: boolean;
-}
+    interface Props {
+        title: string;
+        isEmpty: boolean;
+        emptyMessage: string;
+        addButtonLabel: string;
+        showAddButton?: boolean;
+        editable?: boolean;
+    }
 
-const props = withDefaults(defineProps<Props>(), {
-    showAddButton: true,
-    editable: true
-});
+    const props = withDefaults(defineProps<Props>(), {
+        showAddButton: true,
+        editable: true
+    });
 
-const _emit = defineEmits<{
-    add: [];
-    'edit-title': [value: string];
-}>();
+    const _emit = defineEmits<{
+        add: [];
+        'edit-title': [value: string];
+    }>();
 
 </script>

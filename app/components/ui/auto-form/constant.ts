@@ -1,4 +1,4 @@
-import type { InputComponents } from './interface';
+import type {InputComponents} from './interface';
 import AutoFormFieldArray from './AutoFormFieldArray.vue';
 import AutoFormFieldBoolean from './AutoFormFieldBoolean.vue';
 import AutoFormFieldDate from './AutoFormFieldDate.vue';
@@ -27,7 +27,7 @@ export const INPUT_COMPONENTS: InputComponents = {
  * You can expand this object to support more types.
  */
 export const DEFAULT_ZOD_HANDLERS: {
-  [key: string]: keyof typeof INPUT_COMPONENTS
+    [key: string]: keyof typeof INPUT_COMPONENTS
 } = {
     ZodString: 'string',
     ZodBoolean: 'checkbox',

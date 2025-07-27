@@ -1,16 +1,16 @@
 <script setup lang="ts">
-import { Button } from '~/components/ui/button';
-import { Check, Download, FileText, Shield, Users, Zap } from 'lucide-vue-next';
+    import {Button} from '~/components/ui/button';
+    import {Check, Download, FileText, Shield, Users, Zap} from 'lucide-vue-next';
 
-useHead({
-    title: 'Resume Builder - Build Your Resume for Free',
-    meta: [
-        {
-            name: 'description',
-            content: 'Build professional resumes for free. No servers, no registration, no payments. Unlimited downloads and resumes.'
-        }
-    ]
-});
+    useHead({
+        title: 'Resume Builder - Build Your Resume for Free',
+        meta: [
+            {
+                name: 'description',
+                content: 'Build professional resumes for free. No servers, no registration, no payments. Unlimited downloads and resumes.'
+            }
+        ]
+    });
 </script>
 
 <template>

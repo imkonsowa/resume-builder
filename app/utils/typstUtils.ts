@@ -1,4 +1,4 @@
-import { escapeTypstText } from './stringUtils';
+import {escapeTypstText} from './stringUtils';
 
 export const convertEmail = (email: string): string => {
     if (!email) return '';
@@ -88,7 +88,7 @@ export const convertGrid = (content: string[], columns = '(1fr, 1fr)', gutter = 
 )`;
 };
 
-export const convertSocialLinks = (links: Array<{platform: string, url: string}>, separator = ' • '): string => {
+export const convertSocialLinks = (links: Array<{ platform: string, url: string }>, separator = ' • '): string => {
     const linkItems = links
         .filter(link => link.platform && link.url)
         .map(link => convertLink(link.url, link.platform));

@@ -79,19 +79,19 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
-import { Input } from './ui/input';
-import { Label } from './ui/label';
-import FormContainer from './FormContainer.vue';
-import FormCard from './FormCard.vue';
-import ConfirmationModal from './ConfirmationModal.vue';
+    import {computed} from 'vue';
+    import {Input} from './ui/input';
+    import {Label} from './ui/label';
+    import FormContainer from './FormContainer.vue';
+    import FormCard from './FormCard.vue';
+    import ConfirmationModal from './ConfirmationModal.vue';
 
-const resumeStore = useResumeStore();
-const confirmation = useConfirmation();
-const templateConfig = useTemplate();
+    const resumeStore = useResumeStore();
+    const confirmation = useConfirmation();
+    const templateConfig = useTemplate();
 
-const sectionHeaderTitle = computed(() => {
-    return resumeStore.resumeData.sectionHeaders?.languages || 'Languages';
-});
+    const sectionHeaderTitle = computed(() => {
+        return resumeStore.resumeData.sectionHeaders?.languages || 'Languages';
+    });
 
 </script>

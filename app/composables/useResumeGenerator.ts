@@ -1,8 +1,8 @@
-import { getTemplate } from '~/templates';
-import type { ResumeData } from '~/types/resume';
+import {getTemplate} from '~/templates';
+import type {ResumeData} from '~/types/resume';
 
 export const useResumeGenerator = () => {
-    const { isReady: typstReady, isLoading: typstLoading } = useTypstLoader();
+    const {isReady: typstReady, isLoading: typstLoading} = useTypstLoader();
 
     const generateTypstContent = (
         resumeData: ResumeData,
@@ -28,7 +28,7 @@ export const useResumeGenerator = () => {
 
         const typstContent = generateTypstContent(resumeData, templateId, font);
 
-        return await window.$typst.svg({ mainContent: typstContent });
+        return await window.$typst.svg({mainContent: typstContent});
     };
 
     const generatePDF = async (
@@ -47,7 +47,7 @@ export const useResumeGenerator = () => {
         const typstContent = generateTypstContent(resumeData, templateId, font);
 
         try {
-            const pdfData = await window.$typst.pdf({ mainContent: typstContent });
+            const pdfData = await window.$typst.pdf({mainContent: typstContent});
             return pdfData;
         } catch (error) {
             console.error('PDF generation error:', error);
@@ -70,7 +70,7 @@ export const useResumeGenerator = () => {
             const filenameParts = [firstName, lastName, position, 'resume'].filter(Boolean);
             const filename = `${filenameParts.join('_')}.pdf`;
 
-            const blob = new Blob([pdfData], { type: 'application/pdf' });
+            const blob = new Blob([pdfData], {type: 'application/pdf'});
             const url = URL.createObjectURL(blob);
             const link = document.createElement('a');
             link.href = url;

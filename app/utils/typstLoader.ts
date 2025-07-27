@@ -1,11 +1,11 @@
-import { $typst } from '@myriaddreamin/typst.ts';
-import { preloadRemoteFonts } from '@myriaddreamin/typst.ts/dist/esm/options.init.mjs';
+import {$typst} from '@myriaddreamin/typst.ts';
+import {preloadRemoteFonts} from '@myriaddreamin/typst.ts/dist/esm/options.init.mjs';
 
 export interface TypstLoaderState {
-  isLoading: boolean;
-  isReady: boolean;
-  error: string | null;
-  hasInitialized: boolean;
+    isLoading: boolean;
+    isReady: boolean;
+    error: string | null;
+    hasInitialized: boolean;
 }
 
 class TypstLoader {
@@ -28,7 +28,7 @@ class TypstLoader {
     }
 
     private setState(newState: Partial<TypstLoaderState>) {
-        this.state = { ...this.state, ...newState };
+        this.state = {...this.state, ...newState};
         this.notifyListeners();
     }
 
@@ -36,7 +36,7 @@ class TypstLoader {
         setTimeout(() => {
             this.listeners.forEach(listener => {
                 try {
-                    listener({ ...this.state });
+                    listener({...this.state});
                 } catch (error) {
                     console.error('Error in typst loader listener:', error);
                 }
@@ -45,13 +45,13 @@ class TypstLoader {
     }
 
     getState(): TypstLoaderState {
-        return { ...this.state };
+        return {...this.state};
     }
 
     subscribe(listener: (state: TypstLoaderState) => void): () => void {
         this.listeners.add(listener);
 
-        setTimeout(() => listener({ ...this.state }), 0);
+        setTimeout(() => listener({...this.state}), 0);
 
         return () => {
             this.listeners.delete(listener);
@@ -71,7 +71,7 @@ class TypstLoader {
             return this.initPromise || Promise.resolve();
         }
 
-        this.setState({ isLoading: true, error: null });
+        this.setState({isLoading: true, error: null});
 
         this.initPromise = this.performInitialization();
 
@@ -84,7 +84,7 @@ class TypstLoader {
                 hasInitialized: true
             });
 
-            // @ts-expect-error
+            // @ts-expect-error - Window object doesn't have $typst property in TypeScript definitions
             window.$typst = $typst;
 
         } catch (error) {
@@ -122,7 +122,7 @@ class TypstLoader {
                         '/fonts/calibri-bold.ttf',
                         '/fonts/geist-bold.ttf',
                         '/fonts/geist-regular.ttf'
-                    ], { assets: false })
+                    ], {assets: false})
                 ]
             });
 
@@ -156,7 +156,7 @@ class TypstLoader {
     }
 
     async retry(): Promise<void> {
-        this.setState({ hasInitialized: false, error: null });
+        this.setState({hasInitialized: false, error: null});
         await this.initialize();
     }
 }

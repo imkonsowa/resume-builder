@@ -1,16 +1,16 @@
 <script lang="ts" setup>
-import type { HTMLAttributes } from 'vue';
-import { reactiveOmit } from '@vueuse/core';
-import { ChevronLeft } from 'lucide-vue-next';
-import { CalendarPrev, type CalendarPrevProps, useForwardProps } from 'reka-ui';
-import { cn } from '~/lib/utils';
-import { buttonVariants } from '@/components/ui/button';
+    import type {HTMLAttributes} from 'vue';
+    import {reactiveOmit} from '@vueuse/core';
+    import {ChevronLeft} from 'lucide-vue-next';
+    import {CalendarPrev, type CalendarPrevProps, useForwardProps} from 'reka-ui';
+    import {cn} from '~/lib/utils';
+    import {buttonVariants} from '@/components/ui/button';
 
-const props = defineProps<CalendarPrevProps & { class?: HTMLAttributes['class'] }>();
+    const props = defineProps<CalendarPrevProps & { class?: HTMLAttributes['class'] }>();
 
-const delegatedProps = reactiveOmit(props, 'class');
+    const delegatedProps = reactiveOmit(props, 'class');
 
-const forwardedProps = useForwardProps(delegatedProps);
+    const forwardedProps = useForwardProps(delegatedProps);
 </script>
 
 <template>
@@ -25,7 +25,7 @@ const forwardedProps = useForwardProps(delegatedProps);
         v-bind="forwardedProps"
     >
         <slot>
-            <ChevronLeft class="size-4" />
+            <ChevronLeft class="size-4"/>
         </slot>
     </CalendarPrev>
 </template>
