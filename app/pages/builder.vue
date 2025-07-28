@@ -1,7 +1,8 @@
 <script lang="ts" setup>
     import {useResumeStore} from '~/stores/resume';
-    import {EyeIcon, ZoomIn, ZoomOut} from 'lucide-vue-next';
+    import {EyeIcon} from 'lucide-vue-next';
     import {Button} from '~/components/ui/button';
+    import ZoomControls from '~/components/elements/ZoomControls.vue';
     import ResumeBuilderHeader from '~/components/elements/ResumeBuilderHeader.vue';
     import PersonalInfoForm from '~/components/forms/PersonalInfoForm.vue';
     import ExperienceForm from '~/components/forms/ExperienceForm.vue';
@@ -215,33 +216,14 @@
                                 
                                 <!-- Zoom Controls -->
                                 <div class="flex items-center gap-2">
-                                    <div class="flex items-center bg-gray-100 rounded-lg p-1">
-                                        <Button
-                                            size="sm"
-                                            variant="ghost"
-                                            class="h-8 w-8 p-0"
-                                            :disabled="zoomLevel <= minZoom"
-                                            @click="zoomOut"
-                                        >
-                                            <ZoomOut class="h-4 w-4" />
-                                            <span class="sr-only">Zoom out</span>
-                                        </Button>
-                                        
-                                        <span class="px-3 text-sm font-medium text-gray-700 min-w-[60px] text-center">
-                                            {{ Math.round(zoomLevel * 100) }}%
-                                        </span>
-                                        
-                                        <Button
-                                            size="sm"
-                                            variant="ghost"
-                                            class="h-8 w-8 p-0"
-                                            :disabled="zoomLevel >= maxZoom"
-                                            @click="zoomIn"
-                                        >
-                                            <ZoomIn class="h-4 w-4" />
-                                            <span class="sr-only">Zoom in</span>
-                                        </Button>
-                                    </div>
+                                    <ZoomControls
+                                        :zoom-level="zoomLevel"
+                                        :min-zoom="minZoom"
+                                        :max-zoom="maxZoom"
+                                        :zoom-step="zoomStep"
+                                        @zoom-in="zoomIn"
+                                        @zoom-out="zoomOut"
+                                    />
                                     
                                     <button
                                         class="text-gray-400 hover:text-gray-600 p-2"

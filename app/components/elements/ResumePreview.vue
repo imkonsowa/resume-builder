@@ -9,44 +9,60 @@
                 </h2>
 
                 <!-- Desktop Controls -->
-                <div class="hidden md:flex space-x-3">
-                    <!-- Template Selection -->
-                    <Popover v-model:open="showTemplateMenu">
-                        <PopoverTrigger as-child>
-                            <Button
-                                size="sm"
-                                variant="outline"
-                            >
-                                <span>{{ (availableTemplates?.find(t => t.id === selectedTemplate).name || 'Default') }} Template</span>
-                                <ChevronDown class="w-4 h-4 ml-2"/>
-                            </Button>
-                        </PopoverTrigger>
-                        <PopoverContent class="w-80">
-                            <div class="space-y-2">
-                                <div
-                                    v-for="template in availableTemplates"
-                                    :key="template.id"
-                                    :class="selectedTemplate === template.id ? 'bg-accent' : ''"
-                                    class="cursor-pointer rounded-md p-3 hover:bg-accent transition-colors"
-                                    @click="handleTemplateSelect(template.id)"
+                <div class="hidden md:flex items-center space-x-3">
+                    <!-- Zoom Controls for mid-size screens -->
+                    <div class="zoom-controls-midscreen">
+                        <ZoomControls
+                            :zoom-level="zoomLevel"
+                            :min-zoom="minZoom"
+                            :max-zoom="maxZoom"
+                            :zoom-step="zoomStep"
+                            @zoom-in="handleZoomIn"
+                            @zoom-out="handleZoomOut"
+                        />
+                    </div>
+
+                    <!-- Template Selection - Hidden on mid screens -->
+                    <div class="template-selection-desktop">
+                        <Popover v-model:open="showTemplateMenu">
+                            <PopoverTrigger as-child>
+                                <Button
+                                    size="sm"
+                                    variant="outline"
+                                    class="h-9"
                                 >
-                                    <div class="flex flex-col space-y-1">
-                                        <div class="font-medium text-sm">
-                                            {{ template.name }}
-                                        </div>
-                                        <div class="text-xs text-muted-foreground">
-                                            {{ template.description }}
+                                    <span>{{ (availableTemplates?.find(t => t.id === selectedTemplate).name || 'Default') }} Template</span>
+                                    <ChevronDown class="w-4 h-4 ml-2"/>
+                                </Button>
+                            </PopoverTrigger>
+                            <PopoverContent class="w-80">
+                                <div class="space-y-2">
+                                    <div
+                                        v-for="template in availableTemplates"
+                                        :key="template.id"
+                                        :class="selectedTemplate === template.id ? 'bg-accent' : ''"
+                                        class="cursor-pointer rounded-md p-3 hover:bg-accent transition-colors"
+                                        @click="handleTemplateSelect(template.id)"
+                                    >
+                                        <div class="flex flex-col space-y-1">
+                                            <div class="font-medium text-sm">
+                                                {{ template.name }}
+                                            </div>
+                                            <div class="text-xs text-muted-foreground">
+                                                {{ template.description }}
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        </PopoverContent>
-                    </Popover>
+                            </PopoverContent>
+                        </Popover>
+                    </div>
 
                     <!-- Settings Button -->
                     <Button
                         size="sm"
                         variant="outline"
+                        class="h-9"
                         @click="showSettingsModal = true"
                     >
                         <SlidersHorizontal class="w-4 h-4 mr-2"/>
@@ -56,18 +72,18 @@
                     <!-- Download Button Group -->
                     <div class="flex items-center">
                         <Button
-                            class="rounded-r-none"
+                            class="rounded-r-none h-9"
                             size="sm"
                             @click="handleDownload"
                         >
                             <Download class="w-4 h-4 mr-2"/>
-                            Download PDF
+                            <span class="download-text">Download</span> PDF
                         </Button>
                         <Menubar class="border-0 p-0 h-auto flex items-center">
                             <MenubarMenu>
                                 <MenubarTrigger as-child>
                                     <Button
-                                        class="rounded-l-none border-l-0 px-2"
+                                        class="rounded-l-none border-l-0 px-2 h-9"
                                         size="sm"
                                         variant="default"
                                     >
@@ -95,9 +111,17 @@
 
                 <!-- Mobile Controls Button -->
                 <div class="md:hidden flex space-x-2">
+                    <Button
+                        size="sm"
+                        variant="outline"
+                        class="h-9"
+                        @click="showSettingsModal = true"
+                    >
+                        <Settings class="w-4 h-4"/>
+                    </Button>
                     <div class="flex items-center">
                         <Button
-                            class="rounded-r-none"
+                            class="rounded-r-none h-9"
                             size="sm"
                             @click="handleDownload"
                         >
@@ -108,7 +132,7 @@
                             <MenubarMenu>
                                 <MenubarTrigger as-child>
                                     <Button
-                                        class="rounded-l-none border-l-0 px-2"
+                                        class="rounded-l-none border-l-0 px-2 h-9"
                                         size="sm"
                                         variant="default"
                                     >
@@ -132,13 +156,6 @@
                             </MenubarMenu>
                         </Menubar>
                     </div>
-                    <Button
-                        size="sm"
-                        variant="outline"
-                        @click="showSettingsModal = true"
-                    >
-                        <Settings class="w-4 h-4"/>
-                    </Button>
                 </div>
             </div>
 
@@ -271,6 +288,7 @@
     import {useResumeGenerator} from '~/composables/useResumeGenerator';
     import {useDebounceFn} from '@vueuse/core';
     import SettingsModal from '~/components/elements/SettingsModal.vue';
+    import ZoomControls from '~/components/elements/ZoomControls.vue';
     import {useSettingsStore} from '~/stores/settings';
     import {useResumeStore} from '~/stores/resume';
     import {storeToRefs} from 'pinia';
@@ -298,6 +316,25 @@
 
     // State for settings modal
     const showSettingsModal = ref(false);
+
+    // Zoom state for mid-size screens
+    const zoomLevel = ref(1);
+    const minZoom = 0.5;
+    const maxZoom = 2.5;
+    const zoomStep = 0.25;
+
+    // Zoom control functions
+    const handleZoomIn = () => {
+        if (zoomLevel.value < maxZoom) {
+            zoomLevel.value = Math.min(zoomLevel.value + zoomStep, maxZoom);
+        }
+    };
+
+    const handleZoomOut = () => {
+        if (zoomLevel.value > minZoom) {
+            zoomLevel.value = Math.max(zoomLevel.value - zoomStep, minZoom);
+        }
+    };
 
     // Handler functions to close popovers after selection
     const handleTemplateSelect = (template: string) => {
@@ -430,27 +467,33 @@
 </script>
 
 <style scoped>
-    /* Desktop styles - Fixed A4 size with scrolling */
-    @media (min-width: 1024px) {
-        .resume-preview-wrapper :deep(svg) {
-            width: 794px !important; /* A4 width at 96 DPI */
-            height: auto !important;
-            max-width: none !important;
-            max-height: none !important;
-            display: block;
-            margin: 0 auto;
-            background: white;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            border-radius: 4px;
-        }
-
-        .resume-preview-wrapper {
-            min-width: 810px; /* SVG width + padding */
-            padding: 8px;
-        }
+    /* ==================================
+       Base Styles (Mobile First)
+       ================================== */
+    
+    /* Common styles for all screen sizes */
+    .resume-preview-wrapper :deep(svg) + :deep(svg) {
+        margin-top: 16px; /* Space between pages */
     }
-
-    /* Mobile styles - Fit to screen width */
+    
+    .preview-container {
+        min-width: 100%;
+        display: flex;
+        justify-content: flex-start;
+    }
+    
+    /* Default visibility states */
+    .zoom-controls-midscreen {
+        display: none;
+    }
+    
+    .template-selection-desktop {
+        display: none !important;
+    }
+    
+    /* ==================================
+       Mobile: < 1024px
+       ================================== */
     @media (max-width: 1023px) {
         .resume-preview-wrapper :deep(svg) {
             width: 100% !important;
@@ -470,14 +513,91 @@
             min-width: auto;
         }
     }
-
-    /* Common styles for all screen sizes */
-    .resume-preview-wrapper :deep(svg) + :deep(svg) {
-        margin-top: 16px; /* Space between pages */
+    
+    /* ==================================
+       Small Desktop: 900px - 1024px
+       ================================== */
+    @media (min-width: 900px) and (max-width: 1023px) {
+        .download-text {
+            display: none;
+        }
     }
+    
+    /* ==================================
+       Desktop: >= 1024px
+       ================================== */
+    @media (min-width: 1024px) {
+        .preview-container {
+            justify-content: center;
+        }
+    }
+    
+    /* ==================================
+       Medium Desktop: 1024px - 1600px
+       ================================== */
+    @media (min-width: 1024px) and (max-width: 1600px) {
+        /* Resume preview with zoom support */
+        .resume-preview-wrapper :deep(svg) {
+            width: 100% !important;
+            max-width: 100% !important;
+            height: auto !important;
+            max-height: none !important;
+            display: block;
+            margin: 0;
+            background: white;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border-radius: 4px;
+            transform: scale(v-bind(zoomLevel));
+            transform-origin: top left;
+            transition: transform 0.2s ease-in-out;
+        }
 
-    /* Ensure the container allows proper scrolling */
-    .preview-container {
-        min-width: 100%;
+        .resume-preview-wrapper {
+            width: max-content;
+            padding: 8px;
+            margin: 0;
+        }
+
+        .preview-container {
+            justify-content: flex-start;
+        }
+        
+        /* Show zoom controls */
+        .zoom-controls-midscreen {
+            display: flex;
+        }
+        
+        /* Hide download text */
+        .download-text {
+            display: none;
+        }
+    }
+    
+    /* ==================================
+       Large Desktop: > 1600px
+       ================================== */
+    @media (min-width: 1601px) {
+        /* Fixed A4 size preview */
+        .resume-preview-wrapper :deep(svg) {
+            width: 794px !important; /* A4 width at 96 DPI */
+            height: auto !important;
+            max-width: none !important;
+            max-height: none !important;
+            display: block;
+            margin: 0;
+            background: white;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border-radius: 4px;
+        }
+
+        .resume-preview-wrapper {
+            min-width: 810px; /* SVG width + padding */
+            padding: 8px;
+        }
+        
+        /* Show template selection */
+        .template-selection-desktop {
+            display: block !important;
+        }
     }
 </style>
