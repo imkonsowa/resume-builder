@@ -4,6 +4,7 @@
         :title="sectionHeaderTitle"
         add-button-label="Add Language"
         empty-message="Add languages you speak to showcase your communication skills."
+        section-key="languages"
         @add="resumeStore.addLanguage"
         @edit-title="(value) => resumeStore.updateSectionHeader('languages', value)"
     >

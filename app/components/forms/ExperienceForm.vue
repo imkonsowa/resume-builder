@@ -4,6 +4,7 @@
         :title="resumeStore.resumeData.sectionHeaders.experience"
         add-button-label="Add Experience"
         empty-message="No experience entries added yet. Click 'Add Experience' to get started."
+        section-key="experience"
         @add="resumeStore.addExperience"
         @edit-title="(value) => resumeStore.updateSectionHeader('experience', value)"
     >

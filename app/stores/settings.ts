@@ -17,6 +17,7 @@ export const useSettingsStore = defineStore('settings', {
         showFontMenu: state => state.settings.showFontMenu,
         showTemplateMenu: state => state.settings.showTemplateMenu,
         fontSize: state => state.settings.fontSize ?? 14,
+        sectionCollapsed: state => state.settings.sectionCollapsed || {},
     },
 
     actions: {
@@ -64,6 +65,48 @@ export const useSettingsStore = defineStore('settings', {
 
         updateSettings(newSettings: Partial<AppSettings>) {
             this.settings = {...this.settings, ...newSettings};
+        },
+
+        toggleSectionCollapse(sectionKey: string) {
+            if (!this.settings.sectionCollapsed) {
+                this.settings.sectionCollapsed = {};
+            }
+            this.settings.sectionCollapsed[sectionKey] = !this.settings.sectionCollapsed[sectionKey];
+        },
+
+        setSectionCollapsed(sectionKey: string, collapsed: boolean) {
+            if (!this.settings.sectionCollapsed) {
+                this.settings.sectionCollapsed = {};
+            }
+            this.settings.sectionCollapsed[sectionKey] = collapsed;
+        },
+
+        collapseAllSections() {
+            const sections = ['personal', 'experience', 'education', 'skills', 'volunteering', 'projects', 'languages'];
+            sections.forEach(section => {
+                this.setSectionCollapsed(section, true);
+            });
+        },
+
+        expandAllSections() {
+            const sections = ['personal', 'experience', 'education', 'skills', 'volunteering', 'projects', 'languages'];
+            sections.forEach(section => {
+                this.setSectionCollapsed(section, false);
+            });
+        },
+
+        initialize() {
+            if (!this.settings.sectionCollapsed || Object.keys(this.settings.sectionCollapsed).length === 0) {
+                this.settings.sectionCollapsed = {
+                    personal: false,
+                    experience: true,
+                    education: true,
+                    skills: true,
+                    volunteering: true,
+                    projects: true,
+                    languages: true,
+                };
+            }
         },
     },
 });

@@ -4,6 +4,7 @@
         :title="resumeStore.resumeData.sectionHeaders.skills"
         add-button-label="Add Skill"
         empty-message="No skills added yet. Click 'Add Skill' to get started."
+        section-key="skills"
         @add="resumeStore.addSkill"
         @edit-title="(value) => resumeStore.updateSectionHeader('skills', value)"
     >

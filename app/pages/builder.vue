@@ -81,12 +81,17 @@
 
     // Stores
     const resumeStore = useResumeStore();
+    const settingsStore = useSettingsStore();
 
     // Initialize Typst loader
     useTypstLoader();
 
-    // Initialize store on mount
+    // Initialize stores on mount
     onMounted(() => {
+        // Initialize settings first
+        settingsStore.initialize();
+        
+        // Then initialize resume store
         resumeStore.initialize();
 
         // If no resumes exist and user accessed builder directly, create "Your Resume"

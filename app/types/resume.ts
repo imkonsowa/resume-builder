@@ -139,6 +139,7 @@ export interface AppSettings {
     showFontMenu: boolean;
     showTemplateMenu: boolean;
     fontSize: number;
+    sectionCollapsed: Record<string, boolean>;
 }
 
 export const defaultResumeData: ResumeData = {
@@ -197,6 +198,15 @@ export const defaultAppSettings: AppSettings = {
     showFontMenu: false,
     showTemplateMenu: false,
     fontSize: 12,
+    sectionCollapsed: {
+        personal: false,
+        experience: true,
+        education: true,
+        skills: true,
+        volunteering: true,
+        projects: true,
+        languages: true,
+    },
 };
 
 export const availableFonts = [

@@ -4,6 +4,7 @@
         :title="resumeStore.resumeData.sectionHeaders.volunteering"
         add-button-label="Add Volunteering"
         empty-message="No volunteering entries added yet. Click 'Add Volunteering' to get started."
+        section-key="volunteering"
         @add="resumeStore.addVolunteering"
         @edit-title="(value) => resumeStore.updateSectionHeader('volunteering', value)"
     >

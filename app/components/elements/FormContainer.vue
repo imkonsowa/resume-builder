@@ -12,15 +12,30 @@
                         {{ props.title }}
                     </CardTitle>
                 </div>
-                <div
-                    v-if="$slots['header-actions']"
-                    class="ml-4"
-                >
-                    <slot name="header-actions"/>
+                <div class="flex items-center space-x-2">
+                    <div
+                        v-if="$slots['header-actions']"
+                        class="ml-4"
+                    >
+                        <slot name="header-actions"/>
+                    </div>
+                    <Button
+                        v-if="props.collapsible"
+                        variant="ghost"
+                        size="sm"
+                        @click="toggleCollapse"
+                    >
+                        <ChevronDown
+                            :class="['w-4 h-4 transition-transform duration-200', isCollapsed ? '-rotate-90' : 'rotate-0']"
+                        />
+                    </Button>
                 </div>
             </div>
         </CardHeader>
-        <CardContent class="px-4 md:px-6">
+        <CardContent
+            v-if="!isCollapsed"
+            class="px-4 md:px-6"
+        >
             <div
                 v-if="props.isEmpty"
                 class="text-center py-8 text-muted-foreground"
@@ -48,6 +63,8 @@
 
 <script lang="ts" setup>
     import {Card, CardContent, CardHeader, CardTitle} from '~/components/ui/card';
+    import {Button} from '~/components/ui/button';
+    import {ChevronDown} from 'lucide-vue-next';
     import AddButton from '~/components/elements/AddButton.vue';
     import EditableHeader from '~/components/elements/EditableHeader.vue';
 
@@ -58,15 +75,32 @@
         addButtonLabel: string;
         showAddButton?: boolean;
         editable?: boolean;
+        sectionKey?: string;
+        collapsible?: boolean;
     }
 
     const props = withDefaults(defineProps<Props>(), {
         showAddButton: true,
         editable: true,
+        collapsible: true,
     });
 
     const _emit = defineEmits<{
         'add': [];
         'edit-title': [value: string];
     }>();
+
+    const settingsStore = useSettingsStore();
+
+    // Collapse state management
+    const isCollapsed = computed(() => {
+        if (!props.collapsible || !props.sectionKey) return false;
+        return settingsStore.sectionCollapsed[props.sectionKey] || false;
+    });
+
+    const toggleCollapse = () => {
+        if (props.collapsible && props.sectionKey) {
+            settingsStore.toggleSectionCollapse(props.sectionKey);
+        }
+    };
 </script>

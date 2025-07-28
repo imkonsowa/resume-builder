@@ -4,6 +4,7 @@
         :title="sectionHeaderTitle"
         add-button-label="Add Project"
         empty-message="Add your notable projects to showcase your work."
+        section-key="projects"
         @add="resumeStore.addProject"
     >
         <template #header>

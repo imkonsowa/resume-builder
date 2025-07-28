@@ -4,6 +4,7 @@
         :title="resumeStore.resumeData.sectionHeaders.education"
         add-button-label="Add Education"
         empty-message="No education entries added yet. Click 'Add Education' to get started."
+        section-key="education"
         @add="resumeStore.addEducation"
         @edit-title="(value) => resumeStore.updateSectionHeader('education', value)"
     >
