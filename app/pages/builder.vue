@@ -1,6 +1,6 @@
 <script lang="ts" setup>
     import {useResumeStore} from '~/stores/resume';
-    import {EyeIcon} from 'lucide-vue-next';
+    import {EyeIcon, ZoomIn, ZoomOut} from 'lucide-vue-next';
     import {Button} from '~/components/ui/button';
     import ResumeBuilderHeader from '~/components/elements/ResumeBuilderHeader.vue';
     import PersonalInfoForm from '~/components/forms/PersonalInfoForm.vue';
@@ -97,6 +97,36 @@
 
     // Mobile preview modal state
     const showMobilePreview = ref(false);
+    
+    // Zoom state for mobile preview
+    const zoomLevel = ref(1);
+    const minZoom = 0.5;
+    const maxZoom = 2.5;
+    const zoomStep = 0.25;
+    
+    // Zoom control functions
+    const zoomIn = () => {
+        if (zoomLevel.value < maxZoom) {
+            zoomLevel.value = Math.min(zoomLevel.value + zoomStep, maxZoom);
+        }
+    };
+    
+    const zoomOut = () => {
+        if (zoomLevel.value > minZoom) {
+            zoomLevel.value = Math.max(zoomLevel.value - zoomStep, minZoom);
+        }
+    };
+    
+    const resetZoom = () => {
+        zoomLevel.value = 1;
+    };
+    
+    // Reset zoom when closing modal
+    watch(showMobilePreview, (newValue) => {
+        if (!newValue) {
+            resetZoom();
+        }
+    });
 </script>
 
 <template>
@@ -177,33 +207,69 @@
                     class="lg:hidden fixed inset-0 z-50 overflow-y-auto bg-black bg-opacity-50"
                 >
                     <div class="flex items-center justify-center min-h-screen p-4">
-                        <div class="bg-white rounded-lg max-w-full w-full max-h-[90vh] overflow-y-auto">
+                        <div class="bg-white rounded-lg max-w-full w-full max-h-[90vh] flex flex-col">
                             <div class="p-4 border-b border-gray-200 flex justify-between items-center">
                                 <h3 class="text-lg font-medium">
                                     Resume Preview
                                 </h3>
-                                <button
-                                    class="text-gray-400 hover:text-gray-600"
-                                    @click="showMobilePreview = false"
-                                >
-                                    <span class="sr-only">Close</span>
-                                    <svg
-                                        class="h-6 w-6"
-                                        fill="none"
-                                        stroke="currentColor"
-                                        viewBox="0 0 24 24"
+                                
+                                <!-- Zoom Controls -->
+                                <div class="flex items-center gap-2">
+                                    <div class="flex items-center bg-gray-100 rounded-lg p-1">
+                                        <Button
+                                            size="sm"
+                                            variant="ghost"
+                                            class="h-8 w-8 p-0"
+                                            :disabled="zoomLevel <= minZoom"
+                                            @click="zoomOut"
+                                        >
+                                            <ZoomOut class="h-4 w-4" />
+                                            <span class="sr-only">Zoom out</span>
+                                        </Button>
+                                        
+                                        <span class="px-3 text-sm font-medium text-gray-700 min-w-[60px] text-center">
+                                            {{ Math.round(zoomLevel * 100) }}%
+                                        </span>
+                                        
+                                        <Button
+                                            size="sm"
+                                            variant="ghost"
+                                            class="h-8 w-8 p-0"
+                                            :disabled="zoomLevel >= maxZoom"
+                                            @click="zoomIn"
+                                        >
+                                            <ZoomIn class="h-4 w-4" />
+                                            <span class="sr-only">Zoom in</span>
+                                        </Button>
+                                    </div>
+                                    
+                                    <button
+                                        class="text-gray-400 hover:text-gray-600 p-2"
+                                        @click="showMobilePreview = false"
                                     >
-                                        <path
-                                            d="M6 18L18 6M6 6l12 12"
-                                            stroke-linecap="round"
-                                            stroke-linejoin="round"
-                                            stroke-width="2"
-                                        />
-                                    </svg>
-                                </button>
+                                        <span class="sr-only">Close</span>
+                                        <svg
+                                            class="h-6 w-6"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            viewBox="0 0 24 24"
+                                        >
+                                            <path
+                                                d="M6 18L18 6M6 6l12 12"
+                                                stroke-linecap="round"
+                                                stroke-linejoin="round"
+                                                stroke-width="2"
+                                            />
+                                        </svg>
+                                    </button>
+                                </div>
                             </div>
-                            <div class="p-4">
-                                <ResumePreview/>
+                            
+                            <!-- Scrollable content container -->
+                            <div class="overflow-auto flex-1 p-4">
+                                <div class="mobile-preview-wrapper">
+                                    <ResumePreview/>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -212,3 +278,27 @@
         </div>
     </ClientOnly>
 </template>
+
+<style scoped>
+/* Mobile preview zoom styles */
+.mobile-preview-wrapper :deep(.resume-preview-wrapper svg) {
+    transform: scale(v-bind(zoomLevel));
+    transform-origin: top left;
+    transition: transform 0.2s ease-in-out;
+    margin: 0;
+    display: block;
+}
+
+/* When zoomed in, adjust the wrapper to allow horizontal scrolling */
+.mobile-preview-wrapper :deep(.resume-preview-wrapper) {
+    width: max-content;
+    margin: 0;
+}
+
+/* Ensure preview container has proper dimensions */
+.mobile-preview-wrapper :deep(.preview-container) {
+    display: flex;
+    justify-content: flex-start;
+    width: 100%;
+}
+</style>

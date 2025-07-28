@@ -4,7 +4,8 @@
             <!-- Preview Controls -->
             <div class="flex justify-between items-center mb-8">
                 <h2 class="text-xl font-semibold">
-                    Preview
+                    <span class="hidden md:inline">Preview</span>
+                    <span class="md:hidden text-base">{{ activeResume?.name }}</span>
                 </h2>
 
                 <!-- Desktop Controls -->
@@ -284,7 +285,7 @@
     const resumeStore = useResumeStore();
 
     // Reactive store data
-    const {resumeData} = storeToRefs(resumeStore);
+    const {resumeData, activeResume} = storeToRefs(resumeStore);
     const {selectedFont, selectedTemplate, fontSize} = storeToRefs(settingsStore);
 
     // State for preview
