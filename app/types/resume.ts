@@ -200,9 +200,9 @@ export const defaultAppSettings: AppSettings = {
 };
 
 export const availableFonts = [
-    { name: 'Calibri', family: 'Calibri' },
-    { name: 'Geist', family: 'Geist' },
-    { name: 'Roboto', family: 'Roboto' },
+    {name: 'Calibri', family: 'Calibri'},
+    {name: 'Geist', family: 'Geist'},
+    {name: 'Roboto', family: 'Roboto'},
 ];
 
 export const availableTemplates = [

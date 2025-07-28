@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { Edit, FileText, Github, HelpCircle, Mail } from 'lucide-vue-next';
+    import {Edit, FileText, Github, HelpCircle, Mail} from 'lucide-vue-next';
 </script>
 
 <template>
@@ -22,7 +22,7 @@ import { Edit, FileText, Github, HelpCircle, Mail } from 'lucide-vue-next';
                                 class="flex items-center space-x-1 md:space-x-2 text-gray-600 hover:text-gray-900 transition-colors"
                                 to="/resumes"
                             >
-                                <FileText class="w-4 h-4" />
+                                <FileText class="w-4 h-4"/>
                                 <span class="hidden sm:inline text-sm font-medium">Your Resumes</span>
                             </NuxtLink>
 
@@ -30,7 +30,7 @@ import { Edit, FileText, Github, HelpCircle, Mail } from 'lucide-vue-next';
                                 class="flex items-center space-x-1 md:space-x-2 text-gray-600 hover:text-gray-900 transition-colors"
                                 to="/builder"
                             >
-                                <Edit class="w-4 h-4" />
+                                <Edit class="w-4 h-4"/>
                                 <span class="hidden sm:inline text-sm font-medium">Builder</span>
                             </NuxtLink>
                         </div>
@@ -41,7 +41,7 @@ import { Edit, FileText, Github, HelpCircle, Mail } from 'lucide-vue-next';
                             class="flex items-center space-x-1 md:space-x-2 text-gray-600 hover:text-gray-900 transition-colors"
                             to="/contact"
                         >
-                            <Mail class="w-4 h-4" />
+                            <Mail class="w-4 h-4"/>
                             <span class="hidden sm:inline text-sm font-medium">Contact</span>
                         </NuxtLink>
 
@@ -50,7 +50,7 @@ import { Edit, FileText, Github, HelpCircle, Mail } from 'lucide-vue-next';
                             target="_blank"
                             to="/qa"
                         >
-                            <HelpCircle class="w-4 h-4" />
+                            <HelpCircle class="w-4 h-4"/>
                             <span class="hidden sm:inline text-sm font-medium">Q&A</span>
                         </NuxtLink>
 
@@ -60,7 +60,7 @@ import { Edit, FileText, Github, HelpCircle, Mail } from 'lucide-vue-next';
                             rel="noopener noreferrer"
                             target="_blank"
                         >
-                            <Github class="w-4 h-4" />
+                            <Github class="w-4 h-4"/>
                             <span class="hidden sm:inline text-sm font-medium">GitHub</span>
                         </a>
                     </div>
@@ -70,7 +70,7 @@ import { Edit, FileText, Github, HelpCircle, Mail } from 'lucide-vue-next';
 
         <!-- Page Content -->
         <main class="flex-1">
-            <slot />
+            <slot/>
         </main>
 
         <!-- Footer -->
@@ -82,12 +82,12 @@ import { Edit, FileText, Github, HelpCircle, Mail } from 'lucide-vue-next';
                 <div class="text-center space-y-3">
                     <p class="text-sm text-gray-600">
                         Built by <a
-                            class="font-medium text-gray-900 hover:text-blue-600 transition-colors"
-                            href="https://konsowa.com"
-                            rel="noopener noreferrer"
-                            target="_blank"
-                        >Ibrahim
-                            Konsowa</a>
+                        class="font-medium text-gray-900 hover:text-blue-600 transition-colors"
+                        href="https://konsowa.com"
+                        rel="noopener noreferrer"
+                        target="_blank"
+                    >Ibrahim
+                        Konsowa</a>
                     </p>
                     <div class="flex items-center justify-center space-x-2 text-xs text-gray-500">
                         <span>Powered by</span>

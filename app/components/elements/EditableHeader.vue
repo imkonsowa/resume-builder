@@ -16,13 +16,13 @@
                 class="p-1 text-green-600 hover:text-green-700"
                 @click="saveHeader"
             >
-                <Check class="w-4 h-4" />
+                <Check class="w-4 h-4"/>
             </button>
             <button
                 class="p-1 text-red-600 hover:text-red-700"
                 @click="cancelEdit"
             >
-                <X class="w-4 h-4" />
+                <X class="w-4 h-4"/>
             </button>
         </div>
         <div
@@ -38,47 +38,47 @@
                 variant="ghost"
                 @click="startEdit"
             >
-                <Edit2 class="w-4 h-4" />
+                <Edit2 class="w-4 h-4"/>
             </Button>
         </div>
     </div>
 </template>
 
 <script lang="ts" setup>
-import { nextTick, ref } from 'vue';
-import { Button } from '~/components/ui/button';
-import { Check, Edit2, X } from 'lucide-vue-next';
+    import {nextTick, ref} from 'vue';
+    import {Button} from '~/components/ui/button';
+    import {Check, Edit2, X} from 'lucide-vue-next';
 
-interface Props {
-    value: string;
-}
-
-type Emits = (e: 'update', value: string) => void;
-
-const props = defineProps<Props>();
-const emit = defineEmits<Emits>();
-
-const isEditing = ref(false);
-const localValue = ref(props.value);
-const inputRef = ref<HTMLInputElement>();
-
-const startEdit = async () => {
-    localValue.value = props.value;
-    isEditing.value = true;
-    await nextTick();
-    inputRef.value?.focus();
-    inputRef.value?.select();
-};
-
-const saveHeader = () => {
-    if (localValue.value.trim() && localValue.value !== props.value) {
-        emit('update', localValue.value.trim());
+    interface Props {
+        value: string;
     }
-    isEditing.value = false;
-};
 
-const cancelEdit = () => {
-    localValue.value = props.value;
-    isEditing.value = false;
-};
+    type Emits = (e: 'update', value: string) => void;
+
+    const props = defineProps<Props>();
+    const emit = defineEmits<Emits>();
+
+    const isEditing = ref(false);
+    const localValue = ref(props.value);
+    const inputRef = ref<HTMLInputElement>();
+
+    const startEdit = async () => {
+        localValue.value = props.value;
+        isEditing.value = true;
+        await nextTick();
+        inputRef.value?.focus();
+        inputRef.value?.select();
+    };
+
+    const saveHeader = () => {
+        if (localValue.value.trim() && localValue.value !== props.value) {
+            emit('update', localValue.value.trim());
+        }
+        isEditing.value = false;
+    };
+
+    const cancelEdit = () => {
+        localValue.value = props.value;
+        isEditing.value = false;
+    };
 </script>

@@ -1,7 +1,7 @@
 <script lang="ts" setup>
     import {Button} from '~/components/ui/button';
     import {Check, Download, FileText, Shield, Users, Zap} from 'lucide-vue-next';
-    import {createWebsiteStructuredData, createSoftwareApplicationStructuredData} from '~/composables/useSEO';
+    import {createSoftwareApplicationStructuredData, createWebsiteStructuredData} from '~/composables/useSEO';
 
     useHead({
         title: 'Free Resume Builder - No Registration Required | Privacy-First Resume Maker',

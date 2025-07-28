@@ -1,20 +1,10 @@
 import type {ResumeData, SectionOrder, TemplateLayoutConfig} from '~/types/resume';
+import type {TemplateSettings} from '~/types/templateConfig';
+import {COMPACT_LAYOUT_CONFIG} from '~/types/templateConfig';
 import {escapeTypstText} from '~/utils/stringUtils';
-import {
-    convertDateRange,
-    convertEmail,
-    convertExternalLinkIcon,
-    convertLink,
-    convertList,
-    renderTemplateDate,
-    renderTemplateDateWithLink,
-    renderTemplateHeader,
-    renderTemplateSubHeader,
-    HEADER_SPACING,
-    SECTION_SPACING,
-    ITEMS_SPACING,
-} from '~/utils/typstUtils';
+import {convertEmail, convertLink, SECTION_SPACING} from '~/utils/typstUtils';
 import {useSettingsStore} from '~/stores/settings';
+import {getSharedSectionRenderers} from '~/utils/sectionRenderers';
 
 export interface Template {
     id: string;
@@ -22,10 +12,6 @@ export interface Template {
     description: string;
     layoutConfig: TemplateLayoutConfig;
     parse: (data: ResumeData, font: string) => string;
-}
-
-export interface TemplateSettings {
-    font: string;
 }
 
 const renderHeaderLeftColumn = (data: ResumeData, fontSize: number): string[] => {
@@ -128,188 +114,21 @@ const convertResumeHeader = (data: ResumeData, fontSize: number) => {
     return headerParts.join('\n');
 };
 
-const renderEducationCompact = (data: ResumeData, fontSize: number) => {
-    if (!data?.education || data.education.length === 0) {
-        return '';
-    }
-
-    const educationItems = data.education.map((education) => {
-        const title = `${education.degree}${education.institution ? ' at ' + education.institution : ''}${education.location ? ', ' + education.location : ''}`;
-        const dateRange = convertDateRange(education.startDate, education.endDate, education.isPresent || false);
-
-        let content = `${renderTemplateSubHeader(title, fontSize)}\n${renderTemplateDate(dateRange, fontSize)}`;
-
-        if (education.graduationScore && education.graduationScore.trim()) {
-            content += `\n*Grade:* ${escapeTypstText(education.graduationScore)}`;
-        }
-
-        if (education.description && education.description.trim()) {
-            content += `\n\n${escapeTypstText(education.description)}`;
-        }
-
-        return content;
-    }).join('\n\n');
-
-    const headerText = data?.sectionHeaders?.education || 'Education';
-    return `#block(above: 0em, below: ${SECTION_SPACING})[
-${renderTemplateHeader(headerText, fontSize)}\n\n${educationItems}
-]`;
-};
-
-const renderEmploymentHistoryCompact = (data: ResumeData, fontSize: number) => {
-    if (!data?.experiences || data.experiences.length === 0) {
-        return '';
-    }
-
-    const experienceItems = data.experiences.map((experience) => {
-        const title = `${experience.position}${experience.company ? ' at ' + experience.company : ''}${experience.location ? ', ' + experience.location : ''}`;
-        const dateRange = convertDateRange(experience.startDate, experience.endDate, experience.isPresent);
-
-        const companyLink = experience.companyUrl && experience.companyUrl.trim()
-            ? convertExternalLinkIcon(experience.companyUrl)
-            : '';
-
-        const dateAndLinkSection = renderTemplateDateWithLink(dateRange, companyLink, fontSize);
-
-        const achievements = experience.achievements
-            .filter(achievement => achievement.text && achievement.text.trim() !== '')
-            .map(achievement => achievement.text);
-
-        return `${renderTemplateSubHeader(title, fontSize)}\n${dateAndLinkSection}\n${convertList(achievements)}`;
-    }).join('\n\n');
-
-    const headerText = data?.sectionHeaders?.experience || 'Employment Experience';
-    return `#block(above: 0em, below: ${SECTION_SPACING})[
-${renderTemplateHeader(headerText, fontSize)}\n\n${experienceItems}
-]`;
-};
-
-const renderSkillsCompact = (data: ResumeData, fontSize: number) => {
-    if (data?.skills && data.skills.length > 0) {
-        const skillItems = data.skills
-            .filter(skill => skill.title.trim() || skill.description.trim())
-            .map((skill) => {
-                if (!skill.title.trim()) return escapeTypstText(skill.description);
-                if (!skill.description.trim()) return `*${escapeTypstText(skill.title)}*`;
-                return `*${escapeTypstText(skill.title)}:* ${escapeTypstText(skill.description)}`;
-            })
-            .map(content => `#block(above: 0em, below: ${ITEMS_SPACING})[${content}]`)
-            .join('');
-
-        if (!skillItems) return '';
-
-        const headerText = data?.sectionHeaders?.skills || 'Skills';
-        return `#block(above: 0em, below: ${SECTION_SPACING})[
-${renderTemplateHeader(headerText, fontSize)}\n\n${skillItems}
-]`;
-    }
-
-    if (!data?.technicalSkills || data.technicalSkills.trim() === '') {
-        return '';
-    }
-
-    return `#block(above: 0em, below: ${SECTION_SPACING})[
-${renderTemplateHeader('Technical Skills', fontSize)}\n\n${escapeTypstText(data.technicalSkills)}
-]`;
-};
-
-const renderProjectsCompact = (data: ResumeData, fontSize: number) => {
-    if (!data?.projects || data.projects.length === 0) {
-        return '';
-    }
-
-    const projectItems = data.projects
-        .filter(project => project.title.trim() || project.description.trim())
-        .map((project) => {
-            let content = '';
-
-            if (project.title.trim()) {
-                content += `*${escapeTypstText(project.title)}*`;
-                if (project.url.trim()) {
-                    content += ` • ${convertExternalLinkIcon(project.url)}`;
-                }
-            }
-
-            if (project.description.trim()) {
-                if (content) content += '\n\n';
-                content += escapeTypstText(project.description);
-            }
-
-            return content;
-        })
-        .filter(content => content.trim())
-        .join('\n\n');
-
-    if (!projectItems) return '';
-
-    const headerText = data?.sectionHeaders?.projects || 'Projects';
-    return `#block(above: 0em, below: ${SECTION_SPACING})[
-${renderTemplateHeader(headerText, fontSize)}\n\n${projectItems}
-]`;
-};
-
-const renderVolunteeringCompact = (data: ResumeData, fontSize: number) => {
-    if (!data?.volunteering || data.volunteering.length === 0) {
-        return '';
-    }
-
-    const volunteeringItems = data.volunteering.map((volunteering) => {
-        const title = `${volunteering.position}${volunteering.organization ? ' at ' + volunteering.organization : ''}${volunteering.location ? ', ' + volunteering.location : ''}`;
-        const dateRange = convertDateRange(volunteering.startDate, volunteering.endDate, volunteering.isPresent);
-        const achievements = volunteering.achievements
-            .filter(achievement => achievement.text && achievement.text.trim() !== '')
-            .map(achievement => achievement.text);
-
-        return `${renderTemplateSubHeader(title, fontSize)}\n${renderTemplateDate(dateRange, fontSize)}\n${convertList(achievements)}`;
-    }).join('\n\n');
-
-    const headerText = data?.sectionHeaders?.volunteering || 'Volunteering';
-    return `#block(above: 0em, below: ${SECTION_SPACING})[
-${renderTemplateHeader(headerText, fontSize)}\n\n${volunteeringItems}
-]`;
-};
-
-const renderLanguagesCompact = (data: ResumeData, fontSize: number) => {
-    if (!data?.languages || data.languages.length === 0) {
-        return '';
-    }
-
-    const languageItems = data.languages
-        .filter(language => language.name.trim())
-        .map((language) => {
-            let content = `*${escapeTypstText(language.name)}*`;
-
-            if (language.proficiency.trim()) {
-                content += ` - ${escapeTypstText(language.proficiency)}`;
-            }
-
-            return content;
-        })
-        .filter(content => content.trim())
-        .map(content => `#block(above: 0em, below: ${ITEMS_SPACING})[${content}]`)
-        .join('');
-
-    if (!languageItems) return '';
-
-    const headerText = data?.sectionHeaders?.languages || 'Languages';
-    return `#block(above: 0em, below: ${SECTION_SPACING})[
-${renderTemplateHeader(headerText, fontSize)}\n\n${languageItems}
-]`;
-};
-
 const parse = (data: ResumeData, font: string): string => {
     const settings: TemplateSettings = {font};
     const settingsStore = useSettingsStore();
     const fontSize = settingsStore.fontSize;
 
+    const sharedRenderers = getSharedSectionRenderers();
+    const config = COMPACT_LAYOUT_CONFIG;
 
     const sectionRenderers: Record<string, () => string> = {
-        education: () => renderEducationCompact(data, fontSize),
-        experience: () => renderEmploymentHistoryCompact(data, fontSize),
-        skills: () => renderSkillsCompact(data, fontSize),
-        projects: () => renderProjectsCompact(data, fontSize),
-        volunteering: () => renderVolunteeringCompact(data, fontSize),
-        languages: () => renderLanguagesCompact(data, fontSize),
+        education: () => sharedRenderers.education(data, fontSize, config),
+        experience: () => sharedRenderers.experience(data, fontSize, config),
+        skills: () => sharedRenderers.skills(data, fontSize, config),
+        projects: () => sharedRenderers.projects(data, fontSize, config),
+        volunteering: () => sharedRenderers.volunteering(data, fontSize, config),
+        languages: () => sharedRenderers.languages(data, fontSize, config),
     };
 
     const sectionsToRender = Object.keys(sectionRenderers);
@@ -324,7 +143,7 @@ const parse = (data: ResumeData, font: string): string => {
         .map(section => sectionRenderers[section]())
         .filter(content => content.trim() !== '');
 
-    const sectionsContent = sections.join('');
+    const sectionsContent = sections.join('\n\n');
 
     const fullContent = `${convertResumeHeader(data, fontSize)}${sectionsContent ? `\n\n${sectionsContent}` : ''}`;
 

@@ -1,5 +1,5 @@
-import type { TypstLoaderState } from '~/utils/typstLoader';
-import { typstLoader } from '~/utils/typstLoader';
+import type {TypstLoaderState} from '~/utils/typstLoader';
+import {typstLoader} from '~/utils/typstLoader';
 
 export const useTypstLoader = () => {
     const state = ref<TypstLoaderState>(typstLoader.getState());
@@ -13,8 +13,7 @@ export const useTypstLoader = () => {
         try {
             initializationStarted.value = true;
             await typstLoader.initialize();
-        }
-        catch (error) {
+        } catch (error) {
             console.error('Failed to initialize Typst:', error);
         }
     };

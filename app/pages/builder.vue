@@ -98,30 +98,30 @@
 
     // Mobile preview modal state
     const showMobilePreview = ref(false);
-    
+
     // Zoom state for mobile preview
     const zoomLevel = ref(1);
     const minZoom = 0.5;
     const maxZoom = 2.5;
     const zoomStep = 0.25;
-    
+
     // Zoom control functions
     const zoomIn = () => {
         if (zoomLevel.value < maxZoom) {
             zoomLevel.value = Math.min(zoomLevel.value + zoomStep, maxZoom);
         }
     };
-    
+
     const zoomOut = () => {
         if (zoomLevel.value > minZoom) {
             zoomLevel.value = Math.max(zoomLevel.value - zoomStep, minZoom);
         }
     };
-    
+
     const resetZoom = () => {
         zoomLevel.value = 1;
     };
-    
+
     // Reset zoom when closing modal
     watch(showMobilePreview, (newValue) => {
         if (!newValue) {
@@ -213,18 +213,18 @@
                                 <h3 class="text-lg font-medium">
                                     Resume Preview
                                 </h3>
-                                
+
                                 <!-- Zoom Controls -->
                                 <div class="flex items-center gap-2">
                                     <ZoomControls
-                                        :zoom-level="zoomLevel"
-                                        :min-zoom="minZoom"
                                         :max-zoom="maxZoom"
+                                        :min-zoom="minZoom"
+                                        :zoom-level="zoomLevel"
                                         :zoom-step="zoomStep"
                                         @zoom-in="zoomIn"
                                         @zoom-out="zoomOut"
                                     />
-                                    
+
                                     <button
                                         class="text-gray-400 hover:text-gray-600 p-2"
                                         @click="showMobilePreview = false"
@@ -246,7 +246,7 @@
                                     </button>
                                 </div>
                             </div>
-                            
+
                             <!-- Scrollable content container -->
                             <div class="overflow-auto flex-1 p-4">
                                 <div class="mobile-preview-wrapper">
@@ -262,25 +262,25 @@
 </template>
 
 <style scoped>
-/* Mobile preview zoom styles */
-.mobile-preview-wrapper :deep(.resume-preview-wrapper svg) {
-    transform: scale(v-bind(zoomLevel));
-    transform-origin: top left;
-    transition: transform 0.2s ease-in-out;
-    margin: 0;
-    display: block;
-}
+    /* Mobile preview zoom styles */
+    .mobile-preview-wrapper :deep(.resume-preview-wrapper svg) {
+        transform: scale(v-bind(zoomLevel));
+        transform-origin: top left;
+        transition: transform 0.2s ease-in-out;
+        margin: 0;
+        display: block;
+    }
 
-/* When zoomed in, adjust the wrapper to allow horizontal scrolling */
-.mobile-preview-wrapper :deep(.resume-preview-wrapper) {
-    width: max-content;
-    margin: 0;
-}
+    /* When zoomed in, adjust the wrapper to allow horizontal scrolling */
+    .mobile-preview-wrapper :deep(.resume-preview-wrapper) {
+        width: max-content;
+        margin: 0;
+    }
 
-/* Ensure preview container has proper dimensions */
-.mobile-preview-wrapper :deep(.preview-container) {
-    display: flex;
-    justify-content: flex-start;
-    width: 100%;
-}
+    /* Ensure preview container has proper dimensions */
+    .mobile-preview-wrapper :deep(.preview-container) {
+        display: flex;
+        justify-content: flex-start;
+        width: 100%;
+    }
 </style>

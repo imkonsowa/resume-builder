@@ -13,9 +13,9 @@
                     <!-- Zoom Controls for mid-size screens -->
                     <div class="zoom-controls-midscreen">
                         <ZoomControls
-                            :zoom-level="zoomLevel"
-                            :min-zoom="minZoom"
                             :max-zoom="maxZoom"
+                            :min-zoom="minZoom"
+                            :zoom-level="zoomLevel"
                             :zoom-step="zoomStep"
                             @zoom-in="handleZoomIn"
                             @zoom-out="handleZoomOut"
@@ -27,11 +27,13 @@
                         <Popover v-model:open="showTemplateMenu">
                             <PopoverTrigger as-child>
                                 <Button
+                                    class="h-9"
                                     size="sm"
                                     variant="outline"
-                                    class="h-9"
                                 >
-                                    <span>{{ (availableTemplates?.find(t => t.id === selectedTemplate).name || 'Default') }} Template</span>
+                                    <span>{{
+                                            (availableTemplates?.find(t => t.id === selectedTemplate).name || 'Default')
+                                        }} Template</span>
                                     <ChevronDown class="w-4 h-4 ml-2"/>
                                 </Button>
                             </PopoverTrigger>
@@ -60,9 +62,9 @@
 
                     <!-- Settings Button -->
                     <Button
+                        class="h-9"
                         size="sm"
                         variant="outline"
-                        class="h-9"
                         @click="showSettingsModal = true"
                     >
                         <SlidersHorizontal class="w-4 h-4 mr-2"/>
@@ -112,9 +114,9 @@
                 <!-- Mobile Controls Button -->
                 <div class="md:hidden flex space-x-2">
                     <Button
+                        class="h-9"
                         size="sm"
                         variant="outline"
-                        class="h-9"
                         @click="showSettingsModal = true"
                     >
                         <Settings class="w-4 h-4"/>
@@ -470,27 +472,27 @@
     /* ==================================
        Base Styles (Mobile First)
        ================================== */
-    
+
     /* Common styles for all screen sizes */
     .resume-preview-wrapper :deep(svg) + :deep(svg) {
         margin-top: 16px; /* Space between pages */
     }
-    
+
     .preview-container {
         min-width: 100%;
         display: flex;
         justify-content: flex-start;
     }
-    
+
     /* Default visibility states */
     .zoom-controls-midscreen {
         display: none;
     }
-    
+
     .template-selection-desktop {
         display: none !important;
     }
-    
+
     /* ==================================
        Mobile: < 1024px
        ================================== */
@@ -513,7 +515,7 @@
             min-width: auto;
         }
     }
-    
+
     /* ==================================
        Small Desktop: 900px - 1024px
        ================================== */
@@ -522,7 +524,7 @@
             display: none;
         }
     }
-    
+
     /* ==================================
        Desktop: >= 1024px
        ================================== */
@@ -531,7 +533,7 @@
             justify-content: center;
         }
     }
-    
+
     /* ==================================
        Medium Desktop: 1024px - 1600px
        ================================== */
@@ -561,18 +563,18 @@
         .preview-container {
             justify-content: flex-start;
         }
-        
+
         /* Show zoom controls */
         .zoom-controls-midscreen {
             display: flex;
         }
-        
+
         /* Hide download text */
         .download-text {
             display: none;
         }
     }
-    
+
     /* ==================================
        Large Desktop: > 1600px
        ================================== */
@@ -594,7 +596,7 @@
             min-width: 810px; /* SVG width + padding */
             padding: 8px;
         }
-        
+
         /* Show template selection */
         .template-selection-desktop {
             display: block !important;

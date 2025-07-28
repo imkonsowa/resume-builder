@@ -1,4 +1,4 @@
-import { escapeTypstText } from './stringUtils';
+import {escapeTypstText} from './stringUtils';
 
 // Spacing constants
 export const HEADER_SPACING = '1em';
@@ -60,8 +60,7 @@ export const convertDateRange = (startDate: string, endDate?: string, isPresent?
 
     if (isPresent) {
         dateText += ' - Present';
-    }
-    else if (endDate) {
+    } else if (endDate) {
         const formattedEndDate = formatDateToMonthYear(endDate);
         dateText += ` - ${formattedEndDate}`;
     }
@@ -109,16 +108,16 @@ export const renderTemplateHeader = (text: string, fontSize: number): string => 
 };
 
 export const renderTemplateSubHeader = (text: string, fontSize: number): string => {
-    return `#block(below: 0em)[#text("${escapeTypstText(text)}", size: ${fontSize}pt, weight: "bold")]`;
+    return `#block(below: 0.6em)[#text("${escapeTypstText(text)}", size: ${fontSize}pt, weight: "bold")]`;
 };
 
 export const renderTemplateDate = (dateText: string, fontSize: number): string => {
-    return `#block(above: 0.6em, below: 0.6em)[#text(size: ${fontSize - 2}pt)[${dateText}]]`;
+    return `#block(above: 0em, below: 0.6em)[#text(size: ${fontSize - 2}pt)[${dateText}]]`;
 };
 
 export const renderTemplateDateWithLink = (dateRange: string, link: string | null, fontSize: number): string => {
     if (link) {
-        return `#block(above: 0.6em, below: 0.6em)[#text(size: ${fontSize - 2}pt)[${dateRange} • ${link}]]`;
+        return `#block(above: 0em, below: 0.6em)[#text(size: ${fontSize - 2}pt)[${dateRange} • ${link}]]`;
     }
     return renderTemplateDate(dateRange, fontSize);
 };
