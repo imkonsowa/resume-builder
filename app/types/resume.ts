@@ -196,7 +196,7 @@ export const defaultAppSettings: AppSettings = {
     showDownloadMenu: false,
     showFontMenu: false,
     showTemplateMenu: false,
-    fontSize: 14,
+    fontSize: 12,
 };
 
 export const availableFonts = [
