@@ -51,7 +51,7 @@
                         @update:model-value="updateFont"
                     >
                         <SelectTrigger id="font-family">
-                            <SelectValue placeholder="Select a font"/>
+                            <SelectValue placeholder="Select a font" />
                         </SelectTrigger>
                         <SelectContent>
                             <SelectItem
@@ -105,87 +105,87 @@
 </template>
 
 <script lang="ts" setup>
-    import {computed, ref, watch} from 'vue';
-    import {
-        Dialog,
-        DialogContent,
-        DialogDescription,
-        DialogFooter,
-        DialogHeader,
-        DialogTitle,
-    } from '~/components/ui/dialog';
-    import {Button} from '~/components/ui/button';
-    import {Label} from '~/components/ui/label';
-    import {Slider} from '~/components/ui/slider';
-    import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '~/components/ui/select';
-    import {useSettingsStore} from '~/stores/settings';
-    import {availableFonts, availableTemplates} from '~/types/resume';
+import { computed, ref, watch } from 'vue';
+import {
+    Dialog,
+    DialogContent,
+    DialogDescription,
+    DialogFooter,
+    DialogHeader,
+    DialogTitle,
+} from '~/components/ui/dialog';
+import { Button } from '~/components/ui/button';
+import { Label } from '~/components/ui/label';
+import { Slider } from '~/components/ui/slider';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '~/components/ui/select';
+import { useSettingsStore } from '~/stores/settings';
+import { availableFonts, availableTemplates } from '~/types/resume';
 
-    // Props
-    const props = defineProps<{
-        modelValue: boolean;
-    }>();
+// Props
+const props = defineProps<{
+    modelValue: boolean;
+}>();
 
-    // Emits
-    const emit = defineEmits<{
-        'update:modelValue': [value: boolean];
-    }>();
+// Emits
+const emit = defineEmits<{
+    'update:modelValue': [value: boolean];
+}>();
 
-    // Store
-    const settingsStore = useSettingsStore();
+// Store
+const settingsStore = useSettingsStore();
 
-    // Local state
-    const fontSize = ref([settingsStore.fontSize]);
-    const selectedFont = ref(settingsStore.selectedFont);
-    const selectedTemplate = ref(settingsStore.selectedTemplate);
+// Local state
+const fontSize = ref([settingsStore.fontSize]);
+const selectedFont = ref(settingsStore.selectedFont);
+const selectedTemplate = ref(settingsStore.selectedTemplate);
 
-    // Computed
-    const isOpen = computed({
-        get: () => props.modelValue,
-        set: value => emit('update:modelValue', value),
-    });
+// Computed
+const isOpen = computed({
+    get: () => props.modelValue,
+    set: value => emit('update:modelValue', value),
+});
 
-    const selectedTemplateName = computed(() => {
-        const template = availableTemplates.find(t => t.id === selectedTemplate.value);
-        return template ? template.name : '';
-    });
+const selectedTemplateName = computed(() => {
+    const template = availableTemplates.find(t => t.id === selectedTemplate.value);
+    return template ? template.name : '';
+});
 
-    // Watch for external changes
-    watch(() => settingsStore.fontSize, (newSize) => {
-        fontSize.value = [newSize];
-    });
+// Watch for external changes
+watch(() => settingsStore.fontSize, (newSize) => {
+    fontSize.value = [newSize];
+});
 
-    watch(() => settingsStore.selectedFont, (newFont) => {
-        selectedFont.value = newFont;
-    });
+watch(() => settingsStore.selectedFont, (newFont) => {
+    selectedFont.value = newFont;
+});
 
-    watch(() => settingsStore.selectedTemplate, (newTemplate) => {
-        selectedTemplate.value = newTemplate;
-    });
+watch(() => settingsStore.selectedTemplate, (newTemplate) => {
+    selectedTemplate.value = newTemplate;
+});
 
-    // Methods
-    const updateFontSize = (value: number[]) => {
-        settingsStore.setFontSize(value[0]);
-    };
+// Methods
+const updateFontSize = (value: number[]) => {
+    settingsStore.setFontSize(value[0]);
+};
 
-    const updateFont = (value: string) => {
-        settingsStore.setSelectedFont(value);
-    };
+const updateFont = (value: string) => {
+    settingsStore.setSelectedFont(value);
+};
 
-    const updateTemplate = (value: string) => {
-        settingsStore.setSelectedTemplate(value);
-    };
+const updateTemplate = (value: string) => {
+    settingsStore.setSelectedTemplate(value);
+};
 
-    const resetToDefaults = () => {
-        fontSize.value = [14];
-        selectedFont.value = 'Calibri';
-        selectedTemplate.value = 'default';
-        settingsStore.setFontSize(14);
-        settingsStore.setSelectedFont('Calibri');
-        settingsStore.setSelectedTemplate('default');
-    };
+const resetToDefaults = () => {
+    fontSize.value = [14];
+    selectedFont.value = 'Calibri';
+    selectedTemplate.value = 'default';
+    settingsStore.setFontSize(14);
+    settingsStore.setSelectedFont('Calibri');
+    settingsStore.setSelectedTemplate('default');
+};
 
-    const close = () => {
-        isOpen.value = false;
-    };
+const close = () => {
+    isOpen.value = false;
+};
 </script>

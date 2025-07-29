@@ -17,7 +17,7 @@
                         v-if="$slots['header-actions']"
                         class="ml-4"
                     >
-                        <slot name="header-actions"/>
+                        <slot name="header-actions" />
                     </div>
                     <Button
                         v-if="props.collapsible"
@@ -26,7 +26,8 @@
                         @click="toggleCollapse"
                     >
                         <ChevronDown
-                            :class="['w-4 h-4 transition-transform duration-200', isCollapsed ? '-rotate-90' : 'rotate-0']"
+                            class="w-4 h-4 transition-transform duration-200"
+                            :class="[isCollapsed ? '-rotate-90' : 'rotate-0']"
                         />
                     </Button>
                 </div>
@@ -44,7 +45,7 @@
             </div>
 
             <div v-else>
-                <slot/>
+                <slot />
             </div>
 
             <!-- Add Button at Bottom -->
@@ -62,45 +63,45 @@
 </template>
 
 <script lang="ts" setup>
-    import {Card, CardContent, CardHeader, CardTitle} from '~/components/ui/card';
-    import {Button} from '~/components/ui/button';
-    import {ChevronDown} from 'lucide-vue-next';
-    import AddButton from '~/components/elements/AddButton.vue';
-    import EditableHeader from '~/components/elements/EditableHeader.vue';
+import { Card, CardContent, CardHeader, CardTitle } from '~/components/ui/card';
+import { Button } from '~/components/ui/button';
+import { ChevronDown } from 'lucide-vue-next';
+import AddButton from '~/components/elements/AddButton.vue';
+import EditableHeader from '~/components/elements/EditableHeader.vue';
 
-    interface Props {
-        title: string;
-        isEmpty: boolean;
-        emptyMessage: string;
-        addButtonLabel: string;
-        showAddButton?: boolean;
-        editable?: boolean;
-        sectionKey?: string;
-        collapsible?: boolean;
+interface Props {
+    title: string;
+    isEmpty: boolean;
+    emptyMessage: string;
+    addButtonLabel: string;
+    showAddButton?: boolean;
+    editable?: boolean;
+    sectionKey?: string;
+    collapsible?: boolean;
+}
+
+const props = withDefaults(defineProps<Props>(), {
+    showAddButton: true,
+    editable: true,
+    collapsible: true,
+});
+
+const _emit = defineEmits<{
+    'add': [];
+    'edit-title': [value: string];
+}>();
+
+const settingsStore = useSettingsStore();
+
+// Collapse state management
+const isCollapsed = computed(() => {
+    if (!props.collapsible || !props.sectionKey) return false;
+    return settingsStore.sectionCollapsed[props.sectionKey] || false;
+});
+
+const toggleCollapse = () => {
+    if (props.collapsible && props.sectionKey) {
+        settingsStore.toggleSectionCollapse(props.sectionKey);
     }
-
-    const props = withDefaults(defineProps<Props>(), {
-        showAddButton: true,
-        editable: true,
-        collapsible: true,
-    });
-
-    const _emit = defineEmits<{
-        'add': [];
-        'edit-title': [value: string];
-    }>();
-
-    const settingsStore = useSettingsStore();
-
-    // Collapse state management
-    const isCollapsed = computed(() => {
-        if (!props.collapsible || !props.sectionKey) return false;
-        return settingsStore.sectionCollapsed[props.sectionKey] || false;
-    });
-
-    const toggleCollapse = () => {
-        if (props.collapsible && props.sectionKey) {
-            settingsStore.toggleSectionCollapse(props.sectionKey);
-        }
-    };
+};
 </script>

@@ -1,4 +1,4 @@
-import type {SectionContent, TemplateLayoutConfig} from '~/types/templateConfig';
+import type { SectionContent, TemplateLayoutConfig } from '~/types/templateConfig';
 import {
     convertList,
     ITEMS_SPACING,
@@ -117,7 +117,7 @@ export const formatEducationItems = (
 export const formatProjectsItems = (
     sectionContent: SectionContent[],
     config: TemplateLayoutConfig,
-    fontSize: number,
+    _fontSize: number,
 ): string => {
     const formattedItems = sectionContent.map((item) => {
         let content = '';
@@ -139,6 +139,37 @@ export const formatProjectsItems = (
             .map(content => `#block(above: 0em, below: ${config.projects.itemSpacing})[${content}]`)
             .join('');
     }
+
+    return formattedItems.join(config.sections.joinSeparator);
+};
+
+/**
+ * Format certificates items
+ */
+export const formatCertificatesItems = (
+    sectionContent: SectionContent[],
+    config: TemplateLayoutConfig,
+    _fontSize: number,
+): string => {
+    const formattedItems = sectionContent.map((item) => {
+        let content = '';
+
+        if (item.title) {
+            content += item.title;
+        }
+
+        if (item.date) {
+            const spacing = content ? ' ' : '';
+            content += `${spacing}${item.date}`;
+        }
+
+        if (item.content) {
+            const spacing = content ? `\n${ITEMS_SPACING}` : '';
+            content += `${spacing}${item.content}`;
+        }
+
+        return content;
+    }).filter(content => content.trim() !== '');
 
     return formattedItems.join(config.sections.joinSeparator);
 };

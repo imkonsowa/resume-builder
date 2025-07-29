@@ -1,10 +1,10 @@
-import {defineStore} from 'pinia';
-import type {AppSettings} from '~/types/resume';
-import {defaultAppSettings} from '~/types/resume';
+import { defineStore } from 'pinia';
+import type { AppSettings } from '~/types/resume';
+import { defaultAppSettings } from '~/types/resume';
 
 export const useSettingsStore = defineStore('settings', {
     state: () => ({
-        settings: {...defaultAppSettings} as AppSettings,
+        settings: { ...defaultAppSettings } as AppSettings,
     }),
 
     persist: true,
@@ -60,11 +60,11 @@ export const useSettingsStore = defineStore('settings', {
         },
 
         resetSettings() {
-            this.settings = {...defaultAppSettings};
+            this.settings = { ...defaultAppSettings };
         },
 
         updateSettings(newSettings: Partial<AppSettings>) {
-            this.settings = {...this.settings, ...newSettings};
+            this.settings = { ...this.settings, ...newSettings };
         },
 
         toggleSectionCollapse(sectionKey: string) {
@@ -83,14 +83,14 @@ export const useSettingsStore = defineStore('settings', {
 
         collapseAllSections() {
             const sections = ['personal', 'experience', 'education', 'skills', 'volunteering', 'projects', 'languages'];
-            sections.forEach(section => {
+            sections.forEach((section) => {
                 this.setSectionCollapsed(section, true);
             });
         },
 
         expandAllSections() {
             const sections = ['personal', 'experience', 'education', 'skills', 'volunteering', 'projects', 'languages'];
-            sections.forEach(section => {
+            sections.forEach((section) => {
                 this.setSectionCollapsed(section, false);
             });
         },

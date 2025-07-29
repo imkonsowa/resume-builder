@@ -1,5 +1,5 @@
-import {$typst} from '@myriaddreamin/typst.ts';
-import {preloadRemoteFonts} from '@myriaddreamin/typst.ts/dist/esm/options.init.mjs';
+import { $typst } from '@myriaddreamin/typst.ts';
+import { preloadRemoteFonts } from '@myriaddreamin/typst.ts/dist/esm/options.init.mjs';
 
 export interface TypstLoaderState {
     isLoading: boolean;
@@ -28,13 +28,13 @@ class TypstLoader {
     }
 
     getState(): TypstLoaderState {
-        return {...this.state};
+        return { ...this.state };
     }
 
     subscribe(listener: (state: TypstLoaderState) => void): () => void {
         this.listeners.add(listener);
 
-        setTimeout(() => listener({...this.state}), 0);
+        setTimeout(() => listener({ ...this.state }), 0);
 
         return () => {
             this.listeners.delete(listener);
@@ -54,7 +54,7 @@ class TypstLoader {
             return this.initPromise || Promise.resolve();
         }
 
-        this.setState({isLoading: true, error: null});
+        this.setState({ isLoading: true, error: null });
 
         this.initPromise = this.performInitialization();
 
@@ -69,7 +69,8 @@ class TypstLoader {
 
             // @ts-expect-error - Window object doesn't have $typst property in TypeScript definitions
             window.$typst = $typst;
-        } catch (error) {
+        }
+        catch (error) {
             const errorMessage = error instanceof Error ? error.message : 'Failed to initialize Typst';
             this.setState({
                 isLoading: false,
@@ -78,7 +79,8 @@ class TypstLoader {
                 hasInitialized: false,
             });
             throw error;
-        } finally {
+        }
+        finally {
             this.initPromise = null;
         }
     }
@@ -95,12 +97,12 @@ class TypstLoader {
     }
 
     async retry(): Promise<void> {
-        this.setState({hasInitialized: false, error: null});
+        this.setState({ hasInitialized: false, error: null });
         await this.initialize();
     }
 
     private setState(newState: Partial<TypstLoaderState>) {
-        this.state = {...this.state, ...newState};
+        this.state = { ...this.state, ...newState };
         this.notifyListeners();
     }
 
@@ -108,8 +110,9 @@ class TypstLoader {
         setTimeout(() => {
             this.listeners.forEach((listener) => {
                 try {
-                    listener({...this.state});
-                } catch (error) {
+                    listener({ ...this.state });
+                }
+                catch (error) {
                     console.error('Error in typst loader listener:', error);
                 }
             });
@@ -137,7 +140,7 @@ class TypstLoader {
                         '/fonts/calibri-bold.ttf',
                         '/fonts/geist-bold.ttf',
                         '/fonts/geist-regular.ttf',
-                    ], {assets: false}),
+                    ], { assets: false }),
                 ],
             });
 
@@ -153,7 +156,8 @@ class TypstLoader {
             });
 
             console.log('Typst initialized successfully');
-        } catch (error) {
+        }
+        catch (error) {
             console.error('Failed to initialize Typst:', error);
             throw error;
         }

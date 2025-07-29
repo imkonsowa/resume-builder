@@ -1,7 +1,7 @@
-import type {Education, Experience, Language, Project, ResumeData, SkillItem, Volunteering} from '~/types/resume';
-import type {SectionContent} from '~/types/templateConfig';
-import {convertDateRange, convertEmail, convertExternalLinkIcon, convertLink} from './typstUtils';
-import {escapeTypstText} from './stringUtils';
+import type { Certificate, Education, Experience, Language, Project, ResumeData, SkillItem, Volunteering } from '~/types/resume';
+import type { SectionContent } from '~/types/templateConfig';
+import { convertDateRange, convertEmail, convertExternalLinkIcon, convertLink } from './typstUtils';
+import { escapeTypstText } from './stringUtils';
 
 // Platform labels mapping (shared between templates)
 export const SOCIAL_PLATFORM_LABELS = {
@@ -113,9 +113,11 @@ export const generateSkillsContent = (skills: SkillItem[]): SectionContent[] => 
             let content = '';
             if (!skill.title.trim()) {
                 content = escapeTypstText(skill.description);
-            } else if (!skill.description.trim()) {
+            }
+            else if (!skill.description.trim()) {
                 content = `*${escapeTypstText(skill.title)}*`;
-            } else {
+            }
+            else {
                 content = `*${escapeTypstText(skill.title)}:* ${escapeTypstText(skill.description)}`;
             }
 
@@ -186,7 +188,8 @@ export const generateSocialLinksContent = (data: ResumeData): SectionContent[] =
         let linkText = '';
         if (link.platform === 'other' && link.customLabel) {
             linkText = link.customLabel;
-        } else {
+        }
+        else {
             linkText = SOCIAL_PLATFORM_LABELS[link.platform as keyof typeof SOCIAL_PLATFORM_LABELS] || link.platform;
         }
 
@@ -195,4 +198,31 @@ export const generateSocialLinksContent = (data: ResumeData): SectionContent[] =
             content: convertLink(link.url, linkText),
         };
     });
+};
+
+/**
+ * Generate certificates content (shared between templates)
+ */
+export const generateCertificatesContent = (certificates: Certificate[]): SectionContent[] => {
+    return certificates
+        .filter(cert => cert.title.trim() || cert.issuer.trim())
+        .map((cert) => {
+            let title = '';
+            if (cert.title.trim()) {
+                title = `#block(below: 0.6em)[#text("${escapeTypstText(cert.title)}", weight: "bold")`;
+                if (cert.url?.trim()) {
+                    title += ` • ${convertExternalLinkIcon(cert.url)}`;
+                }
+                title += `]`;
+            }
+
+            const content = cert.issuer.trim() ? escapeTypstText(cert.issuer) : undefined;
+            const date = cert.date ? convertDateRange(cert.date) : undefined;
+
+            return {
+                title,
+                date,
+                content,
+            };
+        });
 };

@@ -97,20 +97,20 @@
 </template>
 
 <script lang="ts" setup>
-    import {computed} from 'vue';
-    import {Input} from '~/components/ui/input';
-    import {Label} from '~/components/ui/label';
-    import {Textarea} from '~/components/ui/textarea';
-    import FormContainer from '~/components/elements/FormContainer.vue';
-    import FormCard from '~/components/elements/FormCard.vue';
-    import ConfirmationModal from '~/components/elements/ConfirmationModal.vue';
-    import EditableHeader from '~/components/elements/EditableHeader.vue';
+import { computed } from 'vue';
+import { Input } from '~/components/ui/input';
+import { Label } from '~/components/ui/label';
+import { Textarea } from '~/components/ui/textarea';
+import FormContainer from '~/components/elements/FormContainer.vue';
+import FormCard from '~/components/elements/FormCard.vue';
+import ConfirmationModal from '~/components/elements/ConfirmationModal.vue';
+import EditableHeader from '~/components/elements/EditableHeader.vue';
 
-    const resumeStore = useResumeStore();
-    const confirmation = useConfirmation();
-    const templateConfig = useTemplate();
+const resumeStore = useResumeStore();
+const confirmation = useConfirmation();
+const templateConfig = useTemplate();
 
-    const sectionHeaderTitle = computed(() => {
-        return resumeStore.resumeData.sectionHeaders?.projects || 'Projects';
-    });
+const sectionHeaderTitle = computed(() => {
+    return resumeStore.resumeData.sectionHeaders?.projects || 'Projects';
+});
 </script>

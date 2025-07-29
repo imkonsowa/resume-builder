@@ -1,5 +1,5 @@
-import type {ResumeData} from './resume';
-import {HEADER_SPACING, ITEMS_SPACING} from '~/utils/typstUtils';
+import type { ResumeData } from './resume';
+import { HEADER_SPACING, ITEMS_SPACING } from '~/utils/typstUtils';
 
 export interface SectionContent {
     title: string;

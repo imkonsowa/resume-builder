@@ -1,4 +1,4 @@
-import {escapeTypstText} from './stringUtils';
+import { escapeTypstText } from './stringUtils';
 
 // Spacing constants
 export const HEADER_SPACING = '1em';
@@ -35,7 +35,7 @@ export const convertSubHeader = (title: string, size = '14pt'): string => {
     return `#block(below: 1em)[#text("${escapeTypstText(title)}", size: ${size}, weight: "bold")]`;
 };
 
-const formatDateToMonthYear = (date: string): string => {
+export const formatDateToMonthYear = (date: string): string => {
     if (!date) return '';
 
     const parts = date.split('-');
@@ -60,7 +60,8 @@ export const convertDateRange = (startDate: string, endDate?: string, isPresent?
 
     if (isPresent) {
         dateText += ' - Present';
-    } else if (endDate) {
+    }
+    else if (endDate) {
         const formattedEndDate = formatDateToMonthYear(endDate);
         dateText += ` - ${formattedEndDate}`;
     }

@@ -1,10 +1,10 @@
-import type {ResumeData, TemplateLayoutConfig} from '~/types/resume';
-import type {TemplateSettings} from '~/types/templateConfig';
-import {DEFAULT_LAYOUT_CONFIG} from '~/types/templateConfig';
-import {escapeTypstText} from '~/utils/stringUtils';
-import {convertGrid, SECTION_SPACING} from '~/utils/typstUtils';
-import {useSettingsStore} from '~/stores/settings';
-import {getSharedSectionRenderers} from '~/utils/sectionRenderers';
+import type { ResumeData, TemplateLayoutConfig } from '~/types/resume';
+import type { TemplateSettings } from '~/types/templateConfig';
+import { DEFAULT_LAYOUT_CONFIG } from '~/types/templateConfig';
+import { escapeTypstText } from '~/utils/stringUtils';
+import { convertGrid, SECTION_SPACING } from '~/utils/typstUtils';
+import { useSettingsStore } from '~/stores/settings';
+import { getSharedSectionRenderers } from '~/utils/sectionRenderers';
 
 export interface Template {
     id: string;
@@ -14,7 +14,7 @@ export interface Template {
     parse: (data: ResumeData, font: string) => string;
 }
 
-const convertResumeHeader = (data: ResumeData, fontSize: number, sharedRenderers: any, config: any) => {
+const convertResumeHeader = (data: ResumeData, fontSize: number, sharedRenderers: ReturnType<typeof getSharedSectionRenderers>, config: TemplateLayoutConfig) => {
     const fullName = `${escapeTypstText(data?.firstName || '')} ${escapeTypstText(data?.lastName || '')}`.trim();
     const position = escapeTypstText(data?.position || '');
 
@@ -29,7 +29,7 @@ ${profileSection}`;
 };
 
 const parse = (data: ResumeData, font: string): string => {
-    const settings: TemplateSettings = {font};
+    const settings: TemplateSettings = { font };
     const settingsStore = useSettingsStore();
     const fontSize = settingsStore.fontSize;
 
@@ -45,11 +45,12 @@ const parse = (data: ResumeData, font: string): string => {
         languages: () => sharedRenderers.languages(data, fontSize, config),
         technicalSkills: () => sharedRenderers.skills(data, fontSize, config),
         volunteering: () => sharedRenderers.volunteering(data, fontSize, config),
+        certificates: () => sharedRenderers.certificates(data, fontSize, config),
     };
 
     const fixedLeftSections = ['experiences', 'education'];
 
-    const movableSections = ['projects', 'languages', 'technicalSkills', 'volunteering'];
+    const movableSections = ['projects', 'languages', 'technicalSkills', 'volunteering', 'certificates'];
 
     const leftSections = [...fixedLeftSections];
     const rightSections = [];
@@ -59,14 +60,17 @@ const parse = (data: ResumeData, font: string): string => {
             const placement = data.sectionPlacement?.skills || 'right';
             if (placement === 'left') {
                 leftSections.push(section);
-            } else {
+            }
+            else {
                 rightSections.push(section);
             }
-        } else {
-            const placement = data.sectionPlacement?.[section as keyof typeof data.sectionPlacement] || 'right';
+        }
+        else {
+            const placement = data.sectionPlacement?.[section as keyof typeof data.sectionPlacement] || (section === 'certificates' ? 'right' : 'right');
             if (placement === 'left') {
                 leftSections.push(section);
-            } else {
+            }
+            else {
                 rightSections.push(section);
             }
         }
@@ -79,6 +83,7 @@ const parse = (data: ResumeData, font: string): string => {
         projects: data.sectionOrder?.projects || 4,
         languages: data.sectionOrder?.languages || 5,
         volunteering: data.sectionOrder?.volunteering || 6,
+        certificates: data.sectionOrder?.certificates || 7,
     };
 
     const rightSectionOrder = {
@@ -86,6 +91,7 @@ const parse = (data: ResumeData, font: string): string => {
         projects: data.sectionOrder?.projects || 2,
         languages: data.sectionOrder?.languages || 3,
         volunteering: data.sectionOrder?.volunteering || 4,
+        certificates: data.sectionOrder?.certificates || 5,
     };
 
     const leftContent = leftSections
@@ -128,7 +134,7 @@ export const defaultTemplate: Template = {
         isTwoColumn: true,
         leftColumnRatio: '7fr',
         rightColumnRatio: '3fr',
-        movableSections: ['skills', 'projects', 'languages', 'volunteering'],
+        movableSections: ['skills', 'projects', 'languages', 'volunteering', 'certificates'],
     },
     parse,
 };

@@ -104,14 +104,14 @@
 </template>
 
 <script lang="ts" setup>
-    import {Input} from '~/components/ui/input';
-    import {Label} from '~/components/ui/label';
-    import {Textarea} from '~/components/ui/textarea';
-    import {Checkbox} from '~/components/ui/checkbox';
-    import MonthYearPicker from '~/components/elements/MonthYearPicker.vue';
-    import FormCard from '~/components/elements/FormCard.vue';
-    import FormContainer from '~/components/elements/FormContainer.vue';
+import { Input } from '~/components/ui/input';
+import { Label } from '~/components/ui/label';
+import { Textarea } from '~/components/ui/textarea';
+import { Checkbox } from '~/components/ui/checkbox';
+import MonthYearPicker from '~/components/elements/MonthYearPicker.vue';
+import FormCard from '~/components/elements/FormCard.vue';
+import FormContainer from '~/components/elements/FormContainer.vue';
 
-    // Use the store directly instead of props
-    const resumeStore = useResumeStore();
+// Use the store directly instead of props
+const resumeStore = useResumeStore();
 </script>

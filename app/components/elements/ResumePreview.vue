@@ -32,9 +32,9 @@
                                     variant="outline"
                                 >
                                     <span>{{
-                                            (availableTemplates?.find(t => t.id === selectedTemplate).name || 'Default')
-                                        }} Template</span>
-                                    <ChevronDown class="w-4 h-4 ml-2"/>
+                                        (availableTemplates?.find(t => t.id === selectedTemplate).name || 'Default')
+                                    }} Template</span>
+                                    <ChevronDown class="w-4 h-4 ml-2" />
                                 </Button>
                             </PopoverTrigger>
                             <PopoverContent class="w-80">
@@ -67,7 +67,7 @@
                         variant="outline"
                         @click="showSettingsModal = true"
                     >
-                        <SlidersHorizontal class="w-4 h-4 mr-2"/>
+                        <SlidersHorizontal class="w-4 h-4 mr-2" />
                         Settings
                     </Button>
 
@@ -78,7 +78,7 @@
                             size="sm"
                             @click="handleDownload"
                         >
-                            <Download class="w-4 h-4 mr-2"/>
+                            <Download class="w-4 h-4 mr-2" />
                             <span class="download-text">Download</span> PDF
                         </Button>
                         <Menubar class="border-0 p-0 h-auto flex items-center">
@@ -89,20 +89,20 @@
                                         size="sm"
                                         variant="default"
                                     >
-                                        <MoreVertical class="w-4 h-4"/>
+                                        <MoreVertical class="w-4 h-4" />
                                     </Button>
                                 </MenubarTrigger>
                                 <MenubarContent>
                                     <MenubarItem @click="handleDownloadSVG">
-                                        <Download class="w-4 h-4 mr-2"/>
+                                        <Download class="w-4 h-4 mr-2" />
                                         Download as SVG
                                     </MenubarItem>
                                     <MenubarItem @click="handleDownloadTypst">
-                                        <Download class="w-4 h-4 mr-2"/>
+                                        <Download class="w-4 h-4 mr-2" />
                                         Download as Typst
                                     </MenubarItem>
                                     <MenubarItem @click="handleDownloadTypstText">
-                                        <Download class="w-4 h-4 mr-2"/>
+                                        <Download class="w-4 h-4 mr-2" />
                                         Download as Text
                                     </MenubarItem>
                                 </MenubarContent>
@@ -119,7 +119,7 @@
                         variant="outline"
                         @click="showSettingsModal = true"
                     >
-                        <Settings class="w-4 h-4"/>
+                        <Settings class="w-4 h-4" />
                     </Button>
                     <div class="flex items-center">
                         <Button
@@ -127,7 +127,7 @@
                             size="sm"
                             @click="handleDownload"
                         >
-                            <Download class="w-4 h-4 mr-2"/>
+                            <Download class="w-4 h-4 mr-2" />
                             Download
                         </Button>
                         <Menubar class="border-0 p-0 h-auto flex items-center">
@@ -138,20 +138,20 @@
                                         size="sm"
                                         variant="default"
                                     >
-                                        <MoreVertical class="w-4 h-4"/>
+                                        <MoreVertical class="w-4 h-4" />
                                     </Button>
                                 </MenubarTrigger>
                                 <MenubarContent>
                                     <MenubarItem @click="handleDownloadSVG">
-                                        <Download class="w-4 h-4 mr-2"/>
+                                        <Download class="w-4 h-4 mr-2" />
                                         Download as SVG
                                     </MenubarItem>
                                     <MenubarItem @click="handleDownloadTypst">
-                                        <Download class="w-4 h-4 mr-2"/>
+                                        <Download class="w-4 h-4 mr-2" />
                                         Download as Typst
                                     </MenubarItem>
                                     <MenubarItem @click="handleDownloadTypstText">
-                                        <Download class="w-4 h-4 mr-2"/>
+                                        <Download class="w-4 h-4 mr-2" />
                                         Download as Text
                                     </MenubarItem>
                                 </MenubarContent>
@@ -275,197 +275,203 @@
             </Card>
 
             <!-- Settings Modal -->
-            <SettingsModal v-model="showSettingsModal"/>
+            <SettingsModal v-model="showSettingsModal" />
         </div>
     </ClientOnly>
 </template>
 
 <script lang="ts" setup>
-    import {Card, CardContent} from '~/components/ui/card';
-    import {Button} from '~/components/ui/button';
-    import {Popover, PopoverContent, PopoverTrigger} from '~/components/ui/popover';
-    import {Menubar, MenubarContent, MenubarItem, MenubarMenu, MenubarTrigger} from '~/components/ui/menubar';
-    import {ChevronDown, Download, MoreVertical, Settings, SlidersHorizontal} from 'lucide-vue-next';
-    import {availableTemplates} from '~/types/resume';
-    import {useResumeGenerator} from '~/composables/useResumeGenerator';
-    import {useDebounceFn} from '@vueuse/core';
-    import SettingsModal from '~/components/elements/SettingsModal.vue';
-    import ZoomControls from '~/components/elements/ZoomControls.vue';
-    import {useSettingsStore} from '~/stores/settings';
-    import {useResumeStore} from '~/stores/resume';
-    import {storeToRefs} from 'pinia';
+import { Card, CardContent } from '~/components/ui/card';
+import { Button } from '~/components/ui/button';
+import { Popover, PopoverContent, PopoverTrigger } from '~/components/ui/popover';
+import { Menubar, MenubarContent, MenubarItem, MenubarMenu, MenubarTrigger } from '~/components/ui/menubar';
+import { ChevronDown, Download, MoreVertical, Settings, SlidersHorizontal } from 'lucide-vue-next';
+import { availableTemplates } from '~/types/resume';
+import { useResumeGenerator } from '~/composables/useResumeGenerator';
+import { useDebounceFn } from '@vueuse/core';
+import SettingsModal from '~/components/elements/SettingsModal.vue';
+import ZoomControls from '~/components/elements/ZoomControls.vue';
+import { useSettingsStore } from '~/stores/settings';
+import { useResumeStore } from '~/stores/resume';
+import { storeToRefs } from 'pinia';
 
-    // No props needed - we'll use stores directly
+// No props needed - we'll use stores directly
 
-    const {generatePreview, downloadPDF, downloadSVG, downloadTypst, downloadTypstText} = useResumeGenerator();
-    const {isReady: typstReady} = useTypstLoader();
+const { generatePreview, downloadPDF, downloadSVG, downloadTypst, downloadTypstText } = useResumeGenerator();
+const { isReady: typstReady } = useTypstLoader();
 
-    // Store instances
-    const settingsStore = useSettingsStore();
-    const resumeStore = useResumeStore();
+// Store instances
+const settingsStore = useSettingsStore();
+const resumeStore = useResumeStore();
 
-    // Reactive store data
-    const {resumeData, activeResume} = storeToRefs(resumeStore);
-    const {selectedFont, selectedTemplate, fontSize} = storeToRefs(settingsStore);
+// Reactive store data
+const { resumeData, activeResume } = storeToRefs(resumeStore);
+const { selectedFont, selectedTemplate, fontSize } = storeToRefs(settingsStore);
 
-    // State for preview
-    const isLoading = ref(false);
-    const error = ref<string | null>(null);
-    const previewContent = ref<string>('');
+// State for preview
+const isLoading = ref(false);
+const error = ref<string | null>(null);
+const previewContent = ref<string>('');
 
-    // State for popover menus
-    const showTemplateMenu = ref(false);
+// State for popover menus
+const showTemplateMenu = ref(false);
 
-    // State for settings modal
-    const showSettingsModal = ref(false);
+// State for settings modal
+const showSettingsModal = ref(false);
 
-    // Zoom state for mid-size screens
-    const zoomLevel = ref(1);
-    const minZoom = 0.5;
-    const maxZoom = 2.5;
-    const zoomStep = 0.25;
+// Zoom state for mid-size screens
+const zoomLevel = ref(1);
+const minZoom = 0.5;
+const maxZoom = 2.5;
+const zoomStep = 0.25;
 
-    // Zoom control functions
-    const handleZoomIn = () => {
-        if (zoomLevel.value < maxZoom) {
-            zoomLevel.value = Math.min(zoomLevel.value + zoomStep, maxZoom);
+// Zoom control functions
+const handleZoomIn = () => {
+    if (zoomLevel.value < maxZoom) {
+        zoomLevel.value = Math.min(zoomLevel.value + zoomStep, maxZoom);
+    }
+};
+
+const handleZoomOut = () => {
+    if (zoomLevel.value > minZoom) {
+        zoomLevel.value = Math.max(zoomLevel.value - zoomStep, minZoom);
+    }
+};
+
+// Handler functions to close popovers after selection
+const handleTemplateSelect = (template: string) => {
+    settingsStore.setSelectedTemplate(template);
+    showTemplateMenu.value = false;
+};
+
+// Generate preview when data changes
+const generatePreviewInternal = async () => {
+    if (!resumeData.value) return;
+
+    isLoading.value = true;
+    error.value = null;
+
+    try {
+        // Wait for Typst to be ready
+        if (!typstReady.value) {
+            // Wait for initialization to complete
+            await new Promise((resolve) => {
+                const unwatch = watch(
+                    typstReady,
+                    (ready) => {
+                        if (ready) {
+                            unwatch();
+                            resolve(void 0);
+                        }
+                    },
+                );
+            });
         }
-    };
 
-    const handleZoomOut = () => {
-        if (zoomLevel.value > minZoom) {
-            zoomLevel.value = Math.max(zoomLevel.value - zoomStep, minZoom);
+        if (!typstReady.value) {
+            return;
         }
-    };
 
-    // Handler functions to close popovers after selection
-    const handleTemplateSelect = (template: string) => {
-        settingsStore.setSelectedTemplate(template);
-        showTemplateMenu.value = false;
-    };
+        previewContent.value = await generatePreview(
+            resumeData.value,
+            selectedTemplate.value || 'default',
+            selectedFont.value || 'Calibri',
+        );
+    }
+    catch (err) {
+        console.error(err);
+        error.value = err instanceof Error ? err.message : 'Failed to generate preview';
+    }
+    finally {
+        isLoading.value = false;
+    }
+};
 
-    // Generate preview when data changes
-    const generatePreviewInternal = async () => {
-        if (!resumeData.value) return;
+// Handle PDF download
+const handleDownload = async () => {
+    if (!resumeData.value) return;
 
-        isLoading.value = true;
-        error.value = null;
+    try {
+        await downloadPDF(
+            resumeData.value,
+            selectedTemplate.value || 'default',
+            selectedFont.value || 'Calibri',
+        );
+    }
+    catch (err) {
+        error.value = err instanceof Error ? err.message : 'Failed to download PDF';
+        console.error('PDF download error:', err);
+    }
+};
 
-        try {
-            // Wait for Typst to be ready
-            if (!typstReady.value) {
-                // Wait for initialization to complete
-                await new Promise((resolve) => {
-                    const unwatch = watch(
-                        typstReady,
-                        (ready) => {
-                            if (ready) {
-                                unwatch();
-                                resolve(void 0);
-                            }
-                        },
-                    );
-                });
-            }
+// Handle SVG download
+const handleDownloadSVG = async () => {
+    if (!resumeData.value) return;
 
-            if (!typstReady.value) {
-                return;
-            }
+    try {
+        await downloadSVG(
+            resumeData.value,
+            selectedTemplate.value || 'default',
+            selectedFont.value || 'Calibri',
+        );
+    }
+    catch (err) {
+        error.value = err instanceof Error ? err.message : 'Failed to download SVG';
+        console.error('SVG download error:', err);
+    }
+};
 
-            previewContent.value = await generatePreview(
-                resumeData.value,
-                selectedTemplate.value || 'default',
-                selectedFont.value || 'Calibri',
-            );
-        } catch (err) {
-            console.error(err);
-            error.value = err instanceof Error ? err.message : 'Failed to generate preview';
-        } finally {
-            isLoading.value = false;
-        }
-    };
+// Handle Typst download
+const handleDownloadTypst = () => {
+    if (!resumeData.value) return;
 
-    // Handle PDF download
-    const handleDownload = async () => {
-        if (!resumeData.value) return;
+    try {
+        downloadTypst(
+            resumeData.value,
+            selectedTemplate.value || 'default',
+            selectedFont.value || 'Calibri',
+        );
+    }
+    catch (err) {
+        error.value = err instanceof Error ? err.message : 'Failed to download Typst';
+        console.error('Typst download error:', err);
+    }
+};
 
-        try {
-            await downloadPDF(
-                resumeData.value,
-                selectedTemplate.value || 'default',
-                selectedFont.value || 'Calibri',
-            );
-        } catch (err) {
-            error.value = err instanceof Error ? err.message : 'Failed to download PDF';
-            console.error('PDF download error:', err);
-        }
-    };
+// Handle Typst text download
+const handleDownloadTypstText = () => {
+    if (!resumeData.value) return;
 
-    // Handle SVG download
-    const handleDownloadSVG = async () => {
-        if (!resumeData.value) return;
+    try {
+        downloadTypstText(
+            resumeData.value,
+            selectedTemplate.value || 'default',
+            selectedFont.value || 'Calibri',
+        );
+    }
+    catch (err) {
+        error.value = err instanceof Error ? err.message : 'Failed to download Typst as text';
+        console.error('Typst text download error:', err);
+    }
+};
 
-        try {
-            await downloadSVG(
-                resumeData.value,
-                selectedTemplate.value || 'default',
-                selectedFont.value || 'Calibri',
-            );
-        } catch (err) {
-            error.value = err instanceof Error ? err.message : 'Failed to download SVG';
-            console.error('SVG download error:', err);
-        }
-    };
+// Watch for changes and regenerate preview with debounce
+const debouncedGeneratePreview = useDebounceFn(() => {
+    generatePreviewInternal();
+}, 100);
 
-    // Handle Typst download
-    const handleDownloadTypst = () => {
-        if (!resumeData.value) return;
+watch(
+    [resumeData, selectedTemplate, selectedFont, fontSize],
+    () => {
+        debouncedGeneratePreview();
+    },
+    { deep: true, immediate: true },
+);
 
-        try {
-            downloadTypst(
-                resumeData.value,
-                selectedTemplate.value || 'default',
-                selectedFont.value || 'Calibri',
-            );
-        } catch (err) {
-            error.value = err instanceof Error ? err.message : 'Failed to download Typst';
-            console.error('Typst download error:', err);
-        }
-    };
-
-    // Handle Typst text download
-    const handleDownloadTypstText = () => {
-        if (!resumeData.value) return;
-
-        try {
-            downloadTypstText(
-                resumeData.value,
-                selectedTemplate.value || 'default',
-                selectedFont.value || 'Calibri',
-            );
-        } catch (err) {
-            error.value = err instanceof Error ? err.message : 'Failed to download Typst as text';
-            console.error('Typst text download error:', err);
-        }
-    };
-
-    // Watch for changes and regenerate preview with debounce
-    const debouncedGeneratePreview = useDebounceFn(() => {
-        generatePreviewInternal();
-    }, 100);
-
-    watch(
-        [resumeData, selectedTemplate, selectedFont, fontSize],
-        () => {
-            debouncedGeneratePreview();
-        },
-        {deep: true, immediate: true},
-    );
-
-    // Expose generatePreview for error retry
-    defineExpose({
-        generatePreview: generatePreviewInternal,
-    });
+// Expose generatePreview for error retry
+defineExpose({
+    generatePreview: generatePreviewInternal,
+});
 </script>
 
 <style scoped>

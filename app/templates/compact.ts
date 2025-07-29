@@ -1,10 +1,10 @@
-import type {ResumeData, SectionOrder, TemplateLayoutConfig} from '~/types/resume';
-import type {TemplateSettings} from '~/types/templateConfig';
-import {COMPACT_LAYOUT_CONFIG} from '~/types/templateConfig';
-import {escapeTypstText} from '~/utils/stringUtils';
-import {convertEmail, convertLink, SECTION_SPACING} from '~/utils/typstUtils';
-import {useSettingsStore} from '~/stores/settings';
-import {getSharedSectionRenderers} from '~/utils/sectionRenderers';
+import type { ResumeData, SectionOrder, TemplateLayoutConfig } from '~/types/resume';
+import type { TemplateSettings } from '~/types/templateConfig';
+import { COMPACT_LAYOUT_CONFIG } from '~/types/templateConfig';
+import { escapeTypstText } from '~/utils/stringUtils';
+import { convertEmail, convertLink, SECTION_SPACING } from '~/utils/typstUtils';
+import { useSettingsStore } from '~/stores/settings';
+import { getSharedSectionRenderers } from '~/utils/sectionRenderers';
 
 export interface Template {
     id: string;
@@ -54,7 +54,8 @@ const renderHeaderRightColumn = (data: ResumeData, fontSize: number): string[] =
             let linkText = '';
             if (link.platform === 'other' && link.customLabel) {
                 linkText = link.customLabel;
-            } else {
+            }
+            else {
                 const platformLabels = {
                     linkedin: 'LinkedIn',
                     github: 'GitHub',
@@ -115,7 +116,7 @@ const convertResumeHeader = (data: ResumeData, fontSize: number) => {
 };
 
 const parse = (data: ResumeData, font: string): string => {
-    const settings: TemplateSettings = {font};
+    const settings: TemplateSettings = { font };
     const settingsStore = useSettingsStore();
     const fontSize = settingsStore.fontSize;
 
@@ -129,6 +130,7 @@ const parse = (data: ResumeData, font: string): string => {
         projects: () => sharedRenderers.projects(data, fontSize, config),
         volunteering: () => sharedRenderers.volunteering(data, fontSize, config),
         languages: () => sharedRenderers.languages(data, fontSize, config),
+        certificates: () => sharedRenderers.certificates(data, fontSize, config),
     };
 
     const sectionsToRender = Object.keys(sectionRenderers);

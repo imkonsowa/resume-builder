@@ -1,8 +1,9 @@
-import type {ResumeData} from '~/types/resume';
-import type {SectionRenderer, TemplateLayoutConfig} from '~/types/templateConfig';
-import {ITEMS_SPACING, renderTemplateHeader} from './typstUtils';
-import {escapeTypstText} from '~/utils/stringUtils';
+import type { ResumeData } from '~/types/resume';
+import type { SectionRenderer, TemplateLayoutConfig } from '~/types/templateConfig';
+import { ITEMS_SPACING, renderTemplateHeader } from './typstUtils';
+import { escapeTypstText } from '~/utils/stringUtils';
 import {
+    generateCertificatesContent,
     generateContactContent,
     generateEducationContent,
     generateExperienceContent,
@@ -13,6 +14,7 @@ import {
     generateVolunteeringContent,
 } from './templateRenderers';
 import {
+    formatCertificatesItems,
     formatEducationItems,
     formatExperienceItems,
     formatProjectsItems,
@@ -34,8 +36,8 @@ const DEFAULT_SECTION_HEADERS = {
     volunteering: 'Volunteering',
     info: 'Info',
     socialLinks: 'Links',
+    certificates: 'Certificates',
 } as const;
-
 
 /**
  * Render experience section using shared logic
@@ -102,7 +104,7 @@ export const renderSharedProjects: SectionRenderer = (data: ResumeData, fontSize
 /**
  * Render skills section using shared logic
  */
-export const renderSharedSkills: SectionRenderer = (data: ResumeData, fontSize: number, config: TemplateLayoutConfig): string => {
+export const renderSharedSkills: SectionRenderer = (data: ResumeData, fontSize: number, _config: TemplateLayoutConfig): string => {
     if (data?.skills && data.skills.length > 0) {
         const sectionContent = generateSkillsContent(data.skills);
         if (sectionContent.length === 0) return '';
@@ -129,7 +131,7 @@ export const renderSharedSkills: SectionRenderer = (data: ResumeData, fontSize: 
 /**
  * Render languages section using shared logic
  */
-export const renderSharedLanguages: SectionRenderer = (data: ResumeData, fontSize: number, config: TemplateLayoutConfig): string => {
+export const renderSharedLanguages: SectionRenderer = (data: ResumeData, fontSize: number, _config: TemplateLayoutConfig): string => {
     if (!data?.languages || data.languages.length === 0) {
         return '';
     }
@@ -181,7 +183,7 @@ export const renderSharedSocialLinks: SectionRenderer = (data: ResumeData, fontS
 /**
  * Render profile/summary section using shared logic
  */
-export const renderSharedProfile: SectionRenderer = (data: ResumeData, fontSize: number, config: TemplateLayoutConfig): string => {
+export const renderSharedProfile: SectionRenderer = (data: ResumeData, fontSize: number, _config: TemplateLayoutConfig): string => {
     if (!data?.summary || !data.summary.trim()) {
         return '';
     }
@@ -190,6 +192,23 @@ export const renderSharedProfile: SectionRenderer = (data: ResumeData, fontSize:
     const content = escapeTypstText(data.summary.trim());
 
     return wrapInSectionBlock(headerText, content, fontSize, renderTemplateHeader);
+};
+
+/**
+ * Render certificates section using shared logic
+ */
+export const renderSharedCertificates: SectionRenderer = (data: ResumeData, fontSize: number, config: TemplateLayoutConfig): string => {
+    if (!data?.certificates || data.certificates.length === 0) {
+        return '';
+    }
+
+    const sectionContent = generateCertificatesContent(data.certificates);
+    if (sectionContent.length === 0) return '';
+
+    const formattedContent = formatCertificatesItems(sectionContent, config, fontSize);
+    const headerText = data?.sectionHeaders?.certificates || DEFAULT_SECTION_HEADERS.certificates;
+
+    return wrapInSectionBlock(headerText, formattedContent, fontSize, renderTemplateHeader);
 };
 
 /**
@@ -205,4 +224,5 @@ export const getSharedSectionRenderers = () => ({
     contactInfo: renderSharedContactInfo,
     socialLinks: renderSharedSocialLinks,
     profile: renderSharedProfile,
+    certificates: renderSharedCertificates,
 });

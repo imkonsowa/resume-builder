@@ -22,6 +22,9 @@ export default withNuxt({
 },
 ).append({
     rules: {
+        // Vue indentation rules
+        'vue/script-indent': 'off', // Disable to avoid conflicts with @stylistic/indent
+
         // Strict TypeScript rules
         '@typescript-eslint/no-explicit-any': 'error',
         '@typescript-eslint/prefer-as-const': 'error',

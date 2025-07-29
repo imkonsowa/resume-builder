@@ -1,47 +1,47 @@
 <script lang="ts" setup>
-    import {Button} from '~/components/ui/button';
-    import {Input} from '~/components/ui/input';
-    import {Label} from '~/components/ui/label';
-    import {Checkbox} from '~/components/ui/checkbox';
+import { Button } from '~/components/ui/button';
+import { Input } from '~/components/ui/input';
+import { Label } from '~/components/ui/label';
+import { Checkbox } from '~/components/ui/checkbox';
 
-    interface Props {
-        isOpen: boolean;
-        resumeName: string;
+interface Props {
+    isOpen: boolean;
+    resumeName: string;
+}
+
+interface Emits {
+    (e: 'close'): void;
+
+    (e: 'confirm', name: string, navigateToBuilder: boolean): void;
+}
+
+const props = defineProps<Props>();
+const emit = defineEmits<Emits>();
+
+const copyResumeName = ref('');
+const navigateToBuilder = ref(true);
+
+// Reset form when modal opens and set initial name
+watch(() => props.isOpen, (isOpen) => {
+    if (isOpen) {
+        copyResumeName.value = props.resumeName;
+        navigateToBuilder.value = true;
     }
+});
 
-    interface Emits {
-        (e: 'close'): void;
+const handleConfirm = () => {
+    emit('confirm', copyResumeName.value, navigateToBuilder.value);
+};
 
-        (e: 'confirm', name: string, navigateToBuilder: boolean): void;
+const handleCancel = () => {
+    emit('close');
+};
+
+const handleEnter = (event: KeyboardEvent) => {
+    if (event.key === 'Enter') {
+        handleConfirm();
     }
-
-    const props = defineProps<Props>();
-    const emit = defineEmits<Emits>();
-
-    const copyResumeName = ref('');
-    const navigateToBuilder = ref(true);
-
-    // Reset form when modal opens and set initial name
-    watch(() => props.isOpen, (isOpen) => {
-        if (isOpen) {
-            copyResumeName.value = props.resumeName;
-            navigateToBuilder.value = true;
-        }
-    });
-
-    const handleConfirm = () => {
-        emit('confirm', copyResumeName.value, navigateToBuilder.value);
-    };
-
-    const handleCancel = () => {
-        emit('close');
-    };
-
-    const handleEnter = (event: KeyboardEvent) => {
-        if (event.key === 'Enter') {
-            handleConfirm();
-        }
-    };
+};
 </script>
 
 <template>
@@ -51,7 +51,7 @@
         @click="handleCancel"
     >
         <!-- Backdrop -->
-        <div class="absolute inset-0 bg-black/50"/>
+        <div class="absolute inset-0 bg-black/50" />
 
         <!-- Modal Content -->
         <div

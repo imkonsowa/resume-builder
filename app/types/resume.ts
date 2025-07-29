@@ -53,6 +53,13 @@ export interface Language {
     proficiency: string;
 }
 
+export interface Certificate {
+    title: string;
+    issuer: string;
+    date: string;
+    url?: string;
+}
+
 export interface SectionOrder {
     summary: number;
     experience: number;
@@ -62,6 +69,7 @@ export interface SectionOrder {
     socialLinks: number;
     projects: number;
     languages: number;
+    certificates: number;
 }
 
 export interface TemplateLayoutConfig {
@@ -76,6 +84,7 @@ export interface SectionPlacement {
     projects: 'left' | 'right';
     volunteering: 'left' | 'right';
     languages: 'left' | 'right';
+    certificates: 'left' | 'right';
 }
 
 export interface SectionHeaders {
@@ -89,6 +98,7 @@ export interface SectionHeaders {
     education: string;
     skills: string;
     volunteering: string;
+    certificates: string;
 }
 
 export interface ResumeData {
@@ -108,6 +118,7 @@ export interface ResumeData {
     socialLinks: SocialLink[];
     projects: Project[];
     languages: Language[];
+    certificates: Certificate[];
 
     technicalSkills: string;
     softSkills: string;
@@ -158,6 +169,7 @@ export const defaultResumeData: ResumeData = {
     socialLinks: [],
     projects: [],
     languages: [],
+    certificates: [],
     technicalSkills: '',
     softSkills: '',
     sectionOrder: {
@@ -169,6 +181,7 @@ export const defaultResumeData: ResumeData = {
         socialLinks: 5,
         projects: 6,
         languages: 7,
+        certificates: 8,
     },
     sectionHeaders: {
         personalInfo: 'Personal Information',
@@ -181,12 +194,14 @@ export const defaultResumeData: ResumeData = {
         education: 'Education',
         skills: 'Skills',
         volunteering: 'Volunteering',
+        certificates: 'Certificates',
     },
     sectionPlacement: {
         skills: 'right',
         projects: 'right',
         volunteering: 'right',
         languages: 'right',
+        certificates: 'right',
     },
 };
 
@@ -206,13 +221,14 @@ export const defaultAppSettings: AppSettings = {
         volunteering: true,
         projects: true,
         languages: true,
+        certificates: true,
     },
 };
 
 export const availableFonts = [
-    {name: 'Calibri', family: 'Calibri'},
-    {name: 'Geist', family: 'Geist'},
-    {name: 'Roboto', family: 'Roboto'},
+    { name: 'Calibri', family: 'Calibri' },
+    { name: 'Geist', family: 'Geist' },
+    { name: 'Roboto', family: 'Roboto' },
 ];
 
 export const availableTemplates = [
