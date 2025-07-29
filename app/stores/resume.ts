@@ -115,6 +115,8 @@ export const useResumeStore = defineStore('resume', {
         initialize() {
             Object.keys(this.resumes).forEach((resumeId) => {
                 const resume = this.resumes[resumeId];
+
+                // Initialize section order for backward compatibility
                 if (resume.data.sectionOrder) {
                     if (resume.data.sectionOrder.projects === undefined) {
                         resume.data.sectionOrder.projects = 6;
@@ -122,6 +124,47 @@ export const useResumeStore = defineStore('resume', {
                     if (resume.data.sectionOrder.languages === undefined) {
                         resume.data.sectionOrder.languages = 7;
                     }
+                    if (resume.data.sectionOrder.certificates === undefined) {
+                        resume.data.sectionOrder.certificates = 8;
+                    }
+                }
+
+                // Initialize section headers for backward compatibility
+                if (!resume.data.sectionHeaders) {
+                    resume.data.sectionHeaders = { ...defaultResumeData.sectionHeaders };
+                }
+                else {
+                    // Ensure all section headers exist
+                    if (resume.data.sectionHeaders.projects === undefined) {
+                        resume.data.sectionHeaders.projects = 'Projects';
+                    }
+                    if (resume.data.sectionHeaders.languages === undefined) {
+                        resume.data.sectionHeaders.languages = 'Languages';
+                    }
+                    if (resume.data.sectionHeaders.certificates === undefined) {
+                        resume.data.sectionHeaders.certificates = 'Certificates';
+                    }
+                }
+
+                // Initialize section placement for backward compatibility
+                if (!resume.data.sectionPlacement) {
+                    resume.data.sectionPlacement = { ...defaultResumeData.sectionPlacement };
+                }
+                else {
+                    if (resume.data.sectionPlacement.projects === undefined) {
+                        resume.data.sectionPlacement.projects = 'right';
+                    }
+                    if (resume.data.sectionPlacement.languages === undefined) {
+                        resume.data.sectionPlacement.languages = 'right';
+                    }
+                    if (resume.data.sectionPlacement.certificates === undefined) {
+                        resume.data.sectionPlacement.certificates = 'right';
+                    }
+                }
+
+                // Initialize certificates array for backward compatibility
+                if (!resume.data.certificates) {
+                    resume.data.certificates = [];
                 }
             });
 

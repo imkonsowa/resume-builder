@@ -1,18 +1,13 @@
 <template>
     <FormContainer
         :is-empty="(resumeStore.resumeData.certificates?.length || 0) === 0"
-        :title="sectionHeaderTitle"
+        :title="resumeStore.resumeData.sectionHeaders.certificates"
         add-button-label="Add Certificate"
         empty-message="Add your professional certificates and achievements."
         section-key="certificates"
         @add="resumeStore.addCertificate"
+        @edit-title="(value) => resumeStore.updateSectionHeader('certificates', value)"
     >
-        <template #header>
-            <EditableHeader
-                :value="resumeStore.resumeData.sectionHeaders.certificates"
-                @update="(value) => resumeStore.updateSectionHeader('certificates', value)"
-            />
-        </template>
 
         <!-- Column Placement Control -->
         <template #header-actions>
@@ -106,20 +101,15 @@
 </template>
 
 <script lang="ts" setup>
-import { computed } from 'vue';
 import { Input } from '~/components/ui/input';
 import { Label } from '~/components/ui/label';
 import MonthYearPicker from '~/components/elements/MonthYearPicker.vue';
 import FormContainer from '~/components/elements/FormContainer.vue';
 import FormCard from '~/components/elements/FormCard.vue';
 import ConfirmationModal from '~/components/elements/ConfirmationModal.vue';
-import EditableHeader from '~/components/elements/EditableHeader.vue';
 
 const resumeStore = useResumeStore();
 const confirmation = useConfirmation();
 const templateConfig = useTemplate();
 
-const sectionHeaderTitle = computed(() => {
-    return resumeStore.resumeData.sectionHeaders?.certificates || 'Certificates';
-});
 </script>

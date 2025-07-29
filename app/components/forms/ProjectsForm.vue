@@ -1,18 +1,13 @@
 <template>
     <FormContainer
         :is-empty="resumeStore.resumeData.projects.length === 0"
-        :title="sectionHeaderTitle"
+        :title="resumeStore.resumeData.sectionHeaders.projects"
         add-button-label="Add Project"
         empty-message="Add your notable projects to showcase your work."
         section-key="projects"
         @add="resumeStore.addProject"
+        @edit-title="(value) => resumeStore.updateSectionHeader('projects', value)"
     >
-        <template #header>
-            <EditableHeader
-                :value="resumeStore.resumeData.sectionHeaders.projects"
-                @update="(value) => resumeStore.updateSectionHeader('projects', value)"
-            />
-        </template>
 
         <!-- Column Placement Control -->
         <template #header-actions>
@@ -97,20 +92,15 @@
 </template>
 
 <script lang="ts" setup>
-import { computed } from 'vue';
 import { Input } from '~/components/ui/input';
 import { Label } from '~/components/ui/label';
 import { Textarea } from '~/components/ui/textarea';
 import FormContainer from '~/components/elements/FormContainer.vue';
 import FormCard from '~/components/elements/FormCard.vue';
 import ConfirmationModal from '~/components/elements/ConfirmationModal.vue';
-import EditableHeader from '~/components/elements/EditableHeader.vue';
 
 const resumeStore = useResumeStore();
 const confirmation = useConfirmation();
 const templateConfig = useTemplate();
 
-const sectionHeaderTitle = computed(() => {
-    return resumeStore.resumeData.sectionHeaders?.projects || 'Projects';
-});
 </script>
