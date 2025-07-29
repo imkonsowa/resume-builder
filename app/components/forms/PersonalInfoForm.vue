@@ -111,57 +111,85 @@
                 <div
                     v-for="(link, linkIndex) in resumeStore.resumeData.socialLinks"
                     :key="linkIndex"
-                    class="flex items-center gap-2"
+                    class="space-y-2"
                 >
-                    <!-- Platform Icon -->
-                    <div class="flex-none">
-                        <component
-                            :is="getPlatformIcon(link.platform)"
-                            class="w-5 h-5 text-gray-600"
-                        />
-                    </div>
+                    <div class="flex items-center space-x-2 md:space-x-2">
+                        <!-- Platform Icon -->
+                        <div class="flex-none">
+                            <component
+                                :is="getPlatformIcon(link.platform)"
+                                class="w-5 h-5 text-gray-600"
+                            />
+                        </div>
 
-                    <!-- Platform Dropdown -->
-                    <div class="w-40">
-                        <select
-                            :value="link.platform"
-                            class="w-full px-3 py-2 border rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-sm"
-                            @change="(e) => resumeStore.updateSocialLink(linkIndex, 'platform', (e.target as HTMLSelectElement).value)"
-                        >
-                            <option
-                                v-for="platform in SOCIAL_PLATFORMS"
-                                :key="platform.value"
-                                :value="platform.value"
+                        <!-- Platform Dropdown -->
+                        <div class="w-32 md:w-40">
+                            <select
+                                :value="link.platform"
+                                class="w-full px-3 py-2 border rounded-md border-gray-300 focus:border-blue-500 focus:ring-blue-500 text-sm"
+                                @change="(e) => resumeStore.updateSocialLink(linkIndex, 'platform', (e.target as HTMLSelectElement).value)"
                             >
-                                {{ platform.label }}
-                            </option>
-                        </select>
-                    </div>
+                                <option
+                                    v-for="platform in SOCIAL_PLATFORMS"
+                                    :key="platform.value"
+                                    :value="platform.value"
+                                >
+                                    {{ platform.label }}
+                                </option>
+                            </select>
+                        </div>
 
-                    <!-- URL Input -->
-                    <div class="flex-1">
-                        <Input
-                            :model-value="link.url"
-                            placeholder="https://"
-                            type="url"
-                            @update:model-value="(value) => resumeStore.updateSocialLink(linkIndex, 'url', value)"
-                        />
-                    </div>
+                        <!-- URL Input -->
+                        <div class="flex-1">
+                            <Input
+                                :model-value="link.url"
+                                placeholder="https://"
+                                type="url"
+                                @update:model-value="(value) => resumeStore.updateSocialLink(linkIndex, 'url', value)"
+                            />
+                        </div>
 
-                    <!-- Custom Label (only for 'other' platform) -->
-                    <div
-                        v-if="link.platform === 'other'"
-                        class="w-32"
-                    >
-                        <Input
-                            :model-value="link.customLabel || ''"
-                            placeholder="Label"
-                            @update:model-value="(value) => resumeStore.updateSocialLink(linkIndex, 'customLabel', value)"
-                        />
-                    </div>
+                        <!-- Custom Label (only for 'other' platform) -->
+                        <div
+                            v-if="link.platform === 'other'"
+                            class="w-32"
+                        >
+                            <Input
+                                :model-value="link.customLabel || ''"
+                                placeholder="Label"
+                                @update:model-value="(value) => resumeStore.updateSocialLink(linkIndex, 'customLabel', value)"
+                            />
+                        </div>
 
-                    <!-- Order Controls -->
-                    <div class="flex items-center gap-1">
+                        <!-- Order Controls - Desktop -->
+                        <div class="hidden md:flex items-center space-x-1">
+                            <Button
+                                :disabled="linkIndex === 0"
+                                size="sm"
+                                variant="outline"
+                                @click="resumeStore.moveSocialLink(linkIndex, linkIndex - 1)"
+                            >
+                                <ChevronUp class="w-4 h-4" />
+                            </Button>
+                            <Button
+                                :disabled="linkIndex === resumeStore.resumeData.socialLinks.length - 1"
+                                size="sm"
+                                variant="outline"
+                                @click="resumeStore.moveSocialLink(linkIndex, linkIndex + 1)"
+                            >
+                                <ChevronDown class="w-4 h-4" />
+                            </Button>
+                            <Button
+                                size="sm"
+                                variant="outline"
+                                @click="handleRemoveSocialLink(linkIndex)"
+                            >
+                                <Trash2 class="w-4 h-4" />
+                            </Button>
+                        </div>
+                    </div>
+                    <!-- Order Controls - Mobile -->
+                    <div class="flex md:hidden items-center justify-center space-x-2">
                         <Button
                             :disabled="linkIndex === 0"
                             size="sm"
