@@ -155,7 +155,7 @@ const getResumePreview = (resume: Resume) => {
     if (data.skills?.length) sections.push(`${data.skills.length} skill${data.skills.length > 1 ? 's' : ''}`);
 
     return {
-        fullName: fullName || 'Unnamed Resume',
+        fullName: fullName || 'No name specified',
         position,
         sections: sections.join(', ') || 'No sections added',
     };
