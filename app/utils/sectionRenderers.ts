@@ -1,6 +1,7 @@
 import type {ResumeData} from '~/types/resume';
 import type {SectionRenderer, TemplateLayoutConfig} from '~/types/templateConfig';
 import {ITEMS_SPACING, renderTemplateHeader} from './typstUtils';
+import {escapeTypstText} from '~/utils/stringUtils';
 import {
     generateContactContent,
     generateEducationContent,
@@ -186,7 +187,7 @@ export const renderSharedProfile: SectionRenderer = (data: ResumeData, fontSize:
     }
 
     const headerText = data?.sectionHeaders?.profile || 'Profile';
-    const content = data.summary.trim();
+    const content = escapeTypstText(data.summary.trim());
 
     return wrapInSectionBlock(headerText, content, fontSize, renderTemplateHeader);
 };
