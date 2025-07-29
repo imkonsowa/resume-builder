@@ -38,43 +38,34 @@
         'update:modelValue': [value: string];
     }>();
 
-    // Convert modelValue to Date object
-    const selectedDate = ref<Date | null>(null);
+    // Convert modelValue to format expected by VueDatePicker month-picker mode
+    const selectedDate = ref<{ month: number; year: number } | null>(null);
 
     // Watch for prop changes
     watch(() => props.modelValue, (newValue) => {
         if (newValue) {
             const [year, month] = newValue.split('-');
-            // Create date object with explicit day to avoid timezone issues
-            selectedDate.value = new Date(parseInt(year), parseInt(month) - 1, 1);
+            // VueDatePicker month-picker expects { month: 0-11, year: number }
+            selectedDate.value = {
+                month: parseInt(month) - 1,  // Convert to 0-based month
+                year: parseInt(year)
+            };
         } else {
             selectedDate.value = null;
         }
     }, {immediate: true});
 
     // Handle date change
-    const handleDateChange = (date: Date | string | null | undefined) => {
+    const handleDateChange = (date: any) => {
         if (!date) {
             emit('update:modelValue', '');
             return;
         }
 
-        // Handle different possible formats from VueDatePicker
-        let dateObj: Date | null = null;
-
-        if (date instanceof Date) {
-            dateObj = date;
-        } else if (typeof date === 'object' && date.month !== undefined && date.year !== undefined) {
-            // VueDatePicker month picker can return { month: number, year: number }
-            dateObj = new Date(date.year, date.month, 1);
-        } else if (typeof date === 'string') {
-            // Try to parse string date
-            dateObj = new Date(date);
-        }
-
-        if (dateObj && !isNaN(dateObj.getTime())) {
-            const year = dateObj.getFullYear();
-            const month = String(dateObj.getMonth() + 1).padStart(2, '0');
+        // VueDatePicker month-picker returns { month: number, year: number }
+        if (typeof date === 'object' && 'month' in date && 'year' in date) {
+            const year = date.year;
+            const month = String(date.month + 1).padStart(2, '0');  // Convert from 0-based to 1-based
             emit('update:modelValue', `${year}-${month}`);
         } else {
             emit('update:modelValue', '');
