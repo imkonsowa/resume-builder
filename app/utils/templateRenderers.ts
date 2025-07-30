@@ -207,22 +207,14 @@ export const generateCertificatesContent = (certificates: Certificate[]): Sectio
     return certificates
         .filter(cert => cert.title.trim() || cert.issuer.trim())
         .map((cert) => {
-            let title = '';
-            if (cert.title.trim()) {
-                title = `#block(below: 0.6em)[#text("${escapeTypstText(cert.title)}", weight: "bold")`;
-                if (cert.url?.trim()) {
-                    title += ` • ${convertExternalLinkIcon(cert.url)}`;
-                }
-                title += `]`;
-            }
-
-            const content = cert.issuer.trim() ? escapeTypstText(cert.issuer) : undefined;
-            const date = cert.date ? convertDateRange(cert.date) : undefined;
+            const title = `${cert.title}${cert.issuer ? ' from ' + cert.issuer : ''}`;
+            const dateRange = cert.date ? convertDateRange(cert.date) : '';
+            const certLink = cert.url?.trim() ? convertExternalLinkIcon(cert.url) : '';
 
             return {
                 title,
-                date,
-                content,
+                date: dateRange,
+                content: certLink,
             };
         });
 };

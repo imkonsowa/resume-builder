@@ -149,28 +149,28 @@ export const formatProjectsItems = (
 export const formatCertificatesItems = (
     sectionContent: SectionContent[],
     config: TemplateLayoutConfig,
-    _fontSize: number,
+    fontSize: number,
 ): string => {
     const formattedItems = sectionContent.map((item) => {
-        let content = '';
+        let content = renderTemplateSubHeader(item.title, fontSize);
 
-        if (item.title) {
-            content += item.title;
-        }
-
-        if (item.date) {
-            const spacing = content ? ' ' : '';
-            content += `${spacing}${item.date}`;
-        }
-
-        if (item.content) {
-            const spacing = content ? `\n${ITEMS_SPACING}` : '';
-            content += `${spacing}${item.content}`;
+        if (item.date || item.content) {
+            content += '\n\n';
+            const dateAndLinkSection = renderTemplateDateWithLink(
+                item.date || '',
+                item.content || null,
+                fontSize,
+            );
+            content += dateAndLinkSection;
         }
 
         return content;
-    }).filter(content => content.trim() !== '');
+    });
 
+    // Certificates items always join with \n\n for proper spacing (default template style)
+    if (config.layout === 'two-column') {
+        return formattedItems.join('\n\n');
+    }
     return formattedItems.join(config.sections.joinSeparator);
 };
 
