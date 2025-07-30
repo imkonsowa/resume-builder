@@ -58,6 +58,7 @@ export interface Certificate {
     issuer: string;
     date: string;
     url?: string;
+    description?: string;
 }
 
 export interface SectionOrder {

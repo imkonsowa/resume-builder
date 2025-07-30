@@ -149,28 +149,34 @@ export const formatProjectsItems = (
 export const formatCertificatesItems = (
     sectionContent: SectionContent[],
     config: TemplateLayoutConfig,
-    fontSize: number,
+    _fontSize: number,
 ): string => {
     const formattedItems = sectionContent.map((item) => {
-        let content = renderTemplateSubHeader(item.title, fontSize);
+        let content = '';
 
-        if (item.date || item.content) {
-            content += '\n\n';
-            const dateAndLinkSection = renderTemplateDateWithLink(
-                item.date || '',
-                item.content || null,
-                fontSize,
-            );
-            content += dateAndLinkSection;
+        if (item.title) {
+            content += item.title;
+        }
+
+        if (item.date) {
+            if (content) content += '\n\n';
+            content += item.date;
+        }
+
+        if (item.content) {
+            const spacing = item.date ? '\n' : (content ? '\n\n' : '');
+            content += spacing + item.content;
         }
 
         return content;
-    });
+    }).filter(content => content.trim());
 
-    // Certificates items always join with \n\n for proper spacing (default template style)
-    if (config.layout === 'two-column') {
-        return formattedItems.join('\n\n');
+    if (config.sections.spacing === 'block' && config.projects.itemSpacing) {
+        return formattedItems
+            .map(content => `#block(above: 0em, below: ${config.projects.itemSpacing})[${content}]`)
+            .join('');
     }
+
     return formattedItems.join(config.sections.joinSeparator);
 };
 

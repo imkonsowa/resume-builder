@@ -75,13 +75,24 @@
                 </div>
 
                 <div class="space-y-2">
-                    <Label :for="`certificate-url-${index}`">Certificate URL (Optional)</Label>
+                    <Label :for="`certificate-url-${index}`">Certificate URL</Label>
                     <Input
                         :id="`certificate-url-${index}`"
                         :model-value="certificate.url || ''"
                         placeholder="https://example.com/certificate"
                         type="url"
                         @update:model-value="(value) => resumeStore.updateCertificate(index, 'url', value)"
+                    />
+                </div>
+
+                <div class="space-y-2">
+                    <Label :for="`certificate-description-${index}`">Description</Label>
+                    <Textarea
+                        :id="`certificate-description-${index}`"
+                        :model-value="certificate.description || ''"
+                        placeholder="Brief description of the certificate or skills gained..."
+                        rows="3"
+                        @update:model-value="(value) => resumeStore.updateCertificate(index, 'description', value)"
                     />
                 </div>
             </div>
@@ -103,6 +114,7 @@
 <script lang="ts" setup>
 import { Input } from '~/components/ui/input';
 import { Label } from '~/components/ui/label';
+import { Textarea } from '~/components/ui/textarea';
 import MonthYearPicker from '~/components/elements/MonthYearPicker.vue';
 import FormContainer from '~/components/elements/FormContainer.vue';
 import FormCard from '~/components/elements/FormCard.vue';

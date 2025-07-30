@@ -207,14 +207,19 @@ export const generateCertificatesContent = (certificates: Certificate[]): Sectio
     return certificates
         .filter(cert => cert.title.trim() || cert.issuer.trim())
         .map((cert) => {
-            const title = `${cert.title}${cert.issuer ? ' from ' + cert.issuer : ''}`;
-            const dateRange = cert.date ? convertDateRange(cert.date) : '';
-            const certLink = cert.url?.trim() ? convertExternalLinkIcon(cert.url) : '';
+            let title = '';
+            if (cert.title.trim()) {
+                title = `#block(below: 0.6em)[#text("${escapeTypstText(`${cert.title}${cert.issuer ? ' from ' + cert.issuer : ''}`)}", weight: "bold")`;
+                if (cert.url?.trim()) {
+                    title += ` • ${convertExternalLinkIcon(cert.url)}`;
+                }
+                title += `]`;
+            }
 
             return {
                 title,
-                date: dateRange,
-                content: certLink,
+                date: cert.date ? convertDateRange(cert.date) : '',
+                content: cert.description?.trim() ? escapeTypstText(cert.description) : undefined,
             };
         });
 };
