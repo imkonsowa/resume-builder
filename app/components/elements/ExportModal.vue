@@ -21,6 +21,19 @@
                 </p>
             </div>
 
+            <!-- Warning about JSON vs PDF -->
+            <div class="bg-blue-50 border border-blue-200 rounded-md p-3 mb-4">
+                <div class="flex">
+                    <Info class="h-5 w-5 text-blue-600 flex-shrink-0" />
+                    <div class="ml-3">
+                        <p class="text-sm text-blue-800">
+                            This exports resume data as JSON files for backup or transfer purposes.
+                            To download PDF resumes, please use the download button in the builder page.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
             <!-- Select All Checkbox -->
             <div class="mb-4 pb-2 border-b">
                 <label class="flex items-center gap-2 cursor-pointer">
@@ -84,6 +97,7 @@
 
 <script lang="ts" setup>
     import {Button} from '~/components/ui/button';
+    import {Info} from 'lucide-vue-next';
     import type {Resume} from '~/types/resume';
 
     interface Props {
