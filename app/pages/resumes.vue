@@ -3,15 +3,19 @@ import { Button } from '~/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '~/components/ui/card';
 import { Badge } from '~/components/ui/badge';
 import { Input } from '~/components/ui/input';
-import { Calendar, Check, Copy, Edit, FileText, PencilIcon, Plus, Search, Trash2, X } from 'lucide-vue-next';
+import { Calendar, Check, Copy, Download, Edit, FileText, PencilIcon, Plus, Search, Trash2, Upload, X } from 'lucide-vue-next';
 import ConfirmationModal from '~/components/elements/ConfirmationModal.vue';
 import CreateResumeModal from '~/components/elements/CreateResumeModal.vue';
 import CopyResumeModal from '~/components/elements/CopyResumeModal.vue';
+import ExportModal from '~/components/elements/ExportModal.vue';
+import ImportConfirmationModal from '~/components/elements/ImportConfirmationModal.vue';
 import type { Resume } from '~/types/resume';
+import type { ImportResumePreview } from '~/components/elements/ImportConfirmationModal.vue';
 
 const resumeStore = useResumeStore();
 const router = useRouter();
 const confirmation = useConfirmation();
+const { exportResumes, exportSingleResume, parseImportFile, importSelectedResumes } = useResumeImportExport();
 
 // Initialize store
 onMounted(() => {
@@ -47,6 +51,16 @@ const showCreateModal = ref(false);
 // Copy modal state
 const showCopyModal = ref(false);
 const resumeToCopy = ref<Resume | null>(null);
+
+// Export modal state
+const showExportModal = ref(false);
+
+// Import modal state
+const showImportModal = ref(false);
+const importPreviews = ref<ImportResumePreview[]>([]);
+
+// Import file input ref
+const importInputRef = ref<HTMLInputElement>();
 
 const createNewResume = () => {
     showCreateModal.value = true;
@@ -132,6 +146,46 @@ const saveResumeName = () => {
 const cancelEditing = () => {
     editingResumeId.value = null;
     editingResumeName.value = '';
+};
+
+// Handle export
+const handleExport = (resumeIds: string[]) => {
+    exportResumes(resumeIds);
+    showExportModal.value = false;
+};
+
+// Handle file selection
+const handleFileSelect = async (event: Event) => {
+    const input = event.target as HTMLInputElement;
+    const file = input.files?.[0];
+    
+    if (!file) return;
+    
+    const result = await parseImportFile(file);
+    
+    if (result.success && result.previews) {
+        importPreviews.value = result.previews;
+        showImportModal.value = true;
+    } else {
+        // Show error message
+        console.error('Failed to parse file:', result.error);
+    }
+    
+    // Clear the input
+    input.value = '';
+};
+
+// Handle import confirmation
+const handleImportConfirm = (selectedIndexes: number[]) => {
+    const importedCount = importSelectedResumes(importPreviews.value, selectedIndexes);
+    console.log(`Successfully imported ${importedCount} resume${importedCount !== 1 ? 's' : ''}`);
+    showImportModal.value = false;
+    importPreviews.value = [];
+};
+
+// Trigger import file dialog
+const triggerImport = () => {
+    importInputRef.value?.click();
 };
 
 // Format date
@@ -257,13 +311,32 @@ useHead({
                     />
                 </div>
 
-                <Button
-                    class="flex items-center gap-2"
-                    @click="createNewResume"
-                >
-                    <Plus class="w-4 h-4" />
-                    Create New Resume
-                </Button>
+                <div class="flex gap-2">
+                    <Button
+                        variant="outline"
+                        class="flex items-center gap-2"
+                        @click="triggerImport"
+                    >
+                        <Upload class="w-4 h-4" />
+                        Import
+                    </Button>
+                    <Button
+                        v-if="resumeCount > 0"
+                        variant="outline"
+                        class="flex items-center gap-2"
+                        @click="showExportModal = true"
+                    >
+                        <Download class="w-4 h-4" />
+                        Export
+                    </Button>
+                    <Button
+                        class="flex items-center gap-2"
+                        @click="createNewResume"
+                    >
+                        <Plus class="w-4 h-4" />
+                        Create New Resume
+                    </Button>
+                </div>
             </div>
         </div>
 
@@ -411,6 +484,16 @@ useHead({
                             Copy
                         </Button>
                         <Button
+                            class="flex items-center gap-1"
+                            size="sm"
+                            variant="outline"
+                            @click.stop="exportSingleResume(resume.id)"
+                            title="Export resume"
+                        >
+                            <Download class="w-3 h-3" />
+                            Export
+                        </Button>
+                        <Button
                             class="flex items-center gap-1 text-red-600 hover:text-red-700"
                             size="sm"
                             variant="outline"
@@ -439,6 +522,22 @@ useHead({
             @confirm="handleCopyResume"
         />
 
+        <!-- Export Modal -->
+        <ExportModal
+            :is-open="showExportModal"
+            :resumes="resumes"
+            @close="showExportModal = false"
+            @export="handleExport"
+        />
+
+        <!-- Import Confirmation Modal -->
+        <ImportConfirmationModal
+            :is-open="showImportModal"
+            :resumes-to-import="importPreviews"
+            @close="showImportModal = false; importPreviews = []"
+            @import="handleImportConfirm"
+        />
+
         <!-- Confirmation Modal -->
         <ConfirmationModal
             :cancel-text="confirmation.cancelText.value"
@@ -449,6 +548,15 @@ useHead({
             @cancel="confirmation.handleCancel"
             @confirm="confirmation.handleConfirm"
         />
+
+        <!-- Hidden file input for import -->
+        <input
+            ref="importInputRef"
+            type="file"
+            accept=".json"
+            class="hidden"
+            @change="handleFileSelect"
+        >
     </div>
 </template>
 
