@@ -208,6 +208,13 @@ const orderableSections = computed<Section[]>(() => {
             orderable: true,
             order: sectionOrder.volunteering,
         },
+        {
+            id: 'certificates',
+            title: 'Certificates',
+            subtitle: `${resumeStore.resumeData.certificates.length} ${resumeStore.resumeData.certificates.length === 1 ? 'certificate' : 'certificates'}`,
+            orderable: true,
+            order: sectionOrder.certificates ?? 8,
+        },
     ];
 
     return sectionsData.sort((a, b) => a.order - b.order);
