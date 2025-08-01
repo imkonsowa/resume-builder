@@ -5,7 +5,7 @@
         @click="handleBackdropClick"
     >
         <!-- Backdrop -->
-        <div class="absolute inset-0 bg-black/50" />
+        <div class="absolute inset-0 bg-black/50"/>
 
         <!-- Modal Content -->
         <div
@@ -27,10 +27,11 @@
                 class="bg-amber-50 border border-amber-200 rounded-md p-3 mb-4"
             >
                 <div class="flex">
-                    <AlertTriangle class="h-5 w-5 text-amber-600 flex-shrink-0" />
+                    <AlertTriangle class="h-5 w-5 text-amber-600 flex-shrink-0"/>
                     <div class="ml-3">
                         <p class="text-sm text-amber-800">
-                            {{ duplicateCount }} resume{{ duplicateCount !== 1 ? 's' : '' }} with matching names already exist.
+                            {{ duplicateCount }} resume{{ duplicateCount !== 1 ? 's' : '' }} with matching names already
+                            exist.
                             These are unchecked by default.
                         </p>
                     </div>
@@ -101,56 +102,56 @@
 </template>
 
 <script lang="ts" setup>
-import { Button } from '~/components/ui/button';
-import { Badge } from '~/components/ui/badge';
-import { AlertTriangle } from 'lucide-vue-next';
+    import {Button} from '~/components/ui/button';
+    import {Badge} from '~/components/ui/badge';
+    import {AlertTriangle} from 'lucide-vue-next';
 
-export interface ImportResumePreview {
-    name: string;
-    data: any;
-    isDuplicate: boolean;
-    itemCount: number;
-}
-
-interface Props {
-    isOpen: boolean;
-    resumesToImport: ImportResumePreview[];
-}
-
-const props = defineProps<Props>();
-
-const emit = defineEmits<{
-    close: [];
-    import: [indexes: number[]];
-}>();
-
-const selectedIndexes = ref<number[]>([]);
-
-// Initialize with non-duplicate resumes selected
-watch(() => props.isOpen, (newVal) => {
-    if (newVal) {
-        // Select only non-duplicate resumes by default
-        selectedIndexes.value = props.resumesToImport
-            .map((resume, index) => ({ resume, index }))
-            .filter(({ resume }) => !resume.isDuplicate)
-            .map(({ index }) => index);
+    export interface ImportResumePreview {
+        name: string;
+        data: any;
+        isDuplicate: boolean;
+        itemCount: number;
     }
-});
 
-// Count duplicates
-const duplicateCount = computed(() => {
-    return props.resumesToImport.filter(r => r.isDuplicate).length;
-});
+    interface Props {
+        isOpen: boolean;
+        resumesToImport: ImportResumePreview[];
+    }
 
-const handleBackdropClick = () => {
-    emit('close');
-};
+    const props = defineProps<Props>();
 
-const handleCancel = () => {
-    emit('close');
-};
+    const emit = defineEmits<{
+        close: [];
+        import: [indexes: number[]];
+    }>();
 
-const handleImport = () => {
-    emit('import', selectedIndexes.value);
-};
+    const selectedIndexes = ref<number[]>([]);
+
+    // Initialize with non-duplicate resumes selected
+    watch(() => props.isOpen, (newVal) => {
+        if (newVal) {
+            // Select only non-duplicate resumes by default
+            selectedIndexes.value = props.resumesToImport
+                .map((resume, index) => ({resume, index}))
+                .filter(({resume}) => !resume.isDuplicate)
+                .map(({index}) => index);
+        }
+    });
+
+    // Count duplicates
+    const duplicateCount = computed(() => {
+        return props.resumesToImport.filter(r => r.isDuplicate).length;
+    });
+
+    const handleBackdropClick = () => {
+        emit('close');
+    };
+
+    const handleCancel = () => {
+        emit('close');
+    };
+
+    const handleImport = () => {
+        emit('import', selectedIndexes.value);
+    };
 </script>
