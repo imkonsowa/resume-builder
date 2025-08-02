@@ -3,6 +3,7 @@ import type {
     Certificate,
     Education,
     Experience,
+    Internship,
     Language,
     Project,
     Resume,
@@ -118,14 +119,24 @@ export const useResumeStore = defineStore('resume', {
 
                 // Initialize section order for backward compatibility
                 if (resume.data.sectionOrder) {
+                    if (resume.data.sectionOrder.internships === undefined) {
+                        resume.data.sectionOrder.internships = 3;
+                        // Shift other sections down
+                        if (resume.data.sectionOrder.skills === 3) resume.data.sectionOrder.skills = 4;
+                        if (resume.data.sectionOrder.volunteering === 4) resume.data.sectionOrder.volunteering = 5;
+                        if (resume.data.sectionOrder.socialLinks === 5) resume.data.sectionOrder.socialLinks = 6;
+                        if (resume.data.sectionOrder.projects === 6) resume.data.sectionOrder.projects = 7;
+                        if (resume.data.sectionOrder.languages === 7) resume.data.sectionOrder.languages = 8;
+                        if (resume.data.sectionOrder.certificates === 8) resume.data.sectionOrder.certificates = 9;
+                    }
                     if (resume.data.sectionOrder.projects === undefined) {
-                        resume.data.sectionOrder.projects = 6;
+                        resume.data.sectionOrder.projects = 7;
                     }
                     if (resume.data.sectionOrder.languages === undefined) {
-                        resume.data.sectionOrder.languages = 7;
+                        resume.data.sectionOrder.languages = 8;
                     }
                     if (resume.data.sectionOrder.certificates === undefined) {
-                        resume.data.sectionOrder.certificates = 8;
+                        resume.data.sectionOrder.certificates = 9;
                     }
                 }
 
@@ -135,6 +146,9 @@ export const useResumeStore = defineStore('resume', {
                 }
                 else {
                     // Ensure all section headers exist
+                    if (resume.data.sectionHeaders.internships === undefined) {
+                        resume.data.sectionHeaders.internships = 'Internships';
+                    }
                     if (resume.data.sectionHeaders.projects === undefined) {
                         resume.data.sectionHeaders.projects = 'Projects';
                     }
@@ -160,6 +174,11 @@ export const useResumeStore = defineStore('resume', {
                     if (resume.data.sectionPlacement.certificates === undefined) {
                         resume.data.sectionPlacement.certificates = 'right';
                     }
+                }
+
+                // Initialize internships array for backward compatibility
+                if (!resume.data.internships) {
+                    resume.data.internships = [];
                 }
 
                 // Initialize certificates array for backward compatibility
@@ -372,6 +391,117 @@ export const useResumeStore = defineStore('resume', {
                         achievements: newAchievements,
                     };
                     this.updateResumeData(this.activeResumeId, { experiences: newExperiences });
+                }
+            }
+        },
+
+        // Internship methods
+        addInternship() {
+            if (this.activeResumeId) {
+                const currentData = this.resumes[this.activeResumeId].data;
+                const newInternships = [...currentData.internships, {
+                    company: '',
+                    position: '',
+                    location: '',
+                    companyUrl: '',
+                    startDate: '',
+                    endDate: '',
+                    isPresent: false,
+                    achievements: [{ text: '' }],
+                }];
+                this.updateResumeData(this.activeResumeId, { internships: newInternships });
+            }
+        },
+
+        updateInternship(index: number, field: keyof Internship, value: unknown) {
+            if (this.activeResumeId) {
+                const currentData = this.resumes[this.activeResumeId].data;
+                if (currentData.internships[index]) {
+                    const newInternships = [...currentData.internships];
+                    (newInternships[index] as Record<string, unknown>)[field] = value;
+                    this.updateResumeData(this.activeResumeId, { internships: newInternships });
+                }
+            }
+        },
+
+        removeInternship(index: number) {
+            if (this.activeResumeId) {
+                const currentData = this.resumes[this.activeResumeId].data;
+                const newInternships = [...currentData.internships];
+                newInternships.splice(index, 1);
+                this.updateResumeData(this.activeResumeId, { internships: newInternships });
+            }
+        },
+
+        moveInternship(fromIndex: number, toIndex: number) {
+            if (this.activeResumeId) {
+                const currentData = this.resumes[this.activeResumeId].data;
+                const newInternships = [...currentData.internships];
+                const item = newInternships.splice(fromIndex, 1)[0];
+                newInternships.splice(toIndex, 0, item);
+                this.updateResumeData(this.activeResumeId, { internships: newInternships });
+            }
+        },
+
+        addInternshipAchievement(internshipIndex: number, achievement = '') {
+            if (this.activeResumeId) {
+                const currentData = this.resumes[this.activeResumeId].data;
+                if (currentData.internships[internshipIndex]) {
+                    const newInternships = [...currentData.internships];
+                    newInternships[internshipIndex] = {
+                        ...newInternships[internshipIndex],
+                        achievements: [...newInternships[internshipIndex].achievements, { text: achievement }],
+                    };
+                    this.updateResumeData(this.activeResumeId, { internships: newInternships });
+                }
+            }
+        },
+
+        updateInternshipAchievement(internshipIndex: number, achievementIndex: number, achievement: string) {
+            if (this.activeResumeId) {
+                const currentData = this.resumes[this.activeResumeId].data;
+                if (currentData.internships[internshipIndex]?.achievements[achievementIndex] !== undefined) {
+                    const newInternships = [...currentData.internships];
+                    const newAchievements = [...newInternships[internshipIndex].achievements];
+                    newAchievements[achievementIndex] = { text: achievement };
+                    newInternships[internshipIndex] = {
+                        ...newInternships[internshipIndex],
+                        achievements: newAchievements,
+                    };
+                    this.updateResumeData(this.activeResumeId, { internships: newInternships });
+                }
+            }
+        },
+
+        removeInternshipAchievement(internshipIndex: number, achievementIndex: number) {
+            if (this.activeResumeId) {
+                const currentData = this.resumes[this.activeResumeId].data;
+                if (currentData.internships[internshipIndex]) {
+                    const newInternships = [...currentData.internships];
+                    const newAchievements = [...newInternships[internshipIndex].achievements];
+                    newAchievements.splice(achievementIndex, 1);
+                    newInternships[internshipIndex] = {
+                        ...newInternships[internshipIndex],
+                        achievements: newAchievements,
+                    };
+                    this.updateResumeData(this.activeResumeId, { internships: newInternships });
+                }
+            }
+        },
+
+        moveInternshipAchievement(internshipIndex: number, fromIndex: number, toIndex: number) {
+            if (this.activeResumeId) {
+                const currentData = this.resumes[this.activeResumeId].data;
+                if (currentData.internships[internshipIndex]) {
+                    const newInternships = [...currentData.internships];
+                    const newAchievements = [...newInternships[internshipIndex].achievements];
+                    const item = newAchievements.splice(fromIndex, 1)[0];
+                    newAchievements.splice(toIndex, 0, item);
+                    newInternships[internshipIndex] = {
+                        ...newInternships[internshipIndex],
+                        achievements: newAchievements,
+                    };
+                    this.updateResumeData(this.activeResumeId, { internships: newInternships });
                 }
             }
         },

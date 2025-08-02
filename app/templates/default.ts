@@ -38,6 +38,7 @@ const parse = (data: ResumeData, font: string): string => {
 
     const allSections = {
         experiences: () => sharedRenderers.experience(data, fontSize, config),
+        internships: () => sharedRenderers.internships(data, fontSize, config),
         education: () => sharedRenderers.education(data, fontSize, config),
         contact: () => sharedRenderers.contactInfo(data, fontSize, config),
         socialLinks: () => sharedRenderers.socialLinks(data, fontSize, config),
@@ -48,7 +49,7 @@ const parse = (data: ResumeData, font: string): string => {
         certificates: () => sharedRenderers.certificates(data, fontSize, config),
     };
 
-    const fixedLeftSections = ['experiences', 'education'];
+    const fixedLeftSections = ['experiences', 'internships', 'education'];
 
     const movableSections = ['projects', 'languages', 'technicalSkills', 'volunteering', 'certificates'];
 
@@ -78,12 +79,13 @@ const parse = (data: ResumeData, font: string): string => {
 
     const leftSectionOrder = {
         experiences: data.sectionOrder?.experience || 1,
-        education: data.sectionOrder?.education || 2,
-        technicalSkills: data.sectionOrder?.skills || 3,
-        projects: data.sectionOrder?.projects || 4,
-        languages: data.sectionOrder?.languages || 5,
-        volunteering: data.sectionOrder?.volunteering || 6,
-        certificates: data.sectionOrder?.certificates || 7,
+        internships: data.sectionOrder?.internships || 2,
+        education: data.sectionOrder?.education || 3,
+        technicalSkills: data.sectionOrder?.skills || 4,
+        projects: data.sectionOrder?.projects || 5,
+        languages: data.sectionOrder?.languages || 6,
+        volunteering: data.sectionOrder?.volunteering || 7,
+        certificates: data.sectionOrder?.certificates || 8,
     };
 
     const rightSectionOrder = {

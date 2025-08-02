@@ -127,6 +127,7 @@ const parse = (data: ResumeData, font: string): string => {
     const sectionRenderers: Record<string, () => string> = {
         education: () => sharedRenderers.education(data, fontSize, config),
         experience: () => sharedRenderers.experience(data, fontSize, config),
+        internships: () => sharedRenderers.internships(data, fontSize, config),
         skills: () => sharedRenderers.skills(data, fontSize, config),
         projects: () => sharedRenderers.projects(data, fontSize, config),
         volunteering: () => sharedRenderers.volunteering(data, fontSize, config),
