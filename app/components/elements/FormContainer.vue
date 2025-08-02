@@ -8,9 +8,9 @@
                         :value="props.title"
                         @update="$emit('edit-title', $event)"
                     />
-                    <CardTitle v-else>
+                    <h3 class="text-lg font-semibold text-gray-900" v-else>
                         {{ props.title }}
-                    </CardTitle>
+                    </h3>
                 </div>
                 <div class="flex items-center space-x-2">
                     <div
