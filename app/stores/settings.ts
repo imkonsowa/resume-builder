@@ -82,14 +82,14 @@ export const useSettingsStore = defineStore('settings', {
         },
 
         collapseAllSections() {
-            const sections = ['personal', 'experience', 'education', 'skills', 'volunteering', 'projects', 'languages'];
+            const sections = ['personal', 'experience', 'education', 'skills', 'volunteering', 'projects', 'languages', 'certificates'];
             sections.forEach((section) => {
                 this.setSectionCollapsed(section, true);
             });
         },
 
         expandAllSections() {
-            const sections = ['personal', 'experience', 'education', 'skills', 'volunteering', 'projects', 'languages'];
+            const sections = ['personal', 'experience', 'education', 'skills', 'volunteering', 'projects', 'languages', 'certificates'];
             sections.forEach((section) => {
                 this.setSectionCollapsed(section, false);
             });
@@ -105,6 +105,7 @@ export const useSettingsStore = defineStore('settings', {
                     volunteering: true,
                     projects: true,
                     languages: true,
+                    certificates: true,
                 };
             }
         },
