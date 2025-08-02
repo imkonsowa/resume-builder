@@ -19,16 +19,11 @@ const renderHeaderLeftColumn = (data: ResumeData, fontSize: number): string[] =>
 
     const fullName = `${escapeTypstText(data?.firstName || '')} ${escapeTypstText(data?.lastName || '')}`.trim();
     const position = escapeTypstText(data?.position || '');
-    const location = escapeTypstText(data?.location || '');
 
     rows.push(`#text(size: ${fontSize + 12}pt, weight: "bold")[${fullName}]`);
 
     if (position) {
         rows.push(`#block(above: 0.8em)[#text(size: ${fontSize + 2}pt)[${position}]]`);
-    }
-
-    if (location) {
-        rows.push(`#block(above: 0.6em)[#text(size: ${fontSize - 1}pt)[${location}]]`);
     }
 
     return rows;
@@ -46,6 +41,12 @@ const renderHeaderRightColumn = (data: ResumeData, fontSize: number): string[] =
         const phone = escapeTypstText(data.phone);
         const phoneSpacing = rows.length > 0 ? '0.8em' : '0em';
         rows.push(`#block(above: ${phoneSpacing})[#text(size: ${fontSize - 1}pt)[${phone}]]`);
+    }
+
+    if (data?.location) {
+        const location = escapeTypstText(data.location);
+        const locationSpacing = rows.length > 0 ? '0.8em' : '0em';
+        rows.push(`#block(above: ${locationSpacing})[#text(size: ${fontSize - 1}pt)[${location}]]`);
     }
 
     const socialLinks = (data?.socialLinks || [])
