@@ -6,6 +6,7 @@ import ZoomControls from '~/components/elements/ZoomControls.vue';
 import ResumeBuilderHeader from '~/components/elements/ResumeBuilderHeader.vue';
 import PersonalInfoForm from '~/components/forms/PersonalInfoForm.vue';
 import ExperienceForm from '~/components/forms/ExperienceForm.vue';
+import InternshipsForm from '~/components/forms/InternshipsForm.vue';
 import EducationForm from '~/components/forms/EducationForm.vue';
 import SkillsForm from '~/components/forms/SkillsForm.vue';
 import ProjectsForm from '~/components/forms/ProjectsForm.vue';
@@ -156,6 +157,11 @@ watch(showMobilePreview, (newValue) => {
                             <!-- Experience -->
                             <div id="experience">
                                 <ExperienceForm />
+                            </div>
+
+                            <!-- Internships -->
+                            <div id="internships">
+                                <InternshipsForm />
                             </div>
 
                             <!-- Education -->

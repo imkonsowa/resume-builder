@@ -174,6 +174,13 @@ const orderableSections = computed<Section[]>(() => {
             order: sectionOrder.experience,
         },
         {
+            id: 'internships',
+            title: 'Internships',
+            subtitle: `${resumeStore.resumeData.internships.length} ${resumeStore.resumeData.internships.length === 1 ? 'internship' : 'internships'}`,
+            orderable: true,
+            order: sectionOrder.internships,
+        },
+        {
             id: 'education',
             title: 'Education',
             subtitle: `${resumeStore.resumeData.education.length} ${resumeStore.resumeData.education.length === 1 ? 'degree' : 'degrees'}`,
@@ -213,7 +220,7 @@ const orderableSections = computed<Section[]>(() => {
             title: 'Certificates',
             subtitle: `${resumeStore.resumeData.certificates.length} ${resumeStore.resumeData.certificates.length === 1 ? 'certificate' : 'certificates'}`,
             orderable: true,
-            order: sectionOrder.certificates ?? 8,
+            order: sectionOrder.certificates,
         },
     ];
 
