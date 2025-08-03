@@ -7,6 +7,7 @@ import {
     generateContactContent,
     generateEducationContent,
     generateExperienceContent,
+    generateInternshipsContent,
     generateLanguagesContent,
     generateProjectsContent,
     generateSkillsContent,
@@ -29,6 +30,7 @@ import {
  */
 const DEFAULT_SECTION_HEADERS = {
     experience: 'Employment History',
+    internships: 'Internships',
     education: 'Education',
     skills: 'Skills',
     projects: 'Projects',
@@ -50,6 +52,21 @@ export const renderSharedExperience: SectionRenderer = (data: ResumeData, fontSi
     const sectionContent = generateExperienceContent(data.experiences);
     const formattedContent = formatExperienceItems(sectionContent, config, fontSize);
     const headerText = data?.sectionHeaders?.experience || DEFAULT_SECTION_HEADERS.experience;
+
+    return wrapInSectionBlock(headerText, formattedContent, fontSize, renderTemplateHeader);
+};
+
+/**
+ * Render internships section using shared logic
+ */
+export const renderSharedInternships: SectionRenderer = (data: ResumeData, fontSize: number, config: TemplateLayoutConfig): string => {
+    if (!data?.internships || data.internships.length === 0) {
+        return '';
+    }
+
+    const sectionContent = generateInternshipsContent(data.internships);
+    const formattedContent = formatExperienceItems(sectionContent, config, fontSize);
+    const headerText = data?.sectionHeaders?.internships || DEFAULT_SECTION_HEADERS.internships;
 
     return wrapInSectionBlock(headerText, formattedContent, fontSize, renderTemplateHeader);
 };
@@ -216,6 +233,7 @@ export const renderSharedCertificates: SectionRenderer = (data: ResumeData, font
  */
 export const getSharedSectionRenderers = () => ({
     experience: renderSharedExperience,
+    internships: renderSharedInternships,
     education: renderSharedEducation,
     volunteering: renderSharedVolunteering,
     projects: renderSharedProjects,

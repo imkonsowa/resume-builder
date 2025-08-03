@@ -1,4 +1,4 @@
-import type { Certificate, Education, Experience, Language, Project, ResumeData, SkillItem, Volunteering } from '~/types/resume';
+import type { Certificate, Education, Experience, Internship, Language, Project, ResumeData, SkillItem, Volunteering } from '~/types/resume';
 import type { SectionContent } from '~/types/templateConfig';
 import { convertDateRange, convertEmail, convertExternalLinkIcon, convertLink } from './typstUtils';
 import { escapeTypstText } from './stringUtils';
@@ -24,6 +24,27 @@ export const generateExperienceContent = (experiences: Experience[]): SectionCon
         const dateRange = convertDateRange(experience.startDate, experience.endDate, experience.isPresent);
         const companyLink = experience.companyUrl?.trim() ? convertExternalLinkIcon(experience.companyUrl) : '';
         const achievements = experience.achievements
+            .filter(achievement => achievement.text && achievement.text.trim() !== '')
+            .map(achievement => achievement.text);
+
+        return {
+            title,
+            date: dateRange,
+            content: companyLink,
+            achievements,
+        };
+    });
+};
+
+/**
+ * Generate internships content (shared between templates)
+ */
+export const generateInternshipsContent = (internships: Internship[]): SectionContent[] => {
+    return internships.map((internship) => {
+        const title = `${internship.position}${internship.company ? ' at ' + internship.company : ''}${internship.location ? ', ' + internship.location : ''}`;
+        const dateRange = convertDateRange(internship.startDate, internship.endDate, internship.isPresent);
+        const companyLink = internship.companyUrl?.trim() ? convertExternalLinkIcon(internship.companyUrl) : '';
+        const achievements = internship.achievements
             .filter(achievement => achievement.text && achievement.text.trim() !== '')
             .map(achievement => achievement.text);
 

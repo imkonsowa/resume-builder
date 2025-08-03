@@ -9,6 +9,17 @@ export interface Experience {
     achievements: Array<{ text: string }>;
 }
 
+export interface Internship {
+    company: string;
+    position: string;
+    location: string;
+    companyUrl?: string;
+    startDate: string;
+    endDate: string;
+    isPresent?: boolean;
+    achievements: Array<{ text: string }>;
+}
+
 export interface Education {
     institution: string;
     degree: string;
@@ -64,6 +75,7 @@ export interface Certificate {
 export interface SectionOrder {
     summary: number;
     experience: number;
+    internships: number;
     education: number;
     skills: number;
     volunteering: number;
@@ -96,6 +108,7 @@ export interface SectionHeaders {
     projects: string;
     languages: string;
     experience: string;
+    internships: string;
     education: string;
     skills: string;
     volunteering: string;
@@ -113,6 +126,7 @@ export interface ResumeData {
     summary: string;
 
     experiences: Experience[];
+    internships: Internship[];
     education: Education[];
     volunteering: Volunteering[];
     skills: SkillItem[];
@@ -164,6 +178,7 @@ export const defaultResumeData: ResumeData = {
     location: '',
     summary: '',
     experiences: [],
+    internships: [],
     education: [],
     volunteering: [],
     skills: [],
@@ -177,12 +192,13 @@ export const defaultResumeData: ResumeData = {
         summary: 0,
         education: 1,
         experience: 2,
-        skills: 3,
-        volunteering: 4,
-        socialLinks: 5,
-        projects: 6,
-        languages: 7,
-        certificates: 8,
+        internships: 3,
+        skills: 4,
+        volunteering: 5,
+        socialLinks: 6,
+        projects: 7,
+        languages: 8,
+        certificates: 9,
     },
     sectionHeaders: {
         personalInfo: 'Personal Information',
@@ -192,6 +208,7 @@ export const defaultResumeData: ResumeData = {
         projects: 'Projects',
         languages: 'Languages',
         experience: 'Employment History',
+        internships: 'Internships',
         education: 'Education',
         skills: 'Skills',
         volunteering: 'Volunteering',
