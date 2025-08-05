@@ -138,7 +138,6 @@
 
     // Section components mapping
     const sectionComponents = {
-        personal: PersonalInfoForm,
         experiences: ExperienceForm,
         internships: InternshipsForm,
         education: EducationForm,
@@ -161,7 +160,6 @@
         const sectionOrder = activeData.sectionOrder;
 
         const leftSectionOrder = {
-            personal: 0,
             experiences: sectionOrder.experience || 1,
             internships: sectionOrder.internships || 2,
             education: sectionOrder.education || 3,
@@ -186,13 +184,15 @@
                 <div class="w-full lg:w-1/2 min-h-screen">
                     <div class="p-4 lg:p-8 pb-32">
                         <!-- Header -->
-                        <ResumeBuilderHeader/>
+                        <ResumeBuilderHeader />
 
                         <!-- Form Content -->
                         <div class="space-y-6">
+                            <PersonalInfoForm />
+
                             <div
                                 v-for="sectionKey in orderedSections"
-                                :id="sectionKey === 'personal' ? 'personal-info' : sectionKey === 'experiences' ? 'experience' : sectionKey === 'technicalSkills' ? 'skills' : sectionKey"
+                                :id="sectionKey === 'experiences' ? 'experience' : sectionKey === 'technicalSkills' ? 'skills' : sectionKey"
                                 :key="sectionKey"
                             >
                                 <component :is="sectionComponents[sectionKey as keyof typeof sectionComponents]"/>
