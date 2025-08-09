@@ -5,7 +5,7 @@
         @click="handleBackdropClick"
     >
         <!-- Backdrop -->
-        <div class="absolute inset-0 bg-black/50"/>
+        <div class="absolute inset-0 bg-black/50" />
 
         <!-- Modal Content -->
         <div
@@ -96,65 +96,66 @@
 </template>
 
 <script lang="ts" setup>
-    import {Button} from '~/components/ui/button';
-    import {Info} from 'lucide-vue-next';
-    import type {Resume} from '~/types/resume';
+import { Button } from '~/components/ui/button';
+import { Info } from 'lucide-vue-next';
+import type { Resume } from '~/types/resume';
 
-    interface Props {
-        isOpen: boolean;
-        resumes: Resume[];
+interface Props {
+    isOpen: boolean;
+    resumes: Resume[];
+}
+
+const props = defineProps<Props>();
+
+const emit = defineEmits<{
+    close: [];
+    export: [resumeIds: string[]];
+}>();
+
+const selectedResumes = ref<string[]>([]);
+const selectAll = ref(true);
+
+// Initialize with all resumes selected
+watch(() => props.isOpen, (newVal) => {
+    if (newVal) {
+        selectedResumes.value = props.resumes.map(r => r.id);
+        selectAll.value = true;
     }
+});
 
-    const props = defineProps<Props>();
+// Handle select all
+const handleSelectAll = () => {
+    if (selectAll.value) {
+        selectedResumes.value = props.resumes.map(r => r.id);
+    }
+    else {
+        selectedResumes.value = [];
+    }
+};
 
-    const emit = defineEmits<{
-        close: [];
-        export: [resumeIds: string[]];
-    }>();
+// Watch selected resumes to update select all checkbox
+watch(selectedResumes, (newVal) => {
+    selectAll.value = newVal.length === props.resumes.length && props.resumes.length > 0;
+});
 
-    const selectedResumes = ref<string[]>([]);
-    const selectAll = ref(true);
+const handleBackdropClick = () => {
+    emit('close');
+};
 
-    // Initialize with all resumes selected
-    watch(() => props.isOpen, (newVal) => {
-        if (newVal) {
-            selectedResumes.value = props.resumes.map(r => r.id);
-            selectAll.value = true;
-        }
+const handleCancel = () => {
+    emit('close');
+};
+
+const handleExport = () => {
+    emit('export', selectedResumes.value);
+};
+
+// Format date
+const formatDate = (dateString: string) => {
+    return new Date(dateString).toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric',
     });
-
-    // Handle select all
-    const handleSelectAll = () => {
-        if (selectAll.value) {
-            selectedResumes.value = props.resumes.map(r => r.id);
-        } else {
-            selectedResumes.value = [];
-        }
-    };
-
-    // Watch selected resumes to update select all checkbox
-    watch(selectedResumes, (newVal) => {
-        selectAll.value = newVal.length === props.resumes.length && props.resumes.length > 0;
-    });
-
-    const handleBackdropClick = () => {
-        emit('close');
-    };
-
-    const handleCancel = () => {
-        emit('close');
-    };
-
-    const handleExport = () => {
-        emit('export', selectedResumes.value);
-    };
-
-    // Format date
-    const formatDate = (dateString: string) => {
-        return new Date(dateString).toLocaleDateString('en-US', {
-            year: 'numeric',
-            month: 'short',
-            day: 'numeric',
-        });
-    };
+};
 </script>

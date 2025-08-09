@@ -8,7 +8,6 @@
         @add="resumeStore.addProject"
         @edit-title="(value) => resumeStore.updateSectionHeader('projects', value)"
     >
-
         <!-- Column Placement Control -->
         <template #header-actions>
             <div
@@ -102,5 +101,4 @@ import ConfirmationModal from '~/components/elements/ConfirmationModal.vue';
 const resumeStore = useResumeStore();
 const confirmation = useConfirmation();
 const templateConfig = useTemplate();
-
 </script>

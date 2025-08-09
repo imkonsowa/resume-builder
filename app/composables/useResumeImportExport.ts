@@ -1,4 +1,4 @@
-import type {ImportResumePreview} from '~/components/elements/ImportConfirmationModal.vue';
+import type { ImportResumePreview } from '~/components/elements/ImportConfirmationModal.vue';
 
 export const useResumeImportExport = () => {
     const resumeStore = useResumeStore();
@@ -21,7 +21,7 @@ export const useResumeImportExport = () => {
         }));
 
         // Create blob and download
-        const blob = new Blob([JSON.stringify(exportData, null, 2)], {type: 'application/json'});
+        const blob = new Blob([JSON.stringify(exportData, null, 2)], { type: 'application/json' });
         const url = URL.createObjectURL(blob);
         const link = document.createElement('a');
         link.href = url;
@@ -48,7 +48,7 @@ export const useResumeImportExport = () => {
     const parseImportFile = (file: File): Promise<{
         success: boolean;
         previews?: ImportResumePreview[];
-        error?: string
+        error?: string;
     }> => {
         return new Promise((resolve) => {
             const reader = new FileReader();
@@ -73,14 +73,14 @@ export const useResumeImportExport = () => {
                         }
 
                         // Count items in the resume
-                        const itemCount =
-                            (resumeData.data.experiences?.length || 0) +
-                            (resumeData.data.education?.length || 0) +
-                            (resumeData.data.skills?.length || 0) +
-                            (resumeData.data.projects?.length || 0) +
-                            (resumeData.data.languages?.length || 0) +
-                            (resumeData.data.volunteering?.length || 0) +
-                            (resumeData.data.certificates?.length || 0);
+                        const itemCount
+                            = (resumeData.data.experiences?.length || 0)
+                                + (resumeData.data.education?.length || 0)
+                                + (resumeData.data.skills?.length || 0)
+                                + (resumeData.data.projects?.length || 0)
+                                + (resumeData.data.languages?.length || 0)
+                                + (resumeData.data.volunteering?.length || 0)
+                                + (resumeData.data.certificates?.length || 0);
 
                         return {
                             name: resumeData.name,
@@ -92,13 +92,14 @@ export const useResumeImportExport = () => {
 
                     resolve({
                         success: true,
-                        previews
+                        previews,
                     });
-                } catch (error) {
+                }
+                catch (error) {
                     console.error('Parse error:', error);
                     resolve({
                         success: false,
-                        error: error instanceof Error ? error.message : 'Failed to parse import file'
+                        error: error instanceof Error ? error.message : 'Failed to parse import file',
                     });
                 }
             };
@@ -106,7 +107,7 @@ export const useResumeImportExport = () => {
             reader.onerror = () => {
                 resolve({
                     success: false,
-                    error: 'Failed to read file'
+                    error: 'Failed to read file',
                 });
             };
 
@@ -118,7 +119,7 @@ export const useResumeImportExport = () => {
     const importSelectedResumes = (previews: ImportResumePreview[], selectedIndexes: number[]) => {
         let importedCount = 0;
 
-        selectedIndexes.forEach(index => {
+        selectedIndexes.forEach((index) => {
             const resumeData = previews[index];
             if (resumeData) {
                 // Create new resume with imported data

@@ -8,7 +8,10 @@
                         :value="props.title"
                         @update="$emit('edit-title', $event)"
                     />
-                    <h3 class="text-lg font-semibold text-gray-900" v-else>
+                    <h3
+                        v-else
+                        class="text-lg font-semibold text-gray-900"
+                    >
                         {{ props.title }}
                     </h3>
                 </div>

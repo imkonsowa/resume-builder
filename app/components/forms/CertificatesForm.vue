@@ -9,7 +9,6 @@
         @add="resumeStore.addCertificate"
         @edit-title="(value) => resumeStore.updateSectionHeader('certificates', value)"
     >
-
         <!-- Column Placement Control -->
         <template #header-actions>
             <div
@@ -124,5 +123,4 @@ import ConfirmationModal from '~/components/elements/ConfirmationModal.vue';
 const resumeStore = useResumeStore();
 const confirmation = useConfirmation();
 const templateConfig = useTemplate();
-
 </script>

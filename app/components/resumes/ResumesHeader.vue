@@ -59,22 +59,22 @@
 </template>
 
 <script lang="ts" setup>
-    import { Button } from '~/components/ui/button';
-    import { Input } from '~/components/ui/input';
-    import { Download, Plus, Search, Upload } from 'lucide-vue-next';
+import { Button } from '~/components/ui/button';
+import { Input } from '~/components/ui/input';
+import { Download, Plus, Search, Upload } from 'lucide-vue-next';
 
-    interface Props {
-        searchQuery: string;
-        resumeCount: number;
-        filteredCount: number;
-    }
+interface Props {
+    searchQuery: string;
+    resumeCount: number;
+    filteredCount: number;
+}
 
-    defineProps<Props>();
+defineProps<Props>();
 
-    defineEmits<{
-        'update:searchQuery': [value: string];
-        import: [];
-        export: [];
-        create: [];
-    }>();
+defineEmits<{
+    'update:searchQuery': [value: string];
+    'import': [];
+    'export': [];
+    'create': [];
+}>();
 </script>

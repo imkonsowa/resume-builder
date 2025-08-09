@@ -14,22 +14,22 @@
 </template>
 
 <script lang="ts" setup>
-    import ResumeCard from './ResumeCard.vue';
-    import type { Resume } from '~/types/resume';
+import ResumeCard from './ResumeCard.vue';
+import type { Resume } from '~/types/resume';
 
-    interface Props {
-        resumes: Resume[];
-        activeResumeId: string | null;
-    }
+interface Props {
+    resumes: Resume[];
+    activeResumeId: string | null;
+}
 
-    defineProps<Props>();
+defineProps<Props>();
 
-    defineEmits<{
-        edit: [id: string];
-        copy: [id: string];
-        export: [id: string];
-        delete: [id: string];
-    }>();
+defineEmits<{
+    edit: [id: string];
+    copy: [id: string];
+    export: [id: string];
+    delete: [id: string];
+}>();
 </script>
 
 <style scoped>

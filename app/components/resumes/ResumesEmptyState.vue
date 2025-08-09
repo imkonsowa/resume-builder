@@ -42,18 +42,18 @@
 </template>
 
 <script lang="ts" setup>
-    import { Button } from '~/components/ui/button';
-    import { FileText, Search } from 'lucide-vue-next';
+import { Button } from '~/components/ui/button';
+import { FileText, Search } from 'lucide-vue-next';
 
-    interface Props {
-        type: 'no-resumes' | 'no-search-results';
-        searchQuery?: string;
-    }
+interface Props {
+    type: 'no-resumes' | 'no-search-results';
+    searchQuery?: string;
+}
 
-    defineProps<Props>();
+defineProps<Props>();
 
-    defineEmits<{
-        create: [];
-        'clear-search': [];
-    }>();
+defineEmits<{
+    'create': [];
+    'clear-search': [];
+}>();
 </script>

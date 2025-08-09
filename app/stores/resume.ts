@@ -117,7 +117,7 @@ export const useResumeStore = defineStore('resume', {
             Object.keys(this.resumes).forEach((resumeId) => {
                 const resume = this.resumes[resumeId];
                 if (resume === undefined) {
-                    return
+                    return;
                 }
 
                 // Initialize section order for backward compatibility

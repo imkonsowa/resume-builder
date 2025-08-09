@@ -234,6 +234,7 @@ export const defaultAppSettings: AppSettings = {
     sectionCollapsed: {
         personal: false,
         experience: true,
+        internships: true,
         education: true,
         skills: true,
         volunteering: true,

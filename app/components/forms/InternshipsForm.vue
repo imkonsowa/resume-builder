@@ -176,15 +176,15 @@
 </template>
 
 <script lang="ts" setup>
-    import { Button } from '~/components/ui/button';
-    import { Input } from '~/components/ui/input';
-    import { Label } from '~/components/ui/label';
-    import { Checkbox } from '~/components/ui/checkbox';
-    import { ChevronDown, ChevronUp, Plus, Trash2 } from 'lucide-vue-next';
-    import MonthYearPicker from '~/components/elements/MonthYearPicker.vue';
-    import FormCard from '~/components/elements/FormCard.vue';
-    import FormContainer from '~/components/elements/FormContainer.vue';
+import { Button } from '~/components/ui/button';
+import { Input } from '~/components/ui/input';
+import { Label } from '~/components/ui/label';
+import { Checkbox } from '~/components/ui/checkbox';
+import { ChevronDown, ChevronUp, Plus, Trash2 } from 'lucide-vue-next';
+import MonthYearPicker from '~/components/elements/MonthYearPicker.vue';
+import FormCard from '~/components/elements/FormCard.vue';
+import FormContainer from '~/components/elements/FormContainer.vue';
 
-    // Use the store directly instead of prop drilling
-    const resumeStore = useResumeStore();
+// Use the store directly instead of prop drilling
+const resumeStore = useResumeStore();
 </script>

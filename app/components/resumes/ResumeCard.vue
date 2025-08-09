@@ -120,84 +120,84 @@
 </template>
 
 <script lang="ts" setup>
-    import { Button } from '~/components/ui/button';
-    import { Card, CardContent, CardHeader, CardTitle } from '~/components/ui/card';
-    import { Badge } from '~/components/ui/badge';
-    import {
-        Calendar,
-        Check,
-        Copy,
-        Download,
-        Edit,
-        PencilIcon,
-        Trash2,
-        X
-    } from 'lucide-vue-next';
-    import type { Resume } from '~/types/resume';
+import { Button } from '~/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '~/components/ui/card';
+import { Badge } from '~/components/ui/badge';
+import {
+    Calendar,
+    Check,
+    Copy,
+    Download,
+    Edit,
+    PencilIcon,
+    Trash2,
+    X,
+} from 'lucide-vue-next';
+import type { Resume } from '~/types/resume';
 
-    interface Props {
-        resume: Resume;
-        isActive: boolean;
-    }
+interface Props {
+    resume: Resume;
+    isActive: boolean;
+}
 
-    const props = defineProps<Props>();
+const props = defineProps<Props>();
 
-    defineEmits<{
-        edit: [id: string];
-        copy: [id: string];
-        export: [id: string];
-        delete: [id: string];
-        rename: [id: string, newName: string];
-    }>();
+defineEmits<{
+    edit: [id: string];
+    copy: [id: string];
+    export: [id: string];
+    delete: [id: string];
+    rename: [id: string, newName: string];
+}>();
 
-    const resumeStore = useResumeStore();
+const resumeStore = useResumeStore();
 
-    // Editing state
-    const isEditing = ref(false);
-    const editingName = ref('');
+// Editing state
+const isEditing = ref(false);
+const editingName = ref('');
 
-    // Resume preview computed
-    const resumePreview = computed(() => {
-        const data = props.resume.data;
-        const fullName = [data.firstName, data.lastName].filter(Boolean).join(' ');
-        const position = data.position || 'No position specified';
-        const sections = [];
+// Resume preview computed
+const resumePreview = computed(() => {
+    const data = props.resume.data;
+    const fullName = [data.firstName, data.lastName].filter(Boolean).join(' ');
+    const position = data.position || 'No position specified';
+    const sections = [];
 
-        if (data.experiences?.length) sections.push(`${data.experiences.length} experience${data.experiences.length > 1 ? 's' : ''}`);
-        if (data.education?.length) sections.push(`${data.education.length} education${data.education.length > 1 ? 's' : ''}`);
-        if (data.skills?.length) sections.push(`${data.skills.length} skill${data.skills.length > 1 ? 's' : ''}`);
+    if (data.experiences?.length) sections.push(`${data.experiences.length} experience${data.experiences.length > 1 ? 's' : ''}`);
+    if (data.education?.length) sections.push(`${data.education.length} education${data.education.length > 1 ? 's' : ''}`);
+    if (data.skills?.length) sections.push(`${data.skills.length} skill${data.skills.length > 1 ? 's' : ''}`);
 
-        return {
-            fullName: fullName || 'No name specified',
-            position,
-            sections: sections.join(', ') || 'No sections added',
-        };
+    return {
+        fullName: fullName || 'No name specified',
+        position,
+        sections: sections.join(', ') || 'No sections added',
+    };
+});
+
+// Format date
+const formatDate = (dateString: string) => {
+    return new Date(dateString).toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric',
     });
+};
 
-    // Format date
-    const formatDate = (dateString: string) => {
-        return new Date(dateString).toLocaleDateString('en-US', {
-            year: 'numeric',
-            month: 'short',
-            day: 'numeric',
-        });
-    };
+// Editing functions
+const startEdit = () => {
+    isEditing.value = true;
+    editingName.value = props.resume.name;
+};
 
-    // Editing functions
-    const startEdit = () => {
-        isEditing.value = true;
-        editingName.value = props.resume.name;
-    };
+const saveEdit = () => {
+    if (editingName.value.trim()) {
+        resumeStore.renameResume(props.resume.id, editingName.value.trim());
+    }
+    cancelEdit();
+};
 
-    const saveEdit = () => {
-        if (editingName.value.trim()) {
-            resumeStore.renameResume(props.resume.id, editingName.value.trim());
-        }
-        cancelEdit();
-    };
-
-    const cancelEdit = () => {
-        isEditing.value = false;
-        editingName.value = '';
-    };
+const cancelEdit = () => {
+    isEditing.value = false;
+    editingName.value = '';
+};
 </script>

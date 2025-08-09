@@ -231,7 +231,7 @@ export const generateCertificatesContent = (certificates: Certificate[]): Sectio
             const title = `${cert.title}${cert.issuer ? ' from ' + cert.issuer : ''}`;
             const dateRange = cert.date ? convertDateRange(cert.date) : '';
             const certLink = cert.url?.trim() ? convertExternalLinkIcon(cert.url) : '';
-            
+
             const description = cert.description?.trim() ? escapeTypstText(cert.description) : '';
 
             return {
