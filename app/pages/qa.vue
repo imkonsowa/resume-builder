@@ -6,81 +6,84 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '~/
 import { ArrowRight, CheckCircle, HelpCircle } from 'lucide-vue-next';
 import { createFAQStructuredData } from '~/composables/useSEO';
 
+const { t } = useI18n();
+
+// Build FAQ data from translations
 const faqs = [
     {
-        question: 'Is the resume builder really free?',
-        answer: 'Yes! Our resume builder is completely free with no hidden costs, no premium features, and no subscription fees. You can create unlimited resumes, download them as PDFs, and use all features without any charges. We believe creating a professional resume should always be accessible to everyone.',
+        question: t('qa.questions.isFree.question'),
+        answer: t('qa.questions.isFree.answer'),
     },
     {
-        question: 'Do I need to create an account or sign up?',
-        answer: 'No account creation is required! You can start building your resume immediately without any registration, email verification, or personal information. All your data is stored locally in your browser, ensuring complete privacy and control over your information.',
+        question: t('qa.questions.signUp.question'),
+        answer: t('qa.questions.signUp.answer'),
     },
     {
-        question: 'How does the PDF export work?',
-        answer: 'Our resume builder uses Typst, a modern typesetting system, to generate high-quality PDF documents. When you click "Download PDF," the system compiles your resume data into a professionally formatted PDF that\'s ready for printing or digital sharing.',
+        question: t('qa.questions.pdfExport.question'),
+        answer: t('qa.questions.pdfExport.answer'),
     },
     {
-        question: 'Is my data secure and private?',
-        answer: 'Absolutely! All your resume data is stored locally in your browser\'s storage. We don\'t collect, store, or transmit any of your personal information to external servers. Your data stays on your device and is completely under your control.',
+        question: t('qa.questions.privacy.question'),
+        answer: t('qa.questions.privacy.answer'),
     },
     {
-        question: 'Can I use this on mobile devices?',
-        answer: 'Yes! Our resume builder is fully responsive and works on all devices including smartphones and tablets. On mobile, you can access the preview through a floating button that opens a full-screen preview modal.',
+        question: t('qa.questions.mobile.question'),
+        answer: t('qa.questions.mobile.answer'),
     },
     {
-        question: 'What is Raw Typst mode?',
-        answer: 'Raw Typst mode allows advanced users to write Typst markup directly, giving you complete control over formatting and layout. This is perfect for users who want to customize their resume beyond what the form interface provides.',
+        question: t('qa.questions.rawMode.question'),
+        answer: t('qa.questions.rawMode.answer'),
     },
     {
-        question: 'Can I import and export my resume data?',
-        answer: 'Yes! You can export your resume data as a JSON file for backup purposes or to transfer between devices. You can also import previously exported data to restore your resume or work on it from another device.',
+        question: t('qa.questions.importExport.question'),
+        answer: t('qa.questions.importExport.answer'),
     },
     {
-        question: 'What sections can I add to my resume?',
-        answer: 'You can add multiple sections including Personal Information, Work Experience, Education, Skills, Volunteering, and Social Links. Each section supports multiple entries, and you can reorder sections to match your preferences.',
+        question: t('qa.questions.sections.question'),
+        answer: t('qa.questions.sections.answer'),
     },
     {
-        question: 'How do I reorder sections or experiences?',
-        answer: 'Use the Section Ordering panel to drag and drop sections into your preferred order. Within each section, you can also reorder individual entries and bullet points using the move up/down buttons.',
+        question: t('qa.questions.reorder.question'),
+        answer: t('qa.questions.reorder.answer'),
     },
     {
-        question: 'Can I customize fonts and templates?',
-        answer: 'Yes! You can choose from multiple font options including Roboto and Calibri. Template selection is also available to change the overall layout and styling of your resume.',
+        question: t('qa.questions.customize.question'),
+        answer: t('qa.questions.customize.answer'),
     },
     {
-        question: 'What browsers are supported?',
-        answer: 'Our resume builder works on all modern browsers including Chrome, Firefox, Safari, and Edge. We recommend using the latest version of your preferred browser for the best experience.',
+        question: t('qa.questions.browsers.question'),
+        answer: t('qa.questions.browsers.answer'),
     },
     {
-        question: 'How do I get help or report issues?',
-        answer: 'You can visit our GitHub repository to report issues, request features, or contribute to the project. We also provide comprehensive documentation and examples to help you get started.',
+        question: t('qa.questions.support.question'),
+        answer: t('qa.questions.support.answer'),
     },
 ];
 
 const faqCategories = [
     {
-        title: 'Getting Started',
+        title: t('qa.categories.gettingStarted'),
         icon: HelpCircle,
         faqs: faqs.slice(0, 4),
     },
     {
-        title: 'Features & Functionality',
+        title: t('qa.categories.features'),
         icon: CheckCircle,
         faqs: faqs.slice(4, 8),
     },
     {
-        title: 'Technical & Support',
+        title: t('qa.categories.technical'),
         icon: HelpCircle,
         faqs: faqs.slice(8),
     },
 ];
 
 useHead({
-    title: 'Q&A - Free Resume Builder | Frequently Asked Questions & Help',
+    title: `${t('qa.title')} ${t('qa.titleHighlight')} - ${t('navigation.qa')}`,
     meta: [
         {
             name: 'description',
-            content: 'Get answers to common questions about our free resume builder. Learn about features, PDF export, privacy, Typst formatting, and how to create professional resumes online.',
+            content: t('qa.subtitle'),
         },
         {
             name: 'keywords',
@@ -101,11 +104,11 @@ useHead({
         },
         {
             property: 'og:title',
-            content: 'Q&A - Free Resume Builder | Frequently Asked Questions',
+            content: `${t('qa.title')} ${t('qa.titleHighlight')} - ${t('navigation.qa')}`,
         },
         {
             property: 'og:description',
-            content: 'Get answers to common questions about our free resume builder. Learn about features, PDF export, privacy, and more.',
+            content: t('qa.subtitle'),
         },
         {
             property: 'og:url',
@@ -122,11 +125,11 @@ useHead({
         },
         {
             name: 'twitter:title',
-            content: 'Q&A - Free Resume Builder | Frequently Asked Questions',
+            content: `${t('qa.title')} ${t('qa.titleHighlight')} - ${t('navigation.qa')}`,
         },
         {
             name: 'twitter:description',
-            content: 'Get answers to common questions about our free resume builder. Learn about features, PDF export, and privacy.',
+            content: t('qa.subtitle'),
         },
         {
             name: 'twitter:image',
@@ -157,15 +160,14 @@ useHead({
                     class="mb-4"
                     variant="secondary"
                 >
-                    Frequently Asked Questions
+                    {{ $t('qa.badge') }}
                 </Badge>
                 <h1 class="text-4xl md:text-6xl font-bold tracking-tight mb-6">
-                    Get Your Questions
-                    <span class="text-primary"> Answered</span>
+                    {{ $t('qa.title') }}
+                    <span class="text-primary"> {{ $t('qa.titleHighlight') }}</span>
                 </h1>
                 <p class="text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-                    Everything you need to know about our free resume builder.
-                    From getting started to advanced features.
+                    {{ $t('qa.subtitle') }}
                 </p>
             </div>
         </div>
@@ -220,10 +222,10 @@ useHead({
         <div class="border-t bg-muted/40">
             <div class="container mx-auto px-4 py-16 text-center">
                 <h2 class="text-3xl md:text-4xl font-bold tracking-tight mb-4">
-                    Ready to Create Your Resume?
+                    {{ $t('qa.ctaTitle') }}
                 </h2>
                 <p class="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
-                    Start building your professional resume now - it's completely free and takes just minutes!
+                    {{ $t('qa.ctaSubtitle') }}
                 </p>
                 <Button
                     as-child
@@ -234,7 +236,7 @@ useHead({
                         class="inline-flex items-center gap-2"
                         to="/builder"
                     >
-                        Start Building
+                        {{ $t('common.startBuilding') }}
                         <ArrowRight class="h-4 w-4" />
                     </NuxtLink>
                 </Button>

@@ -3,12 +3,14 @@ import { Button } from '~/components/ui/button';
 import { Check, Download, FileText, Shield, Users, Zap } from 'lucide-vue-next';
 import { createSoftwareApplicationStructuredData, createWebsiteStructuredData } from '~/composables/useSEO';
 
+const { t } = useI18n();
+
 useHead({
-    title: 'Free Resume Builder - No Registration Required | Privacy-First Resume Maker',
+    title: t('homepage.heroTitle'),
     meta: [
         {
             name: 'description',
-            content: 'Build professional resumes for free with complete privacy. No servers, no registration, no payments. Unlimited downloads and resumes. Everything runs locally on your device.',
+            content: t('homepage.heroDescription'),
         },
         {
             name: 'keywords',
@@ -29,11 +31,11 @@ useHead({
         },
         {
             property: 'og:title',
-            content: 'Free Resume Builder - No Registration Required | Privacy-First Resume Maker',
+            content: t('homepage.heroTitle'),
         },
         {
             property: 'og:description',
-            content: 'Build professional resumes for free with complete privacy. No servers, no registration, no payments. Unlimited downloads and resumes.',
+            content: t('homepage.heroDescription'),
         },
         {
             property: 'og:url',
@@ -62,11 +64,11 @@ useHead({
         },
         {
             name: 'twitter:title',
-            content: 'Free Resume Builder - No Registration Required',
+            content: t('homepage.heroTitle'),
         },
         {
             name: 'twitter:description',
-            content: 'Build professional resumes for free with complete privacy. No servers, no registration, no payments.',
+            content: t('homepage.heroDescription'),
         },
         {
             name: 'twitter:image',
@@ -114,13 +116,13 @@ useHead({
         <!-- Hero Section -->
         <div class="text-center">
             <h1 class="text-6xl font-bold text-black mb-16">
-                Build Your Resume<br>
-                <span class="text-gray-600">For Free</span>
+                {{ $t('homepage.title') }}<br>
+                <span class="text-gray-600">{{ $t('homepage.subtitle') }}</span>
             </h1>
 
             <NuxtLink to="/builder">
                 <Button size="lg">
-                    Build Now
+                    {{ $t('common.buildNow') }}
                 </Button>
             </NuxtLink>
         </div>
@@ -132,10 +134,10 @@ useHead({
                     <Check class="w-6 h-6 text-green-600" />
                 </div>
                 <h3 class="text-lg font-semibold mb-1">
-                    100% Free and Private
+                    {{ $t('homepage.features.free.title') }}
                 </h3>
                 <p class="text-sm text-gray-600">
-                    No hidden costs, completely free to use
+                    {{ $t('homepage.features.free.description') }}
                 </p>
             </div>
 
@@ -144,10 +146,10 @@ useHead({
                     <Shield class="w-6 h-6 text-blue-600" />
                 </div>
                 <h3 class="text-lg font-semibold mb-1">
-                    No Servers Included
+                    {{ $t('homepage.features.noServers.title') }}
                 </h3>
                 <p class="text-sm text-gray-600">
-                    Everything runs locally on your device
+                    {{ $t('homepage.features.noServers.description') }}
                 </p>
             </div>
 
@@ -156,10 +158,10 @@ useHead({
                     <Users class="w-6 h-6 text-purple-600" />
                 </div>
                 <h3 class="text-lg font-semibold mb-1">
-                    No Registration Required
+                    {{ $t('homepage.features.noRegistration.title') }}
                 </h3>
                 <p class="text-sm text-gray-600">
-                    No signup, no payments, just start building
+                    {{ $t('homepage.features.noRegistration.description') }}
                 </p>
             </div>
 
@@ -168,10 +170,10 @@ useHead({
                     <Download class="w-6 h-6 text-orange-600" />
                 </div>
                 <h3 class="text-lg font-semibold mb-1">
-                    Unlimited Downloads
+                    {{ $t('homepage.features.unlimitedDownloads.title') }}
                 </h3>
                 <p class="text-sm text-gray-600">
-                    Download as many times as you want
+                    {{ $t('homepage.features.unlimitedDownloads.description') }}
                 </p>
             </div>
 
@@ -180,10 +182,10 @@ useHead({
                     <FileText class="w-6 h-6 text-red-600" />
                 </div>
                 <h3 class="text-lg font-semibold mb-1">
-                    Unlimited Resumes
+                    {{ $t('homepage.features.unlimitedResumes.title') }}
                 </h3>
                 <p class="text-sm text-gray-600">
-                    Create as many resumes as you need
+                    {{ $t('homepage.features.unlimitedResumes.description') }}
                 </p>
             </div>
 
@@ -192,10 +194,10 @@ useHead({
                     <Zap class="w-6 h-6 text-indigo-600" />
                 </div>
                 <h3 class="text-lg font-semibold mb-1">
-                    Fast & Efficient
+                    {{ $t('homepage.features.fastEfficient.title') }}
                 </h3>
                 <p class="text-sm text-gray-600">
-                    Built with Typst for instant results
+                    {{ $t('homepage.features.fastEfficient.description') }}
                 </p>
             </div>
         </div>

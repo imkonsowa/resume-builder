@@ -15,12 +15,14 @@ import VolunteeringForm from '~/components/forms/VolunteeringForm.vue';
 import CertificatesForm from '~/components/forms/CertificatesForm.vue';
 import ResumePreview from '~/components/elements/ResumePreview.vue';
 
+const { t } = useI18n();
+
 useHead({
-    title: 'Resume Builder - Create Professional Resumes Online | Free, Unlimited and Private',
+    title: t('builder.pageTitle'),
     meta: [
         {
             name: 'description',
-            content: 'Build professional resumes online with our free resume builder. Real-time preview, instant PDF generation, unlimited downloads. No registration required, complete privacy.',
+            content: t('builder.pageDescription'),
         },
         {
             name: 'keywords',
@@ -41,11 +43,11 @@ useHead({
         },
         {
             property: 'og:title',
-            content: 'Resume Builder - Create Professional Resumes Online',
+            content: t('builder.pageTitle'),
         },
         {
             property: 'og:description',
-            content: 'Build professional resumes online with our free resume builder. Real-time preview, instant PDF generation, unlimited downloads.',
+            content: t('builder.pageDescription'),
         },
         {
             property: 'og:url',
@@ -62,11 +64,11 @@ useHead({
         },
         {
             name: 'twitter:title',
-            content: 'Resume Builder - Create Professional Resumes Online',
+            content: t('builder.pageTitle'),
         },
         {
             name: 'twitter:description',
-            content: 'Build professional resumes online with our free resume builder. Real-time preview, instant PDF generation.',
+            content: t('builder.pageDescription'),
         },
         {
             name: 'twitter:image',
@@ -220,7 +222,7 @@ const orderedSections = computed(() => {
                     @click="showMobilePreview = true"
                 >
                     <EyeIcon class="h-5 w-5" />
-                    <span class="text-sm font-medium">Preview</span>
+                    <span class="text-sm font-medium">{{ $t('common.preview') }}</span>
                 </Button>
 
                 <!-- Mobile Preview Modal -->
@@ -232,7 +234,7 @@ const orderedSections = computed(() => {
                         <div class="bg-white rounded-lg max-w-full w-full max-h-[90vh] flex flex-col">
                             <div class="p-4 border-b border-gray-200 flex justify-between items-center">
                                 <h3 class="text-lg font-medium">
-                                    Resume Preview
+                                    {{ $t('builder.resumePreview') }}
                                 </h3>
 
                                 <!-- Zoom Controls -->
