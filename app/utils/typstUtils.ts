@@ -12,17 +12,17 @@ export const convertEmail = (email: string): string => {
 
 export const convertLink = (url: string, text: string): string => {
     if (!url || !text) return '';
-    return `#link("${escapeTypstText(url)}")[#text(fill: blue, "${escapeTypstText(text)}")]`;
+    return `#link("${url}")[#text(fill: blue, "${escapeTypstText(text)}")]`;
 };
 
 export const convertLinkWithColor = (url: string, text: string, color = 'blue'): string => {
     if (!url || !text) return '';
-    return `#link("${escapeTypstText(url)}")[#text(fill: ${color}, "${escapeTypstText(text)}")]`;
+    return `#link("${url}")[#text(fill: ${color}, "${escapeTypstText(text)}")]`;
 };
 
 export const convertExternalLinkIcon = (url: string): string => {
     if (!url) return '';
-    return `#link("${escapeTypstText(url)}")[#text(size: 10pt, weight: "semibold", fill: blue)[↗]]`;
+    return `#link("${url}")[#text(size: 10pt, weight: "semibold", fill: blue)[↗]]`;
 };
 
 export const convertHeader = (title: string, size = '16pt'): string => {
