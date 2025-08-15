@@ -1,9 +1,9 @@
 <template>
     <FormContainer
         :is-empty="resumeStore.resumeData.education.length === 0"
-        :title="resumeStore.resumeData.sectionHeaders.education"
-        add-button-label="Add Education"
-        empty-message="No education entries added yet. Click 'Add Education' to get started."
+        :title="t('forms.education.title')"
+        :add-button-label="t('forms.education.addEducation')"
+        :empty-message="t('forms.education.emptyMessage')"
         section-key="education"
         @add="resumeStore.addEducation"
         @edit-title="(value) => resumeStore.updateSectionHeader('education', value)"
@@ -13,8 +13,8 @@
             :key="index"
             :can-move-down="index < resumeStore.resumeData.education.length - 1"
             :can-move-up="index > 0"
-            :confirm-message="`Are you sure you want to delete this education entry? This action cannot be undone.`"
-            :confirm-title="'Delete Education'"
+            :confirm-message="t('forms.education.deleteConfirm.message')"
+            :confirm-title="t('forms.education.deleteConfirm.title')"
             :title="`Education ${index + 1}`"
             @remove="resumeStore.removeEducation(index)"
             @move-up="resumeStore.moveEducation(index, index - 1)"
@@ -22,18 +22,18 @@
         >
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                 <div class="space-y-2">
-                    <Label>Institution</Label>
+                    <Label>{{ t('forms.education.institution') }}</Label>
                     <Input
                         :model-value="education.institution"
-                        placeholder="University of Example"
+                        :placeholder="t('forms.education.institution')"
                         @update:model-value="(value) => resumeStore.updateEducation(index, 'institution', value)"
                     />
                 </div>
                 <div class="space-y-2">
-                    <Label>Degree</Label>
+                    <Label>{{ t('forms.education.degree') }}</Label>
                     <Input
                         :model-value="education.degree"
-                        placeholder="Bachelor of Science"
+                        :placeholder="t('forms.education.degree')"
                         @update:model-value="(value) => resumeStore.updateEducation(index, 'degree', value)"
                     />
                 </div>
@@ -41,18 +41,18 @@
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                 <div class="space-y-2">
-                    <Label>Location</Label>
+                    <Label>{{ t('forms.education.location') }}</Label>
                     <Input
                         :model-value="education.location"
-                        placeholder="City, Country"
+                        :placeholder="t('forms.education.location')"
                         @update:model-value="(value) => resumeStore.updateEducation(index, 'location', value)"
                     />
                 </div>
                 <div class="space-y-2">
-                    <Label>Graduation Score</Label>
+                    <Label>{{ t('forms.education.graduationScore') }}</Label>
                     <Input
                         :model-value="education.graduationScore"
-                        placeholder="GPA, Grade, etc."
+                        :placeholder="t('forms.education.graduationScore')"
                         @update:model-value="(value) => resumeStore.updateEducation(index, 'graduationScore', value)"
                     />
                 </div>
@@ -62,7 +62,7 @@
                 <div class="space-y-2">
                     <MonthYearPicker
                         :model-value="education.startDate"
-                        label="Start Date"
+                        :label="t('forms.education.startDate')"
                         @update:model-value="(value) => resumeStore.updateEducation(index, 'startDate', value)"
                     />
                 </div>
@@ -70,7 +70,7 @@
                     <MonthYearPicker
                         :disabled="education.isPresent"
                         :model-value="education.endDate"
-                        label="End Date"
+                        :label="t('forms.education.endDate')"
                         @update:model-value="(value) => resumeStore.updateEducation(index, 'endDate', value)"
                     />
                     <div class="flex items-center space-x-2 mt-2">
@@ -85,16 +85,16 @@
                         <Label
                             :for="`present-${index}`"
                             class="text-sm"
-                        >Present</Label>
+                        >{{ t('forms.education.present') }}</Label>
                     </div>
                 </div>
             </div>
 
             <div class="space-y-2">
-                <Label>Description</Label>
+                <Label>{{ t('forms.education.description') }}</Label>
                 <Textarea
                     :model-value="education.description"
-                    placeholder="Relevant coursework, achievements, honors, etc."
+                    :placeholder="t('forms.education.description')"
                     rows="3"
                     @update:model-value="(value) => resumeStore.updateEducation(index, 'description', value)"
                 />
@@ -114,4 +114,5 @@ import FormContainer from '~/components/elements/FormContainer.vue';
 
 // Use the store directly instead of props
 const resumeStore = useResumeStore();
+const { t } = useI18n();
 </script>

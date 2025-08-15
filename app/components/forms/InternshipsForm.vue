@@ -1,9 +1,9 @@
 <template>
     <FormContainer
         :is-empty="resumeStore.resumeData.internships.length === 0"
-        :title="resumeStore.resumeData.sectionHeaders.internships"
-        add-button-label="Add Internship"
-        empty-message="No internship entries added yet. Click 'Add Internship' to get started."
+        :title="t('forms.internships.title')"
+        :add-button-label="t('forms.internships.addInternship')"
+        :empty-message="t('forms.internships.emptyMessage')"
         section-key="internships"
         @add="resumeStore.addInternship"
         @edit-title="(value) => resumeStore.updateSectionHeader('internships', value)"
@@ -13,8 +13,8 @@
             :key="index"
             :can-move-down="index < resumeStore.resumeData.internships.length - 1"
             :can-move-up="index > 0"
-            :confirm-message="`Are you sure you want to delete this internship entry? This action cannot be undone.`"
-            :confirm-title="'Delete Internship'"
+            :confirm-message="t('forms.internships.deleteConfirm.message')"
+            :confirm-title="t('forms.internships.deleteConfirm.title')"
             :title="`Internship ${index + 1}`"
             @remove="resumeStore.removeInternship(index)"
             @move-up="resumeStore.moveInternship(index, index - 1)"
@@ -22,18 +22,18 @@
         >
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                 <div class="space-y-2">
-                    <Label>Position</Label>
+                    <Label>{{ t('forms.internships.position') }}</Label>
                     <Input
                         :model-value="internship.position"
-                        placeholder="Intern Position"
+                        :placeholder="t('forms.internships.position')"
                         @update:model-value="(value) => resumeStore.updateInternship(index, 'position', value)"
                     />
                 </div>
                 <div class="space-y-2">
-                    <Label>Company</Label>
+                    <Label>{{ t('forms.internships.company') }}</Label>
                     <Input
                         :model-value="internship.company"
-                        placeholder="Company Name"
+                        :placeholder="t('forms.internships.company')"
                         @update:model-value="(value) => resumeStore.updateInternship(index, 'company', value)"
                     />
                 </div>
@@ -41,18 +41,18 @@
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                 <div class="space-y-2">
-                    <Label>Location</Label>
+                    <Label>{{ t('forms.internships.location') }}</Label>
                     <Input
                         :model-value="internship.location"
-                        placeholder="City, Country"
+                        :placeholder="t('forms.internships.location')"
                         @update:model-value="(value) => resumeStore.updateInternship(index, 'location', value)"
                     />
                 </div>
                 <div class="space-y-2">
-                    <Label>Company Website URL</Label>
+                    <Label>{{ t('forms.internships.companyUrl') }}</Label>
                     <Input
                         :model-value="internship.companyUrl || ''"
-                        placeholder="https://company.com"
+                        :placeholder="t('forms.internships.companyUrl')"
                         @update:model-value="(value) => resumeStore.updateInternship(index, 'companyUrl', value)"
                     />
                 </div>
@@ -62,7 +62,7 @@
                 <div class="space-y-2">
                     <MonthYearPicker
                         :model-value="internship.startDate"
-                        label="Start Date"
+                        :label="t('forms.internships.startDate')"
                         @update:model-value="(value) => resumeStore.updateInternship(index, 'startDate', value)"
                     />
                 </div>
@@ -70,7 +70,7 @@
                     <MonthYearPicker
                         :disabled="internship.isPresent"
                         :model-value="internship.endDate"
-                        label="End Date"
+                        :label="t('forms.internships.endDate')"
                         @update:model-value="(value) => resumeStore.updateInternship(index, 'endDate', value)"
                     />
                     <div class="flex items-center space-x-2 mt-2">
@@ -85,21 +85,21 @@
                         <Label
                             :for="`present-${index}`"
                             class="text-sm"
-                        >Present</Label>
+                        >{{ t('forms.internships.present') }}</Label>
                     </div>
                 </div>
             </div>
 
             <div class="space-y-4">
                 <div class="flex justify-between items-center">
-                    <Label>Achievements</Label>
+                    <Label>{{ t('forms.internships.achievements') }}</Label>
                     <Button
                         size="sm"
                         variant="outline"
                         @click="resumeStore.addInternshipAchievement(index)"
                     >
                         <Plus class="w-4 h-4 mr-2" />
-                        Add Achievement
+                        {{ t('forms.internships.addAchievement') }}
                     </Button>
                 </div>
 
@@ -113,7 +113,7 @@
                             <Input
                                 :model-value="internship.achievements[achievementIndex].text"
                                 class="flex-1"
-                                placeholder="Describe your key achievements and impact"
+                                :placeholder="t('forms.internships.achievementPlaceholder')"
                                 @update:model-value="(value) => resumeStore.updateInternshipAchievement(index, achievementIndex, value)"
                                 @keydown.enter="resumeStore.addInternshipAchievement(index)"
                             />
@@ -187,4 +187,5 @@ import FormContainer from '~/components/elements/FormContainer.vue';
 
 // Use the store directly instead of prop drilling
 const resumeStore = useResumeStore();
+const { t } = useI18n();
 </script>

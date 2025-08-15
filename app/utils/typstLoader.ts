@@ -134,12 +134,15 @@ class TypstLoader {
                 },
                 beforeBuild: [
                     preloadRemoteFonts([
+                        // English fonts
                         '/fonts/roboto-regular.ttf',
                         '/fonts/roboto-bold.ttf',
                         '/fonts/calibri-regular.ttf',
                         '/fonts/calibri-bold.ttf',
                         '/fonts/geist-bold.ttf',
                         '/fonts/geist-regular.ttf',
+                        // Arabic fonts
+                        '/fonts/ar/naskh.ttf',
                     ], { assets: false }),
                 ],
             });

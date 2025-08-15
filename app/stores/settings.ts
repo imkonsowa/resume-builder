@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia';
 import type { AppSettings } from '~/types/resume';
-import { defaultAppSettings } from '~/types/resume';
+import { defaultAppSettings, getFontsForLanguage } from '~/types/resume';
 
 export const useSettingsStore = defineStore('settings', {
     state: () => ({
@@ -12,6 +12,10 @@ export const useSettingsStore = defineStore('settings', {
     getters: {
         selectedFont: state => state.settings.selectedFont,
         selectedTemplate: state => state.settings.selectedTemplate,
+        availableFontsForCurrentLanguage: () => {
+            const { locale } = useI18n();
+            return getFontsForLanguage(locale.value);
+        },
         isRawMode: state => state.settings.isRawMode,
         showDownloadMenu: state => state.settings.showDownloadMenu,
         showFontMenu: state => state.settings.showFontMenu,

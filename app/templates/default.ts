@@ -32,6 +32,8 @@ const parse = (data: ResumeData, font: string): string => {
     const settings: TemplateSettings = { font };
     const settingsStore = useSettingsStore();
     const fontSize = settingsStore.fontSize;
+    const { locale } = useI18n();
+    const isArabic = locale.value === 'ar';
 
     const sharedRenderers = getSharedSectionRenderers();
     const config = DEFAULT_LAYOUT_CONFIG;
@@ -120,8 +122,13 @@ ${leftContent}`;
 
     const twoColumnLayout = convertGrid([headerAndLeftContent, rightContent], '(7fr, 3fr)');
 
+    // Configure font and text direction for Arabic support
+    const fontConfig = isArabic
+        ? `#set text(font: ("${settings.font}", "Arial"), size: ${fontSize}pt, dir: rtl)`
+        : `#set text(font: ("${settings.font}"), size: ${fontSize}pt)`;
+
     return `#set page(margin: 1.2cm)
-#set text(font: ("${settings.font}"), size: ${fontSize}pt)
+${fontConfig}
 
 ${twoColumnLayout}
 

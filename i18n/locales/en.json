@@ -1,0 +1,325 @@
+{
+    "common": {
+        "save": "Save",
+        "cancel": "Cancel",
+        "delete": "Delete",
+        "edit": "Edit",
+        "add": "Add",
+        "remove": "Remove",
+        "close": "Close",
+        "done": "Done",
+        "preview": "Preview",
+        "download": "Download",
+        "loading": "Loading...",
+        "error": "Error",
+        "success": "Success",
+        "yes": "Yes",
+        "no": "No",
+        "language": "Language",
+        "buildNow": "Build Now",
+        "startBuilding": "Start Building",
+        "resetToDefaults": "Reset to Defaults",
+        "column": "Column",
+        "left": "Left",
+        "right": "Right"
+    },
+    "navigation": {
+        "home": "Home",
+        "builder": "Builder",
+        "qa": "Q&A",
+        "help": "Help",
+        "resumes": "Your Resumes",
+        "contact": "Contact",
+        "github": "GitHub"
+    },
+    "homepage": {
+        "title": "Build Your Resume",
+        "subtitle": "For Free",
+        "heroTitle": "Free Resume Builder - No Registration Required | Privacy-First Resume Maker",
+        "heroDescription": "Build professional resumes for free with complete privacy. No servers, no registration, no payments. Unlimited downloads and resumes. Everything runs locally on your device.",
+        "features": {
+            "free": {
+                "title": "100% Free and Private",
+                "description": "No hidden costs, completely free to use"
+            },
+            "noServers": {
+                "title": "No Servers Included",
+                "description": "Everything runs locally on your device"
+            },
+            "noRegistration": {
+                "title": "No Registration Required",
+                "description": "No signup, no payments, just start building"
+            },
+            "unlimitedDownloads": {
+                "title": "Unlimited Downloads",
+                "description": "Download as many times as you want"
+            },
+            "unlimitedResumes": {
+                "title": "Unlimited Resumes",
+                "description": "Create as many resumes as you need"
+            },
+            "fastEfficient": {
+                "title": "Fast & Efficient",
+                "description": "Built with Typst for instant results"
+            }
+        }
+    },
+    "qa": {
+        "title": "Get Your Questions",
+        "titleHighlight": "Answered",
+        "subtitle": "Everything you need to know about our free resume builder. From getting started to advanced features.",
+        "badge": "Frequently Asked Questions",
+        "ctaTitle": "Ready to Create Your Resume?",
+        "ctaSubtitle": "Start building your professional resume now - it's completely free and takes just minutes!",
+        "categories": {
+            "gettingStarted": "Getting Started",
+            "features": "Features & Functionality",
+            "technical": "Technical & Support"
+        },
+        "questions": {
+            "isFree": {
+                "question": "Is the resume builder really free?",
+                "answer": "Yes! Our resume builder is completely free with no hidden costs, no premium features, and no subscription fees. You can create unlimited resumes, download them as PDFs, and use all features without any charges. We believe creating a professional resume should always be accessible to everyone."
+            },
+            "signUp": {
+                "question": "Do I need to create an account or sign up?",
+                "answer": "No account creation is required! You can start building your resume immediately without any registration, email verification, or personal information. All your data is stored locally in your browser, ensuring complete privacy and control over your information."
+            },
+            "pdfExport": {
+                "question": "How does the PDF export work?",
+                "answer": "Our resume builder uses Typst, a modern typesetting system, to generate high-quality PDF documents. When you click \"Download PDF,\" the system compiles your resume data into a professionally formatted PDF that's ready for printing or digital sharing."
+            },
+            "privacy": {
+                "question": "Is my data secure and private?",
+                "answer": "Absolutely! All your resume data is stored locally in your browser's storage. We don't collect, store, or transmit any of your personal information to external servers. Your data stays on your device and is completely under your control."
+            },
+            "mobile": {
+                "question": "Can I use this on mobile devices?",
+                "answer": "Yes! Our resume builder is fully responsive and works on all devices including smartphones and tablets. On mobile, you can access the preview through a floating button that opens a full-screen preview modal."
+            },
+            "rawMode": {
+                "question": "What is Raw Typst mode?",
+                "answer": "Raw Typst mode allows advanced users to write Typst markup directly, giving you complete control over formatting and layout. This is perfect for users who want to customize their resume beyond what the form interface provides."
+            },
+            "importExport": {
+                "question": "Can I import and export my resume data?",
+                "answer": "Yes! You can export your resume data as a JSON file for backup purposes or to transfer between devices. You can also import previously exported data to restore your resume or work on it from another device."
+            },
+            "sections": {
+                "question": "What sections can I add to my resume?",
+                "answer": "You can add multiple sections including Personal Information, Work Experience, Education, Skills, Volunteering, and Social Links. Each section supports multiple entries, and you can reorder sections to match your preferences."
+            },
+            "reorder": {
+                "question": "How do I reorder sections or experiences?",
+                "answer": "Use the Section Ordering panel to drag and drop sections into your preferred order. Within each section, you can also reorder individual entries and bullet points using the move up/down buttons."
+            },
+            "customize": {
+                "question": "Can I customize fonts and templates?",
+                "answer": "Yes! You can choose from multiple font options including Roboto and Calibri. Template selection is also available to change the overall layout and styling of your resume."
+            },
+            "browsers": {
+                "question": "What browsers are supported?",
+                "answer": "Our resume builder works on all modern browsers including Chrome, Firefox, Safari, and Edge. We recommend using the latest version of your preferred browser for the best experience."
+            },
+            "support": {
+                "question": "How do I get help or report issues?",
+                "answer": "You can visit our GitHub repository to report issues, request features, or contribute to the project. We also provide comprehensive documentation and examples to help you get started."
+            }
+        }
+    },
+    "builder": {
+        "title": "Resume Builder",
+        "pageTitle": "Resume Builder - Create Professional Resumes Online | Free, Unlimited and Private",
+        "pageDescription": "Build professional resumes online with our free resume builder. Real-time preview, instant PDF generation, unlimited downloads. No registration required, complete privacy.",
+        "sections": "Sections",
+        "resumePreview": "Resume Preview",
+        "zoomControls": {
+            "zoomIn": "Zoom In",
+            "zoomOut": "Zoom Out",
+            "resetZoom": "Reset Zoom"
+        }
+    },
+    "settings": {
+        "title": "Resume Settings",
+        "description": "Customize your resume appearance",
+        "template": {
+            "label": "Template",
+            "placeholder": "Select a template",
+            "description": "Choose the layout template for your resume"
+        },
+        "font": {
+            "label": "Font Family",
+            "placeholder": "Select a font",
+            "description": "Choose the font family for your resume"
+        },
+        "fontSize": {
+            "label": "Font Size",
+            "description": "Adjust the base font size for your resume (default: 14pt)"
+        }
+    },
+    "forms": {
+        "personalInfo": {
+            "title": "Personal Information",
+            "firstName": "First Name",
+            "lastName": "Last Name",
+            "email": "Email Address",
+            "phone": "Phone Number",
+            "position": "Position/Title",
+            "location": "Location",
+            "summary": "Professional Summary",
+            "socialLinks": "Social Links",
+            "addSocialLink": "Add Social Link",
+            "socialLinksEmpty": "No social links added yet. Click 'Add Social Link' to get started.",
+            "platform": "Platform",
+            "url": "URL",
+            "customLabel": "Custom Label",
+            "selectPlatform": "Select platform"
+        },
+        "experience": {
+            "title": "Experience",
+            "addExperience": "Add Experience",
+            "emptyMessage": "No experience entries added yet. Click 'Add Experience' to get started.",
+            "position": "Position",
+            "company": "Company",
+            "location": "Location",
+            "companyUrl": "Company Website URL",
+            "startDate": "Start Date",
+            "endDate": "End Date",
+            "present": "Present",
+            "achievements": "Achievements",
+            "addAchievement": "Add Achievement",
+            "achievementPlaceholder": "Describe your key achievements and impact",
+            "deleteConfirm": {
+                "title": "Delete Experience",
+                "message": "Are you sure you want to delete this experience entry? This action cannot be undone."
+            }
+        },
+        "internships": {
+            "title": "Internships",
+            "addInternship": "Add Internship",
+            "emptyMessage": "No internship entries added yet. Click 'Add Internship' to get started.",
+            "position": "Position",
+            "company": "Company",
+            "location": "Location",
+            "companyUrl": "Company Website URL",
+            "startDate": "Start Date",
+            "endDate": "End Date",
+            "present": "Present",
+            "achievements": "Achievements",
+            "addAchievement": "Add Achievement",
+            "achievementPlaceholder": "Describe your key achievements and impact",
+            "deleteConfirm": {
+                "title": "Delete Internship",
+                "message": "Are you sure you want to delete this internship entry? This action cannot be undone."
+            }
+        },
+        "education": {
+            "title": "Education",
+            "addEducation": "Add Education",
+            "emptyMessage": "No education entries added yet. Click 'Add Education' to get started.",
+            "institution": "Institution",
+            "degree": "Degree",
+            "fieldOfStudy": "Field of Study",
+            "location": "Location",
+            "startDate": "Start Date",
+            "endDate": "End Date",
+            "present": "Present",
+            "graduationScore": "Graduation Score/GPA",
+            "description": "Description",
+            "deleteConfirm": {
+                "title": "Delete Education",
+                "message": "Are you sure you want to delete this education entry? This action cannot be undone."
+            }
+        },
+        "skills": {
+            "title": "Skills",
+            "addSkill": "Add Skill",
+            "emptyMessage": "No skills added yet. Click 'Add Skill' to get started.",
+            "skillTitle": "Skill/Category",
+            "description": "Description",
+            "deleteConfirm": {
+                "title": "Delete Skill",
+                "message": "Are you sure you want to delete this skill? This action cannot be undone."
+            }
+        },
+        "projects": {
+            "title": "Projects",
+            "addProject": "Add Project",
+            "emptyMessage": "Add your notable projects to showcase your work.",
+            "projectTitle": "Project Title",
+            "projectUrl": "Project URL",
+            "description": "Description",
+            "deleteConfirm": {
+                "title": "Delete Project",
+                "message": "Are you sure you want to delete this project? This action cannot be undone."
+            }
+        },
+        "languages": {
+            "title": "Languages",
+            "addLanguage": "Add Language",
+            "emptyMessage": "No languages added yet. Click 'Add Language' to get started.",
+            "languageName": "Language",
+            "proficiency": "Proficiency Level",
+            "deleteConfirm": {
+                "title": "Delete Language",
+                "message": "Are you sure you want to delete this language? This action cannot be undone."
+            }
+        },
+        "volunteering": {
+            "title": "Volunteering",
+            "addVolunteering": "Add Volunteering Experience",
+            "emptyMessage": "No volunteering experience added yet. Click 'Add Volunteering Experience' to get started.",
+            "organization": "Organization",
+            "position": "Position",
+            "location": "Location",
+            "startDate": "Start Date",
+            "endDate": "End Date",
+            "present": "Present",
+            "achievements": "Achievements",
+            "addAchievement": "Add Achievement",
+            "achievementPlaceholder": "Describe your key achievements and impact",
+            "deleteConfirm": {
+                "title": "Delete Volunteering Experience",
+                "message": "Are you sure you want to delete this volunteering experience? This action cannot be undone."
+            }
+        },
+        "certificates": {
+            "title": "Certificates",
+            "addCertificate": "Add Certificate",
+            "emptyMessage": "No certificates added yet. Click 'Add Certificate' to get started.",
+            "certificateTitle": "Certificate Title",
+            "issuer": "Issuer",
+            "date": "Date Issued",
+            "url": "Certificate URL",
+            "description": "Description",
+            "deleteConfirm": {
+                "title": "Delete Certificate",
+                "message": "Are you sure you want to delete this certificate? This action cannot be undone."
+            }
+        }
+    },
+    "validation": {
+        "required": "This field is required",
+        "email": "Please enter a valid email address",
+        "url": "Please enter a valid URL"
+    },
+    "notifications": {
+        "resumeCreated": "Resume created successfully",
+        "resumeDeleted": "Resume deleted successfully",
+        "resumeDuplicated": "Resume duplicated successfully",
+        "dataImported": "Data imported successfully",
+        "dataExported": "Data exported successfully",
+        "settingsReset": "Settings reset to defaults"
+    },
+    "platforms": {
+        "linkedin": "LinkedIn",
+        "github": "GitHub",
+        "twitter": "Twitter",
+        "portfolio": "Portfolio",
+        "dribbble": "Dribbble",
+        "medium": "Medium",
+        "devto": "Dev.to",
+        "personal": "Personal",
+        "other": "Other"
+    }
+}

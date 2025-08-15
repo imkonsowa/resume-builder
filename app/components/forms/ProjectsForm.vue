@@ -1,9 +1,9 @@
 <template>
     <FormContainer
         :is-empty="resumeStore.resumeData.projects.length === 0"
-        :title="resumeStore.resumeData.sectionHeaders.projects"
-        add-button-label="Add Project"
-        empty-message="Add your notable projects to showcase your work."
+        :title="t('forms.projects.title')"
+        :add-button-label="t('forms.projects.addProject')"
+        :empty-message="t('forms.projects.emptyMessage')"
         section-key="projects"
         @add="resumeStore.addProject"
         @edit-title="(value) => resumeStore.updateSectionHeader('projects', value)"
@@ -14,17 +14,17 @@
                 v-if="templateConfig.canMoveSection('projects')"
                 class="flex items-center gap-2"
             >
-                <span class="text-sm text-gray-600">Column:</span>
+                <span class="text-sm text-gray-600">{{ t('forms.projects.column') }}:</span>
                 <select
                     :value="resumeStore.resumeData.sectionPlacement.projects"
                     class="px-2 py-1 text-sm border rounded focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                     @change="(e) => resumeStore.updateSectionPlacement('projects', (e.target as HTMLSelectElement).value as 'left' | 'right')"
                 >
                     <option value="left">
-                        Left
+                        {{ t('common.left', 'Left') }}
                     </option>
                     <option value="right">
-                        Right
+                        {{ t('common.right', 'Right') }}
                     </option>
                 </select>
             </div>
@@ -35,8 +35,8 @@
             :key="index"
             :can-move-down="index < resumeStore.resumeData.projects.length - 1"
             :can-move-up="index > 0"
-            :confirm-message="`Are you sure you want to delete this project? This action cannot be undone.`"
-            :confirm-title="'Delete Project'"
+            :confirm-message="t('forms.projects.deleteConfirm.message')"
+            :confirm-title="t('forms.projects.deleteConfirm.title')"
             :title="`Project ${index + 1}`"
             @remove="resumeStore.removeProject(index)"
             @move-up="resumeStore.moveProject(index, index - 1)"
@@ -44,32 +44,32 @@
         >
             <div class="space-y-4">
                 <div class="space-y-2">
-                    <Label :for="`project-title-${index}`">Project Title</Label>
+                    <Label :for="`project-title-${index}`">{{ t('forms.projects.projectTitle') }}</Label>
                     <Input
                         :id="`project-title-${index}`"
                         :model-value="project.title"
-                        placeholder="My Awesome Project"
+                        :placeholder="t('forms.projects.projectTitle')"
                         @update:model-value="(value) => resumeStore.updateProject(index, 'title', value)"
                     />
                 </div>
 
                 <div class="space-y-2">
-                    <Label :for="`project-url-${index}`">Project URL</Label>
+                    <Label :for="`project-url-${index}`">{{ t('forms.projects.projectUrl') }}</Label>
                     <Input
                         :id="`project-url-${index}`"
                         :model-value="project.url"
-                        placeholder="https://github.com/username/project"
+                        :placeholder="t('forms.projects.projectUrl')"
                         type="url"
                         @update:model-value="(value) => resumeStore.updateProject(index, 'url', value)"
                     />
                 </div>
 
                 <div class="space-y-2">
-                    <Label :for="`project-description-${index}`">Description</Label>
+                    <Label :for="`project-description-${index}`">{{ t('forms.projects.description') }}</Label>
                     <Textarea
                         :id="`project-description-${index}`"
                         :model-value="project.description"
-                        placeholder="Brief description of the project, technologies used, and key achievements..."
+                        :placeholder="t('forms.projects.description')"
                         rows="3"
                         @update:model-value="(value) => resumeStore.updateProject(index, 'description', value)"
                     />
@@ -101,4 +101,5 @@ import ConfirmationModal from '~/components/elements/ConfirmationModal.vue';
 const resumeStore = useResumeStore();
 const confirmation = useConfirmation();
 const templateConfig = useTemplate();
+const { t } = useI18n();
 </script>

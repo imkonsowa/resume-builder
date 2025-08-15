@@ -5,43 +5,43 @@
         :show-add-button="false"
         add-button-label=""
         empty-message=""
-        title="Personal Information"
+        :title="t('forms.personalInfo.title')"
         section-key="personal"
     >
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div class="space-y-2">
-                <Label for="firstName">First Name</Label>
+                <Label for="firstName">{{ t('forms.personalInfo.firstName') }}</Label>
                 <Input
                     id="firstName"
                     :model-value="resumeStore.resumeData.firstName"
-                    placeholder="John"
+                    :placeholder="t('forms.personalInfo.firstName')"
                     @update:model-value="(value) => resumeStore.updateField('firstName', value)"
                 />
             </div>
             <div class="space-y-2">
-                <Label for="lastName">Last Name</Label>
+                <Label for="lastName">{{ t('forms.personalInfo.lastName') }}</Label>
                 <Input
                     id="lastName"
                     :model-value="resumeStore.resumeData.lastName"
-                    placeholder="Doe"
+                    :placeholder="t('forms.personalInfo.lastName')"
                     @update:model-value="(value) => resumeStore.updateField('lastName', value)"
                 />
             </div>
             <div class="space-y-2">
-                <Label for="position">Position</Label>
+                <Label for="position">{{ t('forms.personalInfo.position') }}</Label>
                 <Input
                     id="position"
                     :model-value="resumeStore.resumeData.position"
-                    placeholder="Software Engineer"
+                    :placeholder="t('forms.personalInfo.position')"
                     @update:model-value="(value) => resumeStore.updateField('position', value)"
                 />
             </div>
             <div class="space-y-2">
-                <Label for="location">Location</Label>
+                <Label for="location">{{ t('forms.personalInfo.location') }}</Label>
                 <Input
                     id="location"
                     :model-value="resumeStore.resumeData.location"
-                    placeholder="City, Country"
+                    :placeholder="t('forms.personalInfo.location')"
                     @update:model-value="(value) => resumeStore.updateField('location', value)"
                 />
             </div>
@@ -51,21 +51,21 @@
         <div class="mt-6 space-y-4">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div class="space-y-2">
-                    <Label for="email">Email</Label>
+                    <Label for="email">{{ t('forms.personalInfo.email') }}</Label>
                     <Input
                         id="email"
                         :model-value="resumeStore.resumeData.email"
-                        placeholder="john@example.com"
+                        :placeholder="t('forms.personalInfo.email')"
                         type="email"
                         @update:model-value="(value) => resumeStore.updateField('email', value)"
                     />
                 </div>
                 <div class="space-y-2">
-                    <Label for="phone">Phone</Label>
+                    <Label for="phone">{{ t('forms.personalInfo.phone') }}</Label>
                     <Input
                         id="phone"
                         :model-value="resumeStore.resumeData.phone"
-                        placeholder="+1 (555) 123-4567"
+                        :placeholder="t('forms.personalInfo.phone')"
                         type="tel"
                         @update:model-value="(value) => resumeStore.updateField('phone', value)"
                     />
@@ -76,14 +76,14 @@
         <!-- Profile/Summary Section -->
         <div class="mt-6 space-y-4">
             <EditableHeader
-                :value="resumeStore.resumeData.sectionHeaders?.profile || 'Profile'"
+                :value="t('forms.personalInfo.summary')"
                 @update="(value) => resumeStore.updateSectionHeader('profile', value)"
             />
             <div class="space-y-2">
                 <Textarea
                     id="summary"
                     :model-value="resumeStore.resumeData.summary"
-                    placeholder="Brief summary of your experience and skills..."
+                    :placeholder="t('forms.personalInfo.summary')"
                     rows="4"
                     @update:model-value="(value) => resumeStore.updateField('summary', value)"
                 />
@@ -94,7 +94,7 @@
         <div class="mt-6 space-y-4">
             <div class="flex justify-between items-center">
                 <EditableHeader
-                    :value="resumeStore.resumeData.sectionHeaders.socialLinks"
+                    :value="t('forms.personalInfo.socialLinks')"
                     @update="(value) => resumeStore.updateSectionHeader('socialLinks', value)"
                 />
                 <Button
@@ -103,7 +103,7 @@
                     @click="resumeStore.addSocialLink"
                 >
                     <Plus class="w-4 h-4 mr-2" />
-                    Add Link
+                    {{ t('forms.personalInfo.addSocialLink') }}
                 </Button>
             </div>
 
@@ -143,7 +143,7 @@
                         <div class="flex-1">
                             <Input
                                 :model-value="link.url"
-                                placeholder="https://"
+                                :placeholder="t('forms.personalInfo.url')"
                                 type="url"
                                 @update:model-value="(value) => resumeStore.updateSocialLink(linkIndex, 'url', value)"
                             />
@@ -156,7 +156,7 @@
                         >
                             <Input
                                 :model-value="link.customLabel || ''"
-                                placeholder="Label"
+                                :placeholder="t('forms.personalInfo.customLabel')"
                                 @update:model-value="(value) => resumeStore.updateSocialLink(linkIndex, 'customLabel', value)"
                             />
                         </div>
@@ -254,23 +254,25 @@ import FormContainer from '~/components/elements/FormContainer.vue';
 import ConfirmationModal from '~/components/elements/ConfirmationModal.vue';
 import EditableHeader from '~/components/elements/EditableHeader.vue';
 
-const SOCIAL_PLATFORMS = [
-    { value: 'linkedin', label: 'LinkedIn', icon: Linkedin },
-    { value: 'github', label: 'GitHub', icon: Github },
-    { value: 'twitter', label: 'Twitter', icon: Twitter },
-    { value: 'portfolio', label: 'Portfolio', icon: Globe },
-    { value: 'dribbble', label: 'Dribbble', icon: Dribbble },
-    { value: 'medium', label: 'Medium', icon: BookOpen },
-    { value: 'devto', label: 'Dev.to', icon: Edit3 },
-    { value: 'personal', label: 'Personal', icon: Globe },
-    { value: 'other', label: 'Other', icon: Link },
-];
+const { t } = useI18n();
+
+const SOCIAL_PLATFORMS = computed(() => [
+    { value: 'linkedin', label: t('platforms.linkedin'), icon: Linkedin },
+    { value: 'github', label: t('platforms.github'), icon: Github },
+    { value: 'twitter', label: t('platforms.twitter'), icon: Twitter },
+    { value: 'portfolio', label: t('platforms.portfolio'), icon: Globe },
+    { value: 'dribbble', label: t('platforms.dribbble'), icon: Dribbble },
+    { value: 'medium', label: t('platforms.medium'), icon: BookOpen },
+    { value: 'devto', label: t('platforms.devto'), icon: Edit3 },
+    { value: 'personal', label: t('platforms.personal'), icon: Globe },
+    { value: 'other', label: t('platforms.other'), icon: Link },
+]);
 
 const resumeStore = useResumeStore();
 const confirmation = useConfirmation();
 
 const getPlatformIcon = (platform: string) => {
-    const found = SOCIAL_PLATFORMS.find(p => p.value === platform);
+    const found = SOCIAL_PLATFORMS.value.find(p => p.value === platform);
     return found?.icon || Link;
 };
 

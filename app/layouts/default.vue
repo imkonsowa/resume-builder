@@ -1,5 +1,22 @@
 <script lang="ts" setup>
 import { Edit, FileText, Github, HelpCircle, Mail } from 'lucide-vue-next';
+import { getDefaultFontForLanguage } from '~/types/resume';
+
+const { t, locale, setLocale } = useI18n();
+
+const switchLanguage = (newLocale: string) => {
+    setLocale(newLocale);
+    // Update document direction immediately
+    if (import.meta.client) {
+        document.documentElement.dir = newLocale === 'ar' ? 'rtl' : 'ltr';
+        document.documentElement.lang = newLocale;
+
+        // Update font to default for new language
+        const settingsStore = useSettingsStore();
+        const newDefaultFont = getDefaultFontForLanguage(newLocale);
+        settingsStore.setSelectedFont(newDefaultFont);
+    }
+};
 </script>
 
 <template>
@@ -13,7 +30,7 @@ import { Edit, FileText, Github, HelpCircle, Mail } from 'lucide-vue-next';
                             <div class="flex items-center">
                                 <span
                                     class="ml-2 text-lg md:text-xl font-semibold text-black"
-                                >Free Resume Builder</span>
+                                >{{ t('homepage.heroTitle').split(' - ')[0] }}</span>
                             </div>
                         </NuxtLink>
 
@@ -23,7 +40,7 @@ import { Edit, FileText, Github, HelpCircle, Mail } from 'lucide-vue-next';
                                 to="/resumes"
                             >
                                 <FileText class="w-4 h-4" />
-                                <span class="hidden sm:inline text-sm font-medium">Your Resumes</span>
+                                <span class="hidden sm:inline text-sm font-medium">{{ t('navigation.resumes', 'Your Resumes') }}</span>
                             </NuxtLink>
 
                             <NuxtLink
@@ -31,7 +48,7 @@ import { Edit, FileText, Github, HelpCircle, Mail } from 'lucide-vue-next';
                                 to="/builder"
                             >
                                 <Edit class="w-4 h-4" />
-                                <span class="hidden sm:inline text-sm font-medium">Builder</span>
+                                <span class="hidden sm:inline text-sm font-medium">{{ t('navigation.builder') }}</span>
                             </NuxtLink>
                         </div>
                     </div>
@@ -42,7 +59,7 @@ import { Edit, FileText, Github, HelpCircle, Mail } from 'lucide-vue-next';
                             to="/contact"
                         >
                             <Mail class="w-4 h-4" />
-                            <span class="hidden sm:inline text-sm font-medium">Contact</span>
+                            <span class="hidden sm:inline text-sm font-medium">{{ t('navigation.contact', 'Contact') }}</span>
                         </NuxtLink>
 
                         <NuxtLink
@@ -51,7 +68,7 @@ import { Edit, FileText, Github, HelpCircle, Mail } from 'lucide-vue-next';
                             to="/qa"
                         >
                             <HelpCircle class="w-4 h-4" />
-                            <span class="hidden sm:inline text-sm font-medium">Q&A</span>
+                            <span class="hidden sm:inline text-sm font-medium">{{ t('navigation.qa') }}</span>
                         </NuxtLink>
 
                         <a
@@ -61,8 +78,24 @@ import { Edit, FileText, Github, HelpCircle, Mail } from 'lucide-vue-next';
                             target="_blank"
                         >
                             <Github class="w-4 h-4" />
-                            <span class="hidden sm:inline text-sm font-medium">GitHub</span>
+                            <span class="hidden sm:inline text-sm font-medium">{{ t('navigation.github', 'GitHub') }}</span>
                         </a>
+
+                        <!-- Language Selector -->
+                        <div class="relative">
+                            <select
+                                :value="locale"
+                                class="flex items-center space-x-1 md:space-x-2 text-gray-600 hover:text-gray-900 transition-colors bg-transparent border-none text-sm font-medium cursor-pointer"
+                                @change="switchLanguage($event.target.value)"
+                            >
+                                <option value="en">
+                                    English
+                                </option>
+                                <option value="ar">
+                                    العربية
+                                </option>
+                            </select>
+                        </div>
                     </div>
                 </div>
             </div>

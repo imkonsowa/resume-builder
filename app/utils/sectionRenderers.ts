@@ -25,21 +25,6 @@ import {
     wrapInSectionBlock,
 } from './layoutFormatters';
 
-/**
- * Default section headers
- */
-const DEFAULT_SECTION_HEADERS = {
-    experience: 'Employment History',
-    internships: 'Internships',
-    education: 'Education',
-    skills: 'Skills',
-    projects: 'Projects',
-    languages: 'Languages',
-    volunteering: 'Volunteering',
-    info: 'Info',
-    socialLinks: 'Links',
-    certificates: 'Certificates',
-} as const;
 
 /**
  * Render experience section using shared logic
@@ -49,9 +34,10 @@ export const renderSharedExperience: SectionRenderer = (data: ResumeData, fontSi
         return '';
     }
 
+    const { t } = useI18n();
     const sectionContent = generateExperienceContent(data.experiences);
     const formattedContent = formatExperienceItems(sectionContent, config, fontSize);
-    const headerText = data?.sectionHeaders?.experience || DEFAULT_SECTION_HEADERS.experience;
+    const headerText = t('forms.experience.title');
 
     return wrapInSectionBlock(headerText, formattedContent, fontSize, renderTemplateHeader);
 };
@@ -64,9 +50,10 @@ export const renderSharedInternships: SectionRenderer = (data: ResumeData, fontS
         return '';
     }
 
+    const { t } = useI18n();
     const sectionContent = generateInternshipsContent(data.internships);
     const formattedContent = formatExperienceItems(sectionContent, config, fontSize);
-    const headerText = data?.sectionHeaders?.internships || DEFAULT_SECTION_HEADERS.internships;
+    const headerText = t('forms.internships.title');
 
     return wrapInSectionBlock(headerText, formattedContent, fontSize, renderTemplateHeader);
 };
@@ -79,9 +66,10 @@ export const renderSharedEducation: SectionRenderer = (data: ResumeData, fontSiz
         return '';
     }
 
+    const { t } = useI18n();
     const sectionContent = generateEducationContent(data.education);
     const formattedContent = formatEducationItems(sectionContent, config, fontSize);
-    const headerText = data?.sectionHeaders?.education || DEFAULT_SECTION_HEADERS.education;
+    const headerText = t('forms.education.title');
 
     return wrapInSectionBlock(headerText, formattedContent, fontSize, renderTemplateHeader);
 };
@@ -94,9 +82,10 @@ export const renderSharedVolunteering: SectionRenderer = (data: ResumeData, font
         return '';
     }
 
+    const { t } = useI18n();
     const sectionContent = generateVolunteeringContent(data.volunteering);
     const formattedContent = formatExperienceItems(sectionContent, config, fontSize); // Same format as experience
-    const headerText = data?.sectionHeaders?.volunteering || DEFAULT_SECTION_HEADERS.volunteering;
+    const headerText = t('forms.volunteering.title');
 
     return wrapInSectionBlock(headerText, formattedContent, fontSize, renderTemplateHeader);
 };
@@ -109,11 +98,12 @@ export const renderSharedProjects: SectionRenderer = (data: ResumeData, fontSize
         return '';
     }
 
+    const { t } = useI18n();
     const sectionContent = generateProjectsContent(data.projects);
     if (sectionContent.length === 0) return '';
 
     const formattedContent = formatProjectsItems(sectionContent, config, fontSize);
-    const headerText = data?.sectionHeaders?.projects || DEFAULT_SECTION_HEADERS.projects;
+    const headerText = t('forms.projects.title');
 
     return wrapInSectionBlock(headerText, formattedContent, fontSize, renderTemplateHeader);
 };
@@ -122,6 +112,8 @@ export const renderSharedProjects: SectionRenderer = (data: ResumeData, fontSize
  * Render skills section using shared logic
  */
 export const renderSharedSkills: SectionRenderer = (data: ResumeData, fontSize: number, _config: TemplateLayoutConfig): string => {
+    const { t } = useI18n();
+
     if (data?.skills && data.skills.length > 0) {
         const sectionContent = generateSkillsContent(data.skills);
         if (sectionContent.length === 0) return '';
@@ -131,7 +123,7 @@ export const renderSharedSkills: SectionRenderer = (data: ResumeData, fontSize: 
             itemSpacing: ITEMS_SPACING,
             joinSeparator: '',
         });
-        const headerText = data?.sectionHeaders?.skills || DEFAULT_SECTION_HEADERS.skills;
+        const headerText = t('forms.skills.title');
 
         return wrapInSectionBlock(headerText, formattedContent, fontSize, renderTemplateHeader);
     }
@@ -142,7 +134,8 @@ export const renderSharedSkills: SectionRenderer = (data: ResumeData, fontSize: 
     }
 
     const content = data.technicalSkills.trim();
-    return wrapInSectionBlock('Technical Skills', content, fontSize, renderTemplateHeader);
+    const headerText = t('forms.skills.title');
+    return wrapInSectionBlock(headerText, content, fontSize, renderTemplateHeader);
 };
 
 /**
@@ -153,6 +146,7 @@ export const renderSharedLanguages: SectionRenderer = (data: ResumeData, fontSiz
         return '';
     }
 
+    const { t } = useI18n();
     const sectionContent = generateLanguagesContent(data.languages);
     if (sectionContent.length === 0) return '';
 
@@ -161,7 +155,7 @@ export const renderSharedLanguages: SectionRenderer = (data: ResumeData, fontSiz
         itemSpacing: ITEMS_SPACING,
         joinSeparator: '',
     });
-    const headerText = data?.sectionHeaders?.languages || DEFAULT_SECTION_HEADERS.languages;
+    const headerText = t('forms.languages.title');
 
     return wrapInSectionBlock(headerText, formattedContent, fontSize, renderTemplateHeader);
 };
@@ -173,8 +167,9 @@ export const renderSharedContactInfo: SectionRenderer = (data: ResumeData, fontS
     const sectionContent = generateContactContent(data);
     if (sectionContent.length === 0) return '';
 
+    const { t } = useI18n();
     const formattedContent = formatSimpleItems(sectionContent, config);
-    const headerText = data?.sectionHeaders?.info || DEFAULT_SECTION_HEADERS.info;
+    const headerText = t('forms.personalInfo.title');
 
     return wrapInSectionBlock(headerText, formattedContent, fontSize, renderTemplateHeader);
 };
@@ -186,8 +181,9 @@ export const renderSharedSocialLinks: SectionRenderer = (data: ResumeData, fontS
     const sectionContent = generateSocialLinksContent(data);
     if (sectionContent.length === 0) return '';
 
+    const { t } = useI18n();
     const formattedContent = formatSocialLinks(sectionContent, config.socialLinks);
-    const headerText = data?.sectionHeaders?.socialLinks || DEFAULT_SECTION_HEADERS.socialLinks;
+    const headerText = t('forms.personalInfo.socialLinks');
 
     // For horizontal links in header, don't wrap in section block
     if (config.socialLinks.placement === 'header' && config.socialLinks.orientation === 'horizontal') {
@@ -205,7 +201,8 @@ export const renderSharedProfile: SectionRenderer = (data: ResumeData, fontSize:
         return '';
     }
 
-    const headerText = data?.sectionHeaders?.profile || 'Profile';
+    const { t } = useI18n();
+    const headerText = t('forms.personalInfo.summary');
     const content = escapeTypstText(data.summary.trim());
 
     return wrapInSectionBlock(headerText, content, fontSize, renderTemplateHeader);
@@ -219,11 +216,12 @@ export const renderSharedCertificates: SectionRenderer = (data: ResumeData, font
         return '';
     }
 
+    const { t } = useI18n();
     const sectionContent = generateCertificatesContent(data.certificates);
     if (sectionContent.length === 0) return '';
 
     const formattedContent = formatCertificatesItems(sectionContent, config, fontSize);
-    const headerText = data?.sectionHeaders?.certificates || DEFAULT_SECTION_HEADERS.certificates;
+    const headerText = t('forms.certificates.title');
 
     return wrapInSectionBlock(headerText, formattedContent, fontSize, renderTemplateHeader);
 };

@@ -244,11 +244,28 @@ export const defaultAppSettings: AppSettings = {
     },
 };
 
-export const availableFonts = [
-    { name: 'Calibri', family: 'Calibri' },
-    { name: 'Geist', family: 'Geist' },
-    { name: 'Roboto', family: 'Roboto' },
-];
+// Language-specific font configurations
+export const availableFonts = {
+    en: [
+        { name: 'Calibri', family: 'Calibri' },
+        { name: 'Geist', family: 'Geist' },
+        { name: 'Roboto', family: 'Roboto' },
+    ],
+    ar: [
+        { name: 'Naskh', family: 'Naskh' },
+    ],
+};
+
+// Function to get fonts for current language
+export const getFontsForLanguage = (language: string) => {
+    return availableFonts[language as keyof typeof availableFonts] || availableFonts.en;
+};
+
+// Default font for each language
+export const getDefaultFontForLanguage = (language: string) => {
+    const fonts = getFontsForLanguage(language);
+    return fonts[0]?.family || 'Calibri';
+};
 
 export const availableTemplates = [
     {

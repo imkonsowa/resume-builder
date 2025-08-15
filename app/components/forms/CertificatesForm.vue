@@ -1,9 +1,9 @@
 <template>
     <FormContainer
         :is-empty="(resumeStore.resumeData.certificates?.length || 0) === 0"
-        :title="resumeStore.resumeData.sectionHeaders.certificates"
-        add-button-label="Add Certificate"
-        empty-message="Add your professional certificates and achievements."
+        :title="t('forms.certificates.title')"
+        :add-button-label="t('forms.certificates.addCertificate')"
+        :empty-message="t('forms.certificates.emptyMessage')"
         section-key="certificates"
         :collapsible="true"
         @add="resumeStore.addCertificate"
@@ -15,17 +15,17 @@
                 v-if="templateConfig.canMoveSection('certificates')"
                 class="flex items-center gap-2"
             >
-                <span class="text-sm text-gray-600">Column:</span>
+                <span class="text-sm text-gray-600">{{ t('forms.projects.column') }}:</span>
                 <select
                     :value="resumeStore.resumeData.sectionPlacement.certificates"
                     class="px-2 py-1 text-sm border rounded focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                     @change="(e) => resumeStore.updateSectionPlacement('certificates', (e.target as HTMLSelectElement).value as 'left' | 'right')"
                 >
                     <option value="left">
-                        Left
+                        {{ t('common.left', 'Left') }}
                     </option>
                     <option value="right">
-                        Right
+                        {{ t('common.right', 'Right') }}
                     </option>
                 </select>
             </div>
@@ -36,8 +36,8 @@
             :key="index"
             :can-move-down="index < (resumeStore.resumeData.certificates?.length || 0) - 1"
             :can-move-up="index > 0"
-            :confirm-message="`Are you sure you want to delete this certificate? This action cannot be undone.`"
-            :confirm-title="'Delete Certificate'"
+            :confirm-message="t('forms.certificates.deleteConfirm.message')"
+            :confirm-title="t('forms.certificates.deleteConfirm.title')"
             :title="`Certificate ${index + 1}`"
             @remove="resumeStore.removeCertificate(index)"
             @move-up="resumeStore.moveCertificate(index, index - 1)"
@@ -45,22 +45,22 @@
         >
             <div class="space-y-4">
                 <div class="space-y-2">
-                    <Label :for="`certificate-title-${index}`">Certificate Title</Label>
+                    <Label :for="`certificate-title-${index}`">{{ t('forms.certificates.certificateTitle') }}</Label>
                     <Input
                         :id="`certificate-title-${index}`"
                         :model-value="certificate.title"
-                        placeholder="AWS Certified Solutions Architect"
+                        :placeholder="t('forms.certificates.certificateTitle')"
                         @update:model-value="(value) => resumeStore.updateCertificate(index, 'title', value)"
                     />
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div class="space-y-2">
-                        <Label :for="`certificate-issuer-${index}`">Issuer</Label>
+                        <Label :for="`certificate-issuer-${index}`">{{ t('forms.certificates.issuer') }}</Label>
                         <Input
                             :id="`certificate-issuer-${index}`"
                             :model-value="certificate.issuer"
-                            placeholder="Amazon Web Services"
+                            :placeholder="t('forms.certificates.issuer')"
                             @update:model-value="(value) => resumeStore.updateCertificate(index, 'issuer', value)"
                         />
                     </div>
@@ -68,29 +68,29 @@
                     <div class="space-y-2">
                         <MonthYearPicker
                             :model-value="certificate.date"
-                            label="Date Obtained"
+                            :label="t('forms.certificates.date')"
                             @update:model-value="(value) => resumeStore.updateCertificate(index, 'date', value)"
                         />
                     </div>
                 </div>
 
                 <div class="space-y-2">
-                    <Label :for="`certificate-url-${index}`">Certificate URL</Label>
+                    <Label :for="`certificate-url-${index}`">{{ t('forms.certificates.url') }}</Label>
                     <Input
                         :id="`certificate-url-${index}`"
                         :model-value="certificate.url || ''"
-                        placeholder="https://example.com/certificate"
+                        :placeholder="t('forms.certificates.url')"
                         type="url"
                         @update:model-value="(value) => resumeStore.updateCertificate(index, 'url', value)"
                     />
                 </div>
 
                 <div class="space-y-2">
-                    <Label :for="`certificate-description-${index}`">Description</Label>
+                    <Label :for="`certificate-description-${index}`">{{ t('forms.certificates.description') }}</Label>
                     <Textarea
                         :id="`certificate-description-${index}`"
                         :model-value="certificate.description || ''"
-                        placeholder="Brief description of the certificate or skills gained..."
+                        :placeholder="t('forms.certificates.description')"
                         rows="3"
                         @update:model-value="(value) => resumeStore.updateCertificate(index, 'description', value)"
                     />
@@ -123,4 +123,5 @@ import ConfirmationModal from '~/components/elements/ConfirmationModal.vue';
 const resumeStore = useResumeStore();
 const confirmation = useConfirmation();
 const templateConfig = useTemplate();
+const { t } = useI18n();
 </script>

@@ -116,13 +116,13 @@ useHead({
         <!-- Hero Section -->
         <div class="text-center">
             <h1 class="text-6xl font-bold text-black mb-16">
-                {{ $t('homepage.title') }}<br>
-                <span class="text-gray-600">{{ $t('homepage.subtitle') }}</span>
+                {{ t('homepage.title') }}<br>
+                <span class="text-gray-600">{{ t('homepage.subtitle') }}</span>
             </h1>
 
             <NuxtLink to="/builder">
                 <Button size="lg">
-                    {{ $t('common.buildNow') }}
+                    {{ t('common.buildNow') }}
                 </Button>
             </NuxtLink>
         </div>
@@ -134,10 +134,10 @@ useHead({
                     <Check class="w-6 h-6 text-green-600" />
                 </div>
                 <h3 class="text-lg font-semibold mb-1">
-                    {{ $t('homepage.features.free.title') }}
+                    {{ t('homepage.features.free.title') }}
                 </h3>
                 <p class="text-sm text-gray-600">
-                    {{ $t('homepage.features.free.description') }}
+                    {{ t('homepage.features.free.description') }}
                 </p>
             </div>
 
@@ -146,10 +146,10 @@ useHead({
                     <Shield class="w-6 h-6 text-blue-600" />
                 </div>
                 <h3 class="text-lg font-semibold mb-1">
-                    {{ $t('homepage.features.noServers.title') }}
+                    {{ t('homepage.features.noServers.title') }}
                 </h3>
                 <p class="text-sm text-gray-600">
-                    {{ $t('homepage.features.noServers.description') }}
+                    {{ t('homepage.features.noServers.description') }}
                 </p>
             </div>
 
@@ -158,10 +158,10 @@ useHead({
                     <Users class="w-6 h-6 text-purple-600" />
                 </div>
                 <h3 class="text-lg font-semibold mb-1">
-                    {{ $t('homepage.features.noRegistration.title') }}
+                    {{ t('homepage.features.noRegistration.title') }}
                 </h3>
                 <p class="text-sm text-gray-600">
-                    {{ $t('homepage.features.noRegistration.description') }}
+                    {{ t('homepage.features.noRegistration.description') }}
                 </p>
             </div>
 
@@ -170,10 +170,10 @@ useHead({
                     <Download class="w-6 h-6 text-orange-600" />
                 </div>
                 <h3 class="text-lg font-semibold mb-1">
-                    {{ $t('homepage.features.unlimitedDownloads.title') }}
+                    {{ t('homepage.features.unlimitedDownloads.title') }}
                 </h3>
                 <p class="text-sm text-gray-600">
-                    {{ $t('homepage.features.unlimitedDownloads.description') }}
+                    {{ t('homepage.features.unlimitedDownloads.description') }}
                 </p>
             </div>
 
@@ -182,10 +182,10 @@ useHead({
                     <FileText class="w-6 h-6 text-red-600" />
                 </div>
                 <h3 class="text-lg font-semibold mb-1">
-                    {{ $t('homepage.features.unlimitedResumes.title') }}
+                    {{ t('homepage.features.unlimitedResumes.title') }}
                 </h3>
                 <p class="text-sm text-gray-600">
-                    {{ $t('homepage.features.unlimitedResumes.description') }}
+                    {{ t('homepage.features.unlimitedResumes.description') }}
                 </p>
             </div>
 
@@ -194,10 +194,10 @@ useHead({
                     <Zap class="w-6 h-6 text-indigo-600" />
                 </div>
                 <h3 class="text-lg font-semibold mb-1">
-                    {{ $t('homepage.features.fastEfficient.title') }}
+                    {{ t('homepage.features.fastEfficient.title') }}
                 </h3>
                 <p class="text-sm text-gray-600">
-                    {{ $t('homepage.features.fastEfficient.description') }}
+                    {{ t('homepage.features.fastEfficient.description') }}
                 </p>
             </div>
         </div>

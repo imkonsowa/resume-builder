@@ -1,9 +1,9 @@
 <template>
     <FormContainer
         :is-empty="resumeStore.resumeData.volunteering.length === 0"
-        :title="resumeStore.resumeData.sectionHeaders.volunteering"
-        add-button-label="Add Volunteering"
-        empty-message="No volunteering entries added yet. Click 'Add Volunteering' to get started."
+        :title="t('forms.volunteering.title')"
+        :add-button-label="t('forms.volunteering.addVolunteering')"
+        :empty-message="t('forms.volunteering.emptyMessage')"
         section-key="volunteering"
         @add="resumeStore.addVolunteering"
         @edit-title="(value) => resumeStore.updateSectionHeader('volunteering', value)"
@@ -14,17 +14,17 @@
                 v-if="templateConfig.canMoveSection('volunteering')"
                 class="flex items-center gap-2"
             >
-                <span class="text-sm text-gray-600">Column:</span>
+                <span class="text-sm text-gray-600">{{ t('forms.projects.column') }}:</span>
                 <select
                     :value="resumeStore.resumeData.sectionPlacement.volunteering"
                     class="px-2 py-1 text-sm border rounded focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                     @change="(e) => resumeStore.updateSectionPlacement('volunteering', (e.target as HTMLSelectElement).value as 'left' | 'right')"
                 >
                     <option value="left">
-                        Left
+                        {{ t('common.left', 'Left') }}
                     </option>
                     <option value="right">
-                        Right
+                        {{ t('common.right', 'Right') }}
                     </option>
                 </select>
             </div>
@@ -34,8 +34,8 @@
             :key="index"
             :can-move-down="index < resumeStore.resumeData.volunteering.length - 1"
             :can-move-up="index > 0"
-            :confirm-message="`Are you sure you want to delete this volunteering entry? This action cannot be undone.`"
-            :confirm-title="'Delete Volunteering'"
+            :confirm-message="t('forms.volunteering.deleteConfirm.message')"
+            :confirm-title="t('forms.volunteering.deleteConfirm.title')"
             :title="`Volunteering ${index + 1}`"
             @remove="resumeStore.removeVolunteering(index)"
             @move-up="resumeStore.moveVolunteering(index, index - 1)"
@@ -43,18 +43,18 @@
         >
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                 <div class="space-y-2">
-                    <Label>Organization</Label>
+                    <Label>{{ t('forms.volunteering.organization') }}</Label>
                     <Input
                         :model-value="volunteering.organization"
-                        placeholder="Organization Name"
+                        :placeholder="t('forms.volunteering.organization')"
                         @update:model-value="(value) => resumeStore.updateVolunteering(index, 'organization', value)"
                     />
                 </div>
                 <div class="space-y-2">
-                    <Label>Position</Label>
+                    <Label>{{ t('forms.volunteering.position') }}</Label>
                     <Input
                         :model-value="volunteering.position"
-                        placeholder="Volunteer Position"
+                        :placeholder="t('forms.volunteering.position')"
                         @update:model-value="(value) => resumeStore.updateVolunteering(index, 'position', value)"
                     />
                 </div>
@@ -62,23 +62,23 @@
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
                 <div class="space-y-2">
-                    <Label>Location</Label>
+                    <Label>{{ t('forms.volunteering.location') }}</Label>
                     <Input
                         :model-value="volunteering.location"
-                        placeholder="City, Country"
+                        :placeholder="t('forms.volunteering.location')"
                         @update:model-value="(value) => resumeStore.updateVolunteering(index, 'location', value)"
                     />
                 </div>
                 <MonthYearPicker
                     :model-value="volunteering.startDate"
-                    label="Start Date"
+                    :label="t('forms.volunteering.startDate')"
                     @update:model-value="(value) => resumeStore.updateVolunteering(index, 'startDate', value)"
                 />
                 <div class="space-y-2">
                     <MonthYearPicker
                         :disabled="volunteering.isPresent"
                         :model-value="volunteering.endDate"
-                        label="End Date"
+                        :label="t('forms.volunteering.endDate')"
                         @update:model-value="(value) => resumeStore.updateVolunteering(index, 'endDate', value)"
                     />
                     <div class="flex items-center space-x-2">
@@ -93,21 +93,21 @@
                         <Label
                             :for="`vol-present-${index}`"
                             class="text-sm"
-                        >Present</Label>
+                        >{{ t('forms.volunteering.present') }}</Label>
                     </div>
                 </div>
             </div>
 
             <div class="space-y-4">
                 <div class="flex justify-between items-center">
-                    <Label>Volunteer Achievements</Label>
+                    <Label>{{ t('forms.volunteering.achievements') }}</Label>
                     <Button
                         size="sm"
                         variant="outline"
                         @click="resumeStore.addVolunteeringAchievement(index)"
                     >
                         <Plus class="w-4 h-4 mr-2" />
-                        Add Achievement
+                        {{ t('forms.volunteering.addAchievement') }}
                     </Button>
                 </div>
 
@@ -121,7 +121,7 @@
                             <Input
                                 :model-value="volunteering.achievements[achievementIndex].text"
                                 class="flex-1"
-                                placeholder="Describe your volunteer achievements and impact"
+                                :placeholder="t('forms.volunteering.achievementPlaceholder')"
                                 @update:model-value="(value) => resumeStore.updateVolunteeringAchievement(index, achievementIndex, value)"
                                 @keydown.enter="resumeStore.addVolunteeringAchievement(index)"
                             />
@@ -196,4 +196,5 @@ import FormContainer from '~/components/elements/FormContainer.vue';
 // Use the store directly instead of props
 const resumeStore = useResumeStore();
 const templateConfig = useTemplate();
+const { t } = useI18n();
 </script>

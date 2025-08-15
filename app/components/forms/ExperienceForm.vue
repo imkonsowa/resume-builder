@@ -1,9 +1,9 @@
 <template>
     <FormContainer
         :is-empty="resumeStore.resumeData.experiences.length === 0"
-        :title="resumeStore.resumeData.sectionHeaders.experience"
-        add-button-label="Add Experience"
-        empty-message="No experience entries added yet. Click 'Add Experience' to get started."
+        :title="t('forms.experience.title')"
+        :add-button-label="t('forms.experience.addExperience')"
+        :empty-message="t('forms.experience.emptyMessage')"
         section-key="experience"
         @add="resumeStore.addExperience"
         @edit-title="(value) => resumeStore.updateSectionHeader('experience', value)"
@@ -13,8 +13,8 @@
             :key="index"
             :can-move-down="index < resumeStore.resumeData.experiences.length - 1"
             :can-move-up="index > 0"
-            :confirm-message="`Are you sure you want to delete this experience entry? This action cannot be undone.`"
-            :confirm-title="'Delete Experience'"
+            :confirm-message="t('forms.experience.deleteConfirm.message')"
+            :confirm-title="t('forms.experience.deleteConfirm.title')"
             :title="`Experience ${index + 1}`"
             @remove="resumeStore.removeExperience(index)"
             @move-up="resumeStore.moveExperience(index, index - 1)"
@@ -22,18 +22,18 @@
         >
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                 <div class="space-y-2">
-                    <Label>Position</Label>
+                    <Label>{{ t('forms.experience.position') }}</Label>
                     <Input
                         :model-value="experience.position"
-                        placeholder="Job Title"
+                        :placeholder="t('forms.experience.position')"
                         @update:model-value="(value) => resumeStore.updateExperience(index, 'position', value)"
                     />
                 </div>
                 <div class="space-y-2">
-                    <Label>Company</Label>
+                    <Label>{{ t('forms.experience.company') }}</Label>
                     <Input
                         :model-value="experience.company"
-                        placeholder="Company Name"
+                        :placeholder="t('forms.experience.company')"
                         @update:model-value="(value) => resumeStore.updateExperience(index, 'company', value)"
                     />
                 </div>
@@ -41,18 +41,18 @@
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                 <div class="space-y-2">
-                    <Label>Location</Label>
+                    <Label>{{ t('forms.experience.location') }}</Label>
                     <Input
                         :model-value="experience.location"
-                        placeholder="City, Country"
+                        :placeholder="t('forms.experience.location')"
                         @update:model-value="(value) => resumeStore.updateExperience(index, 'location', value)"
                     />
                 </div>
                 <div class="space-y-2">
-                    <Label>Company Website URL</Label>
+                    <Label>{{ t('forms.experience.companyUrl') }}</Label>
                     <Input
                         :model-value="experience.companyUrl || ''"
-                        placeholder="https://company.com"
+                        :placeholder="t('forms.experience.companyUrl')"
                         @update:model-value="(value) => resumeStore.updateExperience(index, 'companyUrl', value)"
                     />
                 </div>
@@ -62,7 +62,7 @@
                 <div class="space-y-2">
                     <MonthYearPicker
                         :model-value="experience.startDate"
-                        label="Start Date"
+                        :label="t('forms.experience.startDate')"
                         @update:model-value="(value) => resumeStore.updateExperience(index, 'startDate', value)"
                     />
                 </div>
@@ -70,7 +70,7 @@
                     <MonthYearPicker
                         :disabled="experience.isPresent"
                         :model-value="experience.endDate"
-                        label="End Date"
+                        :label="t('forms.experience.endDate')"
                         @update:model-value="(value) => resumeStore.updateExperience(index, 'endDate', value)"
                     />
                     <div class="flex items-center space-x-2 mt-2">
@@ -85,21 +85,21 @@
                         <Label
                             :for="`present-${index}`"
                             class="text-sm"
-                        >Present</Label>
+                        >{{ t('forms.experience.present') }}</Label>
                     </div>
                 </div>
             </div>
 
             <div class="space-y-4">
                 <div class="flex justify-between items-center">
-                    <Label>Achievements</Label>
+                    <Label>{{ t('forms.experience.achievements') }}</Label>
                     <Button
                         size="sm"
                         variant="outline"
                         @click="resumeStore.addExperienceAchievement(index)"
                     >
                         <Plus class="w-4 h-4 mr-2" />
-                        Add Achievement
+                        {{ t('forms.experience.addAchievement') }}
                     </Button>
                 </div>
 
@@ -113,7 +113,7 @@
                             <Input
                                 :model-value="experience.achievements[achievementIndex].text"
                                 class="flex-1"
-                                placeholder="Describe your key achievements and impact"
+                                :placeholder="t('forms.experience.achievementPlaceholder')"
                                 @update:model-value="(value) => resumeStore.updateExperienceAchievement(index, achievementIndex, value)"
                                 @keydown.enter="resumeStore.addExperienceAchievement(index)"
                             />
@@ -187,4 +187,5 @@ import FormContainer from '~/components/elements/FormContainer.vue';
 
 // Use the store directly instead of prop drilling
 const resumeStore = useResumeStore();
+const { t } = useI18n();
 </script>

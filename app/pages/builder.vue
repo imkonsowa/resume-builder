@@ -222,7 +222,7 @@ const orderedSections = computed(() => {
                     @click="showMobilePreview = true"
                 >
                     <EyeIcon class="h-5 w-5" />
-                    <span class="text-sm font-medium">{{ $t('common.preview') }}</span>
+                    <span class="text-sm font-medium">{{ t('common.preview') }}</span>
                 </Button>
 
                 <!-- Mobile Preview Modal -->
@@ -234,7 +234,7 @@ const orderedSections = computed(() => {
                         <div class="bg-white rounded-lg max-w-full w-full max-h-[90vh] flex flex-col">
                             <div class="p-4 border-b border-gray-200 flex justify-between items-center">
                                 <h3 class="text-lg font-medium">
-                                    {{ $t('builder.resumePreview') }}
+                                    {{ t('builder.resumePreview') }}
                                 </h3>
 
                                 <!-- Zoom Controls -->

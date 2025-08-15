@@ -2,8 +2,8 @@
     <FormContainer
         :is-empty="resumeStore.resumeData.languages.length === 0"
         :title="sectionHeaderTitle"
-        add-button-label="Add Language"
-        empty-message="Add languages you speak to showcase your communication skills."
+        :add-button-label="t('forms.languages.addLanguage')"
+        :empty-message="t('forms.languages.emptyMessage')"
         section-key="languages"
         @add="resumeStore.addLanguage"
         @edit-title="(value) => resumeStore.updateSectionHeader('languages', value)"
@@ -14,17 +14,17 @@
                 v-if="templateConfig.canMoveSection('languages')"
                 class="flex items-center gap-2"
             >
-                <span class="text-sm text-gray-600">Column:</span>
+                <span class="text-sm text-gray-600">{{ t('forms.projects.column') }}:</span>
                 <select
                     :value="resumeStore.resumeData.sectionPlacement.languages"
                     class="px-2 py-1 text-sm border rounded focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                     @change="(e) => resumeStore.updateSectionPlacement('languages', (e.target as HTMLSelectElement).value as 'left' | 'right')"
                 >
                     <option value="left">
-                        Left
+                        {{ t('common.left', 'Left') }}
                     </option>
                     <option value="right">
-                        Right
+                        {{ t('common.right', 'Right') }}
                     </option>
                 </select>
             </div>
@@ -35,8 +35,8 @@
             :key="index"
             :can-move-down="index < resumeStore.resumeData.languages.length - 1"
             :can-move-up="index > 0"
-            :confirm-message="`Are you sure you want to delete this language? This action cannot be undone.`"
-            :confirm-title="'Delete Language'"
+            :confirm-message="t('forms.languages.deleteConfirm.message')"
+            :confirm-title="t('forms.languages.deleteConfirm.title')"
             :title="`Language ${index + 1}`"
             @remove="resumeStore.removeLanguage(index)"
             @move-up="resumeStore.moveLanguage(index, index - 1)"
@@ -44,17 +44,17 @@
         >
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div class="space-y-2">
-                    <Label :for="`language-name-${index}`">Language</Label>
+                    <Label :for="`language-name-${index}`">{{ t('forms.languages.languageName') }}</Label>
                     <Input
                         :id="`language-name-${index}`"
                         :model-value="language.name"
-                        placeholder="English, Spanish, French..."
+                        :placeholder="t('forms.languages.languageName')"
                         @update:model-value="(value) => resumeStore.updateLanguage(index, 'name', value)"
                     />
                 </div>
 
                 <div class="space-y-2">
-                    <Label :for="`language-proficiency-${index}`">Proficiency</Label>
+                    <Label :for="`language-proficiency-${index}`">{{ t('forms.languages.proficiency') }}</Label>
                     <select
                         :id="`language-proficiency-${index}`"
                         :value="language.proficiency"
@@ -62,25 +62,25 @@
                         @change="(e) => resumeStore.updateLanguage(index, 'proficiency', (e.target as HTMLSelectElement).value)"
                     >
                         <option value="">
-                            Select proficiency
+                            {{ t('forms.languages.proficiency') }}
                         </option>
                         <option value="Native">
-                            Native
+                            {{ t('proficiency.native', 'Native') }}
                         </option>
                         <option value="Fluent">
-                            Fluent
+                            {{ t('proficiency.fluent', 'Fluent') }}
                         </option>
                         <option value="Proficient">
-                            Proficient
+                            {{ t('proficiency.proficient', 'Proficient') }}
                         </option>
                         <option value="Conversational">
-                            Conversational
+                            {{ t('proficiency.conversational', 'Conversational') }}
                         </option>
                         <option value="Basic">
-                            Basic
+                            {{ t('proficiency.basic', 'Basic') }}
                         </option>
                         <option value="Beginner">
-                            Beginner
+                            {{ t('proficiency.beginner', 'Beginner') }}
                         </option>
                     </select>
                 </div>
@@ -111,8 +111,9 @@ import ConfirmationModal from '~/components/elements/ConfirmationModal.vue';
 const resumeStore = useResumeStore();
 const confirmation = useConfirmation();
 const templateConfig = useTemplate();
+const { t } = useI18n();
 
 const sectionHeaderTitle = computed(() => {
-    return resumeStore.resumeData.sectionHeaders?.languages || 'Languages';
+    return t('forms.languages.title');
 });
 </script>

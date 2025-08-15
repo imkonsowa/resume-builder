@@ -160,14 +160,14 @@ useHead({
                     class="mb-4"
                     variant="secondary"
                 >
-                    {{ $t('qa.badge') }}
+                    {{ t('qa.badge') }}
                 </Badge>
                 <h1 class="text-4xl md:text-6xl font-bold tracking-tight mb-6">
-                    {{ $t('qa.title') }}
-                    <span class="text-primary"> {{ $t('qa.titleHighlight') }}</span>
+                    {{ t('qa.title') }}
+                    <span class="text-primary"> {{ t('qa.titleHighlight') }}</span>
                 </h1>
                 <p class="text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-                    {{ $t('qa.subtitle') }}
+                    {{ t('qa.subtitle') }}
                 </p>
             </div>
         </div>
@@ -222,10 +222,10 @@ useHead({
         <div class="border-t bg-muted/40">
             <div class="container mx-auto px-4 py-16 text-center">
                 <h2 class="text-3xl md:text-4xl font-bold tracking-tight mb-4">
-                    {{ $t('qa.ctaTitle') }}
+                    {{ t('qa.ctaTitle') }}
                 </h2>
                 <p class="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
-                    {{ $t('qa.ctaSubtitle') }}
+                    {{ t('qa.ctaSubtitle') }}
                 </p>
                 <Button
                     as-child
@@ -236,7 +236,7 @@ useHead({
                         class="inline-flex items-center gap-2"
                         to="/builder"
                     >
-                        {{ $t('common.startBuilding') }}
+                        {{ t('common.startBuilding') }}
                         <ArrowRight class="h-4 w-4" />
                     </NuxtLink>
                 </Button>
