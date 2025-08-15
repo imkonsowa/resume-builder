@@ -66,7 +66,7 @@
 </template>
 
 <script lang="ts" setup>
-import { Card, CardContent, CardHeader, CardTitle } from '~/components/ui/card';
+import { Card, CardContent, CardHeader } from '~/components/ui/card';
 import { Button } from '~/components/ui/button';
 import { ChevronDown } from 'lucide-vue-next';
 import AddButton from '~/components/elements/AddButton.vue';

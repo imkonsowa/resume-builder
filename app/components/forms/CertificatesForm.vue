@@ -5,7 +5,7 @@
         add-button-label="Add Certificate"
         empty-message="Add your professional certificates and achievements."
         section-key="certificates"
-        :collapsible="true"
+        collapsible
         @add="resumeStore.addCertificate"
         @edit-title="(value) => resumeStore.updateSectionHeader('certificates', value)"
     >
