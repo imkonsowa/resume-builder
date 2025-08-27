@@ -41,6 +41,14 @@ export default defineNuxtConfig({
         description: 'Build professional resumes for free. No servers, no registration, no payments. Unlimited downloads and resumes with complete privacy.',
         defaultLocale: 'en',
     },
+
+    runtimeConfig: {
+        public: {
+            pocketbaseUrl: process.env.NODE_ENV === 'production'
+                ? 'https://api.resumeforfree.com'
+                : 'http://localhost:8010',
+        },
+    },
     future: {
         compatibilityVersion: 4,
     },

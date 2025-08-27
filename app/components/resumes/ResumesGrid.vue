@@ -9,6 +9,7 @@
             @copy="$emit('copy', $event)"
             @export="$emit('export', $event)"
             @delete="$emit('delete', $event)"
+            @sync="$emit('sync', $event)"
         />
     </div>
 </template>
@@ -29,6 +30,7 @@ defineEmits<{
     copy: [id: string];
     export: [id: string];
     delete: [id: string];
+    sync: [id: string];
 }>();
 </script>
 

@@ -11,6 +11,7 @@ import type { ImportResumePreview } from '~/components/elements/ImportConfirmati
 import type { Resume } from '~/types/resume';
 
 const resumeStore = useResumeStore();
+const authStore = useAuthStore();
 const router = useRouter();
 const confirmation = useConfirmation();
 const { exportResumes, exportSingleResume, parseImportFile, importSelectedResumes } = useResumeImportExport();
@@ -101,6 +102,7 @@ const handleCopyResume = (name: string, navigateToBuilder: boolean) => {
 
 // Delete resume
 const deleteResume = async (id: string) => {
+    const { toast } = await import('vue-sonner');
     const resume = resumeStore.resumesList.find(r => r.id === id);
     const resumeName = resume?.name || 'this resume';
 
@@ -112,7 +114,92 @@ const deleteResume = async (id: string) => {
     });
 
     if (confirmed) {
+        // Delete from local store first
         resumeStore.deleteResume(id);
+
+        // Also delete from backend if user is logged in and resume has serverId
+        if (authStore.isLoggedIn && resume?.serverId) {
+            try {
+                const pb = usePocketBase();
+                await pb.collection('resumes').delete(resume.serverId);
+                toast.success(`Resume "${resumeName}" deleted from cloud`);
+            }
+            catch (error) {
+                // Don't fail the local deletion if backend deletion fails
+                console.error('Failed to delete resume from cloud:', error);
+                const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+                toast.warning(`Resume deleted locally, but failed to delete from cloud: ${errorMessage}`);
+            }
+        }
+        else {
+            toast.success(`Resume "${resumeName}" deleted`);
+        }
+    }
+};
+
+// Sync resume to cloud
+const syncResume = async (id: string) => {
+    const { toast } = await import('vue-sonner');
+
+    if (!authStore.isLoggedIn) {
+        toast.error('Please log in to sync resumes');
+        return;
+    }
+
+    try {
+        const pb = usePocketBase();
+        const resume = resumeStore.resumesList.find(r => r.id === id);
+
+        if (!resume) {
+            toast.error('Resume not found');
+            return;
+        }
+
+        toast.info('Syncing resume to cloud...');
+
+        const resumeData = {
+            created_by: authStore.user?.id || '',
+            name: resume.name,
+            data: resume.data,
+            published: false,
+        };
+
+        if (resume.serverId) {
+            try {
+                await pb.collection('resumes').update(resume.serverId, resumeData);
+                toast.success(`Resume "${resume.name}" updated in cloud`);
+            }
+            catch (error) {
+                // If serverId is invalid (resume deleted on server), create new one
+                if (error && typeof error === 'object' && 'status' in error && error.status === 404) {
+                    const newRecord = await pb.collection('resumes').create(resumeData);
+                    // Directly update the serverId in the store
+                    if (resumeStore.resumes[id]) {
+                        resumeStore.resumes[id].serverId = newRecord.id;
+                        resumeStore.resumes[id].updatedAt = new Date().toISOString();
+                    }
+                    toast.success(`Resume "${resume.name}" synced to cloud (new copy created)`);
+                }
+                else {
+                    throw error;
+                }
+            }
+        }
+        else {
+            // Create new resume and store the serverId
+            const newRecord = await pb.collection('resumes').create(resumeData);
+            // Directly update the serverId in the store
+            if (resumeStore.resumes[id]) {
+                resumeStore.resumes[id].serverId = newRecord.id;
+                resumeStore.resumes[id].updatedAt = new Date().toISOString();
+            }
+            toast.success(`Resume "${resume.name}" synced to cloud`);
+        }
+    }
+    catch (error) {
+        console.error('Failed to sync resume:', error);
+        const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+        toast.error(`Failed to sync resume: ${errorMessage}`);
     }
 };
 
@@ -271,6 +358,7 @@ useHead({
                 @copy="showCopyResumeModal"
                 @export="exportSingleResume"
                 @delete="deleteResume"
+                @sync="syncResume"
             />
 
             <CreateResumeModal

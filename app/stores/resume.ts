@@ -188,6 +188,11 @@ export const useResumeStore = defineStore('resume', {
                 if (!resume.data.certificates) {
                     resume.data.certificates = [];
                 }
+
+                // Initialize serverId for backward compatibility
+                if (resume.serverId === undefined) {
+                    resume.serverId = undefined;
+                }
             });
 
             if (Object.keys(this.resumes).length === 0) {
@@ -243,6 +248,13 @@ export const useResumeStore = defineStore('resume', {
         renameResume(id: string, name: string): void {
             if (this.resumes[id]) {
                 this.resumes[id].name = name;
+                this.resumes[id].updatedAt = new Date().toISOString();
+            }
+        },
+
+        updateServerId(id: string, serverId: string): void {
+            if (this.resumes[id]) {
+                this.resumes[id].serverId = serverId;
                 this.resumes[id].updatedAt = new Date().toISOString();
             }
         },

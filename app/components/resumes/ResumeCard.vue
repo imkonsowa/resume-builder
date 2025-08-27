@@ -105,15 +105,43 @@
                     <Download class="w-3 h-3" />
                     Export
                 </Button>
+                <!-- Sync Button (only for logged in users) -->
                 <Button
-                    class="flex items-center gap-1 text-red-600 hover:text-red-700"
+                    v-if="authStore.isLoggedIn"
+                    class="flex items-center gap-1"
                     size="sm"
                     variant="outline"
-                    @click.stop="$emit('delete', resume.id)"
+                    title="Sync with cloud"
+                    @click.stop="$emit('sync', resume.id)"
                 >
-                    <Trash2 class="w-3 h-3" />
-                    Delete
+                    <Cloud class="w-3 h-3" />
+                    Sync
                 </Button>
+                <!-- Options Menu -->
+                <Popover>
+                    <PopoverTrigger as-child>
+                        <Button
+                            size="sm"
+                            variant="outline"
+                            class="p-2"
+                            @click.stop
+                        >
+                            <MoreVertical class="w-3 h-3" />
+                        </Button>
+                    </PopoverTrigger>
+                    <PopoverContent
+                        class="w-40 p-1"
+                        align="end"
+                    >
+                        <button
+                            class="w-full flex items-center gap-2 px-2 py-1.5 text-sm text-red-600 hover:bg-red-50 rounded transition-colors"
+                            @click.stop="$emit('delete', resume.id)"
+                        >
+                            <Trash2 class="w-3 h-3" />
+                            Delete
+                        </button>
+                    </PopoverContent>
+                </Popover>
             </div>
         </CardContent>
     </Card>
@@ -123,12 +151,15 @@
 import { Button } from '~/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '~/components/ui/card';
 import { Badge } from '~/components/ui/badge';
+import { Popover, PopoverContent, PopoverTrigger } from '~/components/ui/popover';
 import {
     Calendar,
     Check,
+    Cloud,
     Copy,
     Download,
     Edit,
+    MoreVertical,
     PencilIcon,
     Trash2,
     X,
@@ -148,9 +179,11 @@ defineEmits<{
     export: [id: string];
     delete: [id: string];
     rename: [id: string, newName: string];
+    sync: [id: string];
 }>();
 
 const resumeStore = useResumeStore();
+const authStore = useAuthStore();
 
 // Editing state
 const isEditing = ref(false);

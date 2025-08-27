@@ -8,7 +8,7 @@
     "deploy:staging": "nuxt build && wrangler deploy --env staging",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
-    "dev": "nuxt dev --host",
+    "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare"
@@ -29,6 +29,7 @@
     "lucide-vue-next": "^0.525.0",
     "nuxt": "^4.0.0",
     "pinia-plugin-persistedstate": "^4.4.1",
+    "pocketbase": "^0.26.2",
     "reka-ui": "^2.4.0",
     "shadcn-nuxt": "^2.2.0",
     "tailwind-merge": "^3.3.1",
@@ -37,7 +38,7 @@
     "vee-validate": "^4.15.1",
     "vue": "^3.5.17",
     "vue-router": "^4.5.1",
-    "vue-sonner": "^2.0.1",
+    "vue-sonner": "^2.0.8",
     "zod": "^3.25.76"
   },
   "devDependencies": {

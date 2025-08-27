@@ -149,6 +149,7 @@ export interface Resume {
     data: ResumeData;
     createdAt: string;
     updatedAt: string;
+    serverId?: string;
 }
 
 export interface MultiResumeState {
