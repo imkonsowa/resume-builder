@@ -10,6 +10,7 @@
             @export="$emit('export', $event)"
             @delete="$emit('delete', $event)"
             @sync="$emit('sync', $event)"
+            @disable-sync="$emit('disableSync', $event)"
         />
     </div>
 </template>
@@ -22,15 +23,14 @@ interface Props {
     resumes: Resume[];
     activeResumeId: string | null;
 }
-
 defineProps<Props>();
-
 defineEmits<{
     edit: [id: string];
     copy: [id: string];
     export: [id: string];
     delete: [id: string];
     sync: [id: string];
+    disableSync: [id: string];
 }>();
 </script>
 
@@ -40,13 +40,11 @@ defineEmits<{
         grid-template-columns: 1fr;
         gap: 1.5rem;
     }
-
     @media (min-width: 768px) {
         .resumes-grid {
             grid-template-columns: repeat(2, 1fr);
         }
     }
-
     @media (min-width: 1024px) {
         .resumes-grid {
             grid-template-columns: repeat(3, 1fr);

@@ -19,8 +19,10 @@ command = "npm run build"
 # binding = "MY_KV"
 # id = "your-kv-namespace-id"
 
-# D1 databases (if needed)
-# [[d1_databases]]
-# binding = "DB"
-# database_name = "resume-db"
-# database_id = "your-database-id"
+[[d1_databases]]
+binding = "DB"
+database_name = "resume-builder-db"
+database_id = "18a06c90-6adb-4400-bbf5-85313c47df0a"
+
+[vars]
+ENVIRONMENT = "development"

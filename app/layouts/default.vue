@@ -6,25 +6,19 @@ import { Toaster } from '@/components/ui/sonner';
 import { Button } from '@/components/ui/button';
 
 const authStore = useAuthStore();
-
 const showLoginModal = ref(false);
 const showRegisterModal = ref(false);
-
 const switchToRegister = () => {
     showLoginModal.value = false;
     showRegisterModal.value = true;
 };
-
 const switchToLogin = () => {
     showRegisterModal.value = false;
     showLoginModal.value = true;
 };
-
 const handleLogout = async () => {
     await authStore.logout();
 };
-
-// Initialize auth on mount
 onMounted(async () => {
     await authStore.initializeAuth();
 });
@@ -32,7 +26,6 @@ onMounted(async () => {
 
 <template>
     <div class="min-h-screen bg-white flex flex-col">
-        <!-- Navigation -->
         <nav class="border-b border-gray-200">
             <div class="px-4 lg:px-8">
                 <div class="flex justify-between items-center h-16">
@@ -44,7 +37,6 @@ onMounted(async () => {
                                 >Free Resume Builder</span>
                             </div>
                         </NuxtLink>
-
                         <div class="flex items-center space-x-4">
                             <NuxtLink
                                 class="flex items-center space-x-1 md:space-x-2 text-gray-600 hover:text-gray-900 transition-colors"
@@ -53,7 +45,6 @@ onMounted(async () => {
                                 <FileText class="w-4 h-4" />
                                 <span class="hidden sm:inline text-sm font-medium">Your Resumes</span>
                             </NuxtLink>
-
                             <NuxtLink
                                 class="flex items-center space-x-1 md:space-x-2 text-gray-600 hover:text-gray-900 transition-colors"
                                 to="/builder"
@@ -63,9 +54,7 @@ onMounted(async () => {
                             </NuxtLink>
                         </div>
                     </div>
-
                     <div class="flex items-center space-x-2 md:space-x-6">
-                        <!-- Auth Buttons - Show when not authenticated -->
                         <template v-if="!authStore.isLoggedIn">
                             <Button
                                 variant="ghost"
@@ -76,7 +65,6 @@ onMounted(async () => {
                                 <User class="w-4 h-4 mr-1" />
                                 <span class="hidden sm:inline">Sign In</span>
                             </Button>
-
                             <Button
                                 size="sm"
                                 @click="showRegisterModal = true"
@@ -84,14 +72,11 @@ onMounted(async () => {
                                 <span class="text-sm">Sign Up</span>
                             </Button>
                         </template>
-
-                        <!-- User Menu - Show when authenticated -->
                         <template v-else>
                             <div class="flex items-center space-x-2 text-sm text-gray-600">
                                 <User class="w-4 h-4" />
                                 <span class="hidden sm:inline">{{ authStore.currentUser?.name || authStore.currentUser?.email }}</span>
                             </div>
-
                             <Button
                                 variant="ghost"
                                 size="sm"
@@ -102,10 +87,7 @@ onMounted(async () => {
                                 <span class="hidden sm:inline">Sign Out</span>
                             </Button>
                         </template>
-
-                        <!-- Divider -->
                         <div class="h-4 w-px bg-gray-300 hidden md:block" />
-
                         <NuxtLink
                             class="flex items-center space-x-1 md:space-x-2 text-gray-600 hover:text-gray-900 transition-colors"
                             to="/contact"
@@ -113,7 +95,6 @@ onMounted(async () => {
                             <Mail class="w-4 h-4" />
                             <span class="hidden sm:inline text-sm font-medium">Contact</span>
                         </NuxtLink>
-
                         <NuxtLink
                             class="flex items-center space-x-1 md:space-x-2 text-gray-600 hover:text-gray-900 transition-colors"
                             target="_blank"
@@ -122,7 +103,6 @@ onMounted(async () => {
                             <HelpCircle class="w-4 h-4" />
                             <span class="hidden sm:inline text-sm font-medium">Q&A</span>
                         </NuxtLink>
-
                         <a
                             class="flex items-center space-x-1 md:space-x-2 text-gray-600 hover:text-gray-900 transition-colors"
                             href="https://github.com/imkonsowa/resume-builder"
@@ -136,13 +116,9 @@ onMounted(async () => {
                 </div>
             </div>
         </nav>
-
-        <!-- Page Content -->
         <main class="flex-1">
             <slot />
         </main>
-
-        <!-- Footer -->
         <footer
             v-if="$route.path !== '/builder'"
             class="bg-gray-50 border-t border-gray-200 mt-auto"
@@ -177,20 +153,26 @@ onMounted(async () => {
                 </div>
             </div>
         </footer>
-
-        <!-- Auth Modals -->
         <LoginModal
             v-model:open="showLoginModal"
             @switch-to-register="switchToRegister"
         />
-
         <RegisterModal
             v-model:open="showRegisterModal"
             @switch-to-login="switchToLogin"
         />
-
-        <!-- Toast Notifications -->
-        <Toaster />
+        <Toaster
+            position="bottom-right"
+            :duration="4000"
+            :theme="'light'"
+            :toast-options="{
+                style: {
+                    background: 'white',
+                    color: 'black',
+                    border: '1px solid #e5e7eb',
+                },
+            }"
+        />
     </div>
 </template>
 

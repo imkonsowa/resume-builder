@@ -10,7 +10,6 @@
                     Create a free account to save and access your resumes
                 </DialogDescription>
             </DialogHeader>
-
             <form
                 class="space-y-4"
                 @submit.prevent="handleRegister"
@@ -26,7 +25,6 @@
                         :disabled="loading"
                     />
                 </div>
-
                 <div class="space-y-2">
                     <Label for="reg-email">Email</Label>
                     <Input
@@ -38,7 +36,6 @@
                         :disabled="loading"
                     />
                 </div>
-
                 <div class="space-y-2">
                     <Label for="reg-password">Password</Label>
                     <Input
@@ -51,7 +48,6 @@
                         :disabled="loading"
                     />
                 </div>
-
                 <div class="space-y-2">
                     <Label for="reg-password-confirm">Confirm Password</Label>
                     <Input
@@ -63,7 +59,6 @@
                         :disabled="loading"
                     />
                 </div>
-
                 <Button
                     type="submit"
                     class="w-full"
@@ -75,14 +70,12 @@
                     />
                     Create Account
                 </Button>
-
                 <div
                     v-if="error"
                     class="text-sm text-red-600 text-center"
                 >
                     {{ error }}
                 </div>
-
                 <div
                     v-if="success"
                     class="text-sm text-green-600 text-center"
@@ -90,7 +83,6 @@
                     {{ success }}
                 </div>
             </form>
-
             <div class="text-center text-sm text-muted-foreground">
                 Already have an account?
                 <button
@@ -116,17 +108,13 @@ import { Loader2 } from 'lucide-vue-next';
 interface Props {
     open: boolean;
 }
-
 interface Emits {
     (e: 'update:open', value: boolean): void;
     (e: 'switch-to-login'): void;
 }
-
 const props = defineProps<Props>();
 const emit = defineEmits<Emits>();
-
 const authStore = useAuthStore();
-
 const isOpen = ref(props.open);
 const name = ref('');
 const email = ref('');
@@ -135,7 +123,6 @@ const passwordConfirm = ref('');
 const loading = ref(false);
 const error = ref('');
 const success = ref('');
-
 const isFormValid = computed(() => {
     return name.value
         && email.value
@@ -144,15 +131,12 @@ const isFormValid = computed(() => {
         && passwordConfirm.value
         && password.value === passwordConfirm.value;
 });
-
 watch(() => props.open, (newValue) => {
     isOpen.value = newValue;
 });
-
 watch(isOpen, (newValue) => {
     emit('update:open', newValue);
 });
-
 watch([password, passwordConfirm], () => {
     if (password.value && passwordConfirm.value && password.value !== passwordConfirm.value) {
         error.value = 'Passwords do not match';
@@ -161,14 +145,12 @@ watch([password, passwordConfirm], () => {
         error.value = '';
     }
 });
-
 const handleClose = () => {
     if (!loading.value) {
         isOpen.value = false;
         resetForm();
     }
 };
-
 const resetForm = () => {
     name.value = '';
     email.value = '';
@@ -178,21 +160,17 @@ const resetForm = () => {
     success.value = '';
     loading.value = false;
 };
-
 const handleRegister = async () => {
     if (loading.value || !isFormValid.value) return;
-
     loading.value = true;
     error.value = '';
     success.value = '';
-
     const result = await authStore.register(
         email.value,
         password.value,
         passwordConfirm.value,
         name.value,
     );
-
     if (result.success) {
         success.value = 'Account created successfully! You are now signed in.';
         setTimeout(() => {
@@ -203,10 +181,8 @@ const handleRegister = async () => {
     else {
         error.value = result.error || 'Registration failed';
     }
-
     loading.value = false;
 };
-
 const switchToLogin = () => {
     isOpen.value = false;
     resetForm();

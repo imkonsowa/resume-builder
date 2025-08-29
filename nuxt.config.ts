@@ -9,6 +9,7 @@ export default defineNuxtConfig({
         'pinia-plugin-persistedstate/nuxt',
         '@nuxt/eslint',
         '@vite-pwa/nuxt',
+        'nitro-cloudflare-dev',
     ],
 
     imports: {
@@ -54,7 +55,12 @@ export default defineNuxtConfig({
     },
     compatibilityDate: '2025-07-15',
     nitro: {
-        preset: 'cloudflare',
+        preset: 'cloudflare-module',
+        cloudflare: {
+            d1: {
+                DB: process.env.NODE_ENV === 'production' ? undefined : './dev.db',
+            },
+        },
     },
 
     vite: {

@@ -10,7 +10,6 @@
                     Sign in to your account to access your resumes
                 </DialogDescription>
             </DialogHeader>
-
             <form
                 class="space-y-4"
                 @submit.prevent="handleLogin"
@@ -26,7 +25,6 @@
                         :disabled="loading"
                     />
                 </div>
-
                 <div class="space-y-2">
                     <Label for="password">Password</Label>
                     <Input
@@ -38,7 +36,6 @@
                         :disabled="loading"
                     />
                 </div>
-
                 <Button
                     type="submit"
                     class="w-full"
@@ -50,7 +47,6 @@
                     />
                     Sign In
                 </Button>
-
                 <div
                     v-if="error"
                     class="text-sm text-red-600 text-center"
@@ -58,7 +54,6 @@
                     {{ error }}
                 </div>
             </form>
-
             <div class="text-center text-sm text-muted-foreground">
                 Don't have an account?
                 <button
@@ -84,53 +79,41 @@ import { Loader2 } from 'lucide-vue-next';
 interface Props {
     open: boolean;
 }
-
 interface Emits {
     (e: 'update:open', value: boolean): void;
     (e: 'switch-to-register'): void;
 }
-
 const props = defineProps<Props>();
 const emit = defineEmits<Emits>();
-
 const authStore = useAuthStore();
-
 const isOpen = ref(props.open);
 const email = ref('');
 const password = ref('');
 const loading = ref(false);
 const error = ref('');
-
 watch(() => props.open, (newValue) => {
     isOpen.value = newValue;
 });
-
 watch(isOpen, (newValue) => {
     emit('update:open', newValue);
 });
-
 const handleClose = () => {
     if (!loading.value) {
         isOpen.value = false;
         resetForm();
     }
 };
-
 const resetForm = () => {
     email.value = '';
     password.value = '';
     error.value = '';
     loading.value = false;
 };
-
 const handleLogin = async () => {
     if (loading.value) return;
-
     loading.value = true;
     error.value = '';
-
     const result = await authStore.login(email.value, password.value);
-
     if (result.success) {
         isOpen.value = false;
         resetForm();
@@ -138,10 +121,8 @@ const handleLogin = async () => {
     else {
         error.value = result.error || 'Login failed';
     }
-
     loading.value = false;
 };
-
 const switchToRegister = () => {
     isOpen.value = false;
     resetForm();
