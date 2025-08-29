@@ -26,3 +26,8 @@ database_id = "18a06c90-6adb-4400-bbf5-85313c47df0a"
 
 [vars]
 ENVIRONMENT = "development"
+
+[observability.logs]
+enabled = true
+
+invocation_logs = false
