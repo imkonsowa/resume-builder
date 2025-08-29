@@ -6,18 +6,8 @@ compatibility_date = "2025-07-15"
 directory = ".output/public"
 binding = "ASSETS"
 
-# Build configuration
 [build]
 command = "npm run build"
-
-# Environment variables (optional)
-# [vars]
-# EXAMPLE_VAR = "example_value"
-
-# KV namespaces (if needed)
-# [[kv_namespaces]]
-# binding = "MY_KV"
-# id = "your-kv-namespace-id"
 
 [[d1_databases]]
 binding = "DB"
@@ -25,7 +15,7 @@ database_name = "resume-builder-db"
 database_id = "18a06c90-6adb-4400-bbf5-85313c47df0a"
 
 [vars]
-ENVIRONMENT = "development"
+ENVIRONMENT = "production"
 
 [observability.logs]
 enabled = true
