@@ -359,59 +359,61 @@ useHead({
 <template>
     <div class="px-4 py-8">
         <div class="container mx-auto">
-            <div
-                v-if="!authStore.isLoggedIn"
-                class="mb-6 p-4 bg-blue-50 border border-blue-200 rounded-lg"
-            >
-                <div class="flex items-start gap-3">
-                    <Cloud class="w-5 h-5 text-blue-600 mt-0.5 flex-shrink-0" />
-                    <div class="flex-1">
-                        <h3 class="text-sm font-medium text-blue-900 mb-1">
-                            Save Your Resumes to the Cloud
-                        </h3>
-                        <p class="text-sm text-blue-700 mb-3">
-                            Register for a free account to save up to 3 resumes to the cloud and access them from any browser.
-                            Never lose your work again!
-                        </p>
-                        <div class="flex gap-2">
-                            <Button
-                                size="sm"
-                                class="bg-blue-600 hover:bg-blue-700"
-                                @click="$router.push('/auth/register')"
-                            >
-                                <UserPlus class="w-4 h-4 mr-1" />
-                                Register Free
-                            </Button>
-                            <Button
-                                size="sm"
-                                variant="outline"
-                                class="border-blue-300 text-blue-700 hover:bg-blue-100"
-                                @click="$router.push('/auth/login')"
-                            >
-                                <LogIn class="w-4 h-4 mr-1" />
-                                Login
-                            </Button>
+            <ClientOnly>
+                <div
+                    v-if="!authStore.isLoggedIn"
+                    class="mb-6 p-4 bg-blue-50 border border-blue-200 rounded-lg"
+                >
+                    <div class="flex items-start gap-3">
+                        <Cloud class="w-5 h-5 text-blue-600 mt-0.5 flex-shrink-0" />
+                        <div class="flex-1">
+                            <h3 class="text-sm font-medium text-blue-900 mb-1">
+                                Save Your Resumes to the Cloud
+                            </h3>
+                            <p class="text-sm text-blue-700 mb-3">
+                                Register for a free account to save up to 3 resumes to the cloud and access them from any browser.
+                                Never lose your work again!
+                            </p>
+                            <div class="flex gap-2">
+                                <Button
+                                    size="sm"
+                                    class="bg-blue-600 hover:bg-blue-700"
+                                    @click="$router.push('/auth/register')"
+                                >
+                                    <UserPlus class="w-4 h-4 mr-1" />
+                                    Register Free
+                                </Button>
+                                <Button
+                                    size="sm"
+                                    variant="outline"
+                                    class="border-blue-300 text-blue-700 hover:bg-blue-100"
+                                    @click="$router.push('/auth/login')"
+                                >
+                                    <LogIn class="w-4 h-4 mr-1" />
+                                    Login
+                                </Button>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div
-                v-else
-                class="mb-6 p-4 bg-green-50 border border-green-200 rounded-lg"
-            >
-                <div class="flex items-start gap-3">
-                    <CheckCircle class="w-5 h-5 text-green-600 mt-0.5 flex-shrink-0" />
-                    <div class="flex-1">
-                        <h3 class="text-sm font-medium text-green-900 mb-1">
-                            Cloud Storage Available
-                        </h3>
-                        <p class="text-sm text-green-700">
-                            You can now save up to 3 resumes to the cloud and access them from any browser.
-                            Use the "Cloud Sync" button to sync your resumes.
-                        </p>
+                <div
+                    v-else
+                    class="mb-6 p-4 bg-green-50 border border-green-200 rounded-lg"
+                >
+                    <div class="flex items-start gap-3">
+                        <CheckCircle class="w-5 h-5 text-green-600 mt-0.5 flex-shrink-0" />
+                        <div class="flex-1">
+                            <h3 class="text-sm font-medium text-green-900 mb-1">
+                                Cloud Storage Available
+                            </h3>
+                            <p class="text-sm text-green-700">
+                                You can now save up to 3 resumes to the cloud and access them from any browser.
+                                Use the "Cloud Sync" button to sync your resumes.
+                            </p>
+                        </div>
                     </div>
                 </div>
-            </div>
+            </ClientOnly>
             <ResumesHeader
                 v-model:search-query="searchQuery"
                 :resume-count="resumeCount"
