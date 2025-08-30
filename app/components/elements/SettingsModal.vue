@@ -7,9 +7,7 @@
                     Customize your resume appearance
                 </DialogDescription>
             </DialogHeader>
-
             <div class="space-y-6 py-4">
-                <!-- Template Selection -->
                 <div class="space-y-2">
                     <Label for="template">Template</Label>
                     <Select
@@ -42,8 +40,6 @@
                         Choose the layout template for your resume
                     </p>
                 </div>
-
-                <!-- Font Selection -->
                 <div class="space-y-2">
                     <Label for="font-family">Font Family</Label>
                     <Select
@@ -67,8 +63,6 @@
                         Choose the font family for your resume
                     </p>
                 </div>
-
-                <!-- Font Size Control -->
                 <div class="space-y-2">
                     <Label for="font-size">Font Size</Label>
                     <div class="flex items-center space-x-4">
@@ -88,7 +82,6 @@
                     </p>
                 </div>
             </div>
-
             <DialogFooter>
                 <Button
                     variant="outline"
@@ -121,61 +114,42 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '~
 import { useSettingsStore } from '~/stores/settings';
 import { availableFonts, availableTemplates } from '~/types/resume';
 
-// Props
 const props = defineProps<{
     modelValue: boolean;
 }>();
-
-// Emits
 const emit = defineEmits<{
     'update:modelValue': [value: boolean];
 }>();
-
-// Store
 const settingsStore = useSettingsStore();
-
-// Local state
 const fontSize = ref([settingsStore.fontSize]);
 const selectedFont = ref(settingsStore.selectedFont);
 const selectedTemplate = ref(settingsStore.selectedTemplate);
-
-// Computed
 const isOpen = computed({
     get: () => props.modelValue,
     set: value => emit('update:modelValue', value),
 });
-
 const selectedTemplateName = computed(() => {
     const template = availableTemplates.find(t => t.id === selectedTemplate.value);
     return template ? template.name : '';
 });
-
-// Watch for external changes
 watch(() => settingsStore.fontSize, (newSize) => {
     fontSize.value = [newSize];
 });
-
 watch(() => settingsStore.selectedFont, (newFont) => {
     selectedFont.value = newFont;
 });
-
 watch(() => settingsStore.selectedTemplate, (newTemplate) => {
     selectedTemplate.value = newTemplate;
 });
-
-// Methods
 const updateFontSize = (value: number[]) => {
     settingsStore.setFontSize(value[0]);
 };
-
 const updateFont = (value: string) => {
     settingsStore.setSelectedFont(value);
 };
-
 const updateTemplate = (value: string) => {
     settingsStore.setSelectedTemplate(value);
 };
-
 const resetToDefaults = () => {
     fontSize.value = [14];
     selectedFont.value = 'Calibri';
@@ -184,7 +158,6 @@ const resetToDefaults = () => {
     settingsStore.setSelectedFont('Calibri');
     settingsStore.setSelectedTemplate('default');
 };
-
 const close = () => {
     isOpen.value = false;
 };

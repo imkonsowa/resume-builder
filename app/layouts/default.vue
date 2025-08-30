@@ -1,10 +1,20 @@
 <script lang="ts" setup>
-import { Edit, FileText, Github, HelpCircle, Mail } from 'lucide-vue-next';
+import { Edit, FileText, Github, HelpCircle, Mail, LogOut, User } from 'lucide-vue-next';
+import { Toaster } from '@/components/ui/sonner';
+import { Button } from '@/components/ui/button';
+import 'vue-sonner/style.css';
+
+const authStore = useAuthStore();
+const handleLogout = async () => {
+    await authStore.logout();
+};
+onMounted(async () => {
+    await authStore.initializeAuth();
+});
 </script>
 
 <template>
     <div class="min-h-screen bg-white flex flex-col">
-        <!-- Navigation -->
         <nav class="border-b border-gray-200">
             <div class="px-4 lg:px-8">
                 <div class="flex justify-between items-center h-16">
@@ -16,7 +26,6 @@ import { Edit, FileText, Github, HelpCircle, Mail } from 'lucide-vue-next';
                                 >Free Resume Builder</span>
                             </div>
                         </NuxtLink>
-
                         <div class="flex items-center space-x-4">
                             <NuxtLink
                                 class="flex items-center space-x-1 md:space-x-2 text-gray-600 hover:text-gray-900 transition-colors"
@@ -25,7 +34,6 @@ import { Edit, FileText, Github, HelpCircle, Mail } from 'lucide-vue-next';
                                 <FileText class="w-4 h-4" />
                                 <span class="hidden sm:inline text-sm font-medium">Your Resumes</span>
                             </NuxtLink>
-
                             <NuxtLink
                                 class="flex items-center space-x-1 md:space-x-2 text-gray-600 hover:text-gray-900 transition-colors"
                                 to="/builder"
@@ -35,8 +43,42 @@ import { Edit, FileText, Github, HelpCircle, Mail } from 'lucide-vue-next';
                             </NuxtLink>
                         </div>
                     </div>
-
                     <div class="flex items-center space-x-2 md:space-x-6">
+                        <template v-if="!authStore.isLoggedIn">
+                            <NuxtLink to="/auth/login">
+                                <Button
+                                    variant="ghost"
+                                    size="sm"
+                                    class="text-gray-600 hover:text-gray-900"
+                                >
+                                    <User class="w-4 h-4 mr-1" />
+                                    <span class="hidden sm:inline">Sign In</span>
+                                </Button>
+                            </NuxtLink>
+                            <NuxtLink to="/auth/register">
+                                <Button
+                                    size="sm"
+                                >
+                                    <span class="text-sm">Sign Up</span>
+                                </Button>
+                            </NuxtLink>
+                        </template>
+                        <template v-else>
+                            <div class="flex items-center space-x-2 text-sm text-gray-600">
+                                <User class="w-4 h-4" />
+                                <span class="hidden sm:inline">{{ authStore.currentUser?.name || authStore.currentUser?.email }}</span>
+                            </div>
+                            <Button
+                                variant="ghost"
+                                size="sm"
+                                class="text-gray-600 hover:text-gray-900"
+                                @click="handleLogout"
+                            >
+                                <LogOut class="w-4 h-4 mr-1" />
+                                <span class="hidden sm:inline">Sign Out</span>
+                            </Button>
+                        </template>
+                        <div class="h-4 w-px bg-gray-300 hidden md:block" />
                         <NuxtLink
                             class="flex items-center space-x-1 md:space-x-2 text-gray-600 hover:text-gray-900 transition-colors"
                             to="/contact"
@@ -44,7 +86,6 @@ import { Edit, FileText, Github, HelpCircle, Mail } from 'lucide-vue-next';
                             <Mail class="w-4 h-4" />
                             <span class="hidden sm:inline text-sm font-medium">Contact</span>
                         </NuxtLink>
-
                         <NuxtLink
                             class="flex items-center space-x-1 md:space-x-2 text-gray-600 hover:text-gray-900 transition-colors"
                             target="_blank"
@@ -53,7 +94,6 @@ import { Edit, FileText, Github, HelpCircle, Mail } from 'lucide-vue-next';
                             <HelpCircle class="w-4 h-4" />
                             <span class="hidden sm:inline text-sm font-medium">Q&A</span>
                         </NuxtLink>
-
                         <a
                             class="flex items-center space-x-1 md:space-x-2 text-gray-600 hover:text-gray-900 transition-colors"
                             href="https://github.com/imkonsowa/resume-builder"
@@ -67,13 +107,9 @@ import { Edit, FileText, Github, HelpCircle, Mail } from 'lucide-vue-next';
                 </div>
             </div>
         </nav>
-
-        <!-- Page Content -->
         <main class="flex-1">
             <slot />
         </main>
-
-        <!-- Footer -->
         <footer
             v-if="$route.path !== '/builder'"
             class="bg-gray-50 border-t border-gray-200 mt-auto"
@@ -108,8 +144,9 @@ import { Edit, FileText, Github, HelpCircle, Mail } from 'lucide-vue-next';
                 </div>
             </div>
         </footer>
+        <ClientOnly>
+            <Toaster position="top-right" />
+        </ClientOnly>
     </div>
 </template>
 
-<style scoped>
-</style>

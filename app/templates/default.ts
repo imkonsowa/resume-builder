@@ -13,29 +13,21 @@ export interface Template {
     layoutConfig: TemplateLayoutConfig;
     parse: (data: ResumeData, font: string) => string;
 }
-
 const convertResumeHeader = (data: ResumeData, fontSize: number, sharedRenderers: ReturnType<typeof getSharedSectionRenderers>, config: TemplateLayoutConfig) => {
     const fullName = `${escapeTypstText(data?.firstName || '')} ${escapeTypstText(data?.lastName || '')}`.trim();
     const position = escapeTypstText(data?.position || '');
-
     const positionBlock = position ? `#block(above: 0em, below: ${SECTION_SPACING})[${position}]` : '';
     const profileSection = sharedRenderers.profile(data, fontSize, config);
-
     return `= ${fullName}
-
 ${positionBlock}
-
 ${profileSection}`;
 };
-
 const parse = (data: ResumeData, font: string): string => {
     const settings: TemplateSettings = { font };
     const settingsStore = useSettingsStore();
     const fontSize = settingsStore.fontSize;
-
     const sharedRenderers = getSharedSectionRenderers();
     const config = DEFAULT_LAYOUT_CONFIG;
-
     const allSections = {
         experiences: () => sharedRenderers.experience(data, fontSize, config),
         internships: () => sharedRenderers.internships(data, fontSize, config),
@@ -48,14 +40,10 @@ const parse = (data: ResumeData, font: string): string => {
         volunteering: () => sharedRenderers.volunteering(data, fontSize, config),
         certificates: () => sharedRenderers.certificates(data, fontSize, config),
     };
-
     const fixedLeftSections = ['experiences', 'internships', 'education'];
-
     const movableSections = ['projects', 'languages', 'technicalSkills', 'volunteering', 'certificates'];
-
     const leftSections = [...fixedLeftSections];
     const rightSections = [];
-
     movableSections.forEach((section) => {
         if (section === 'technicalSkills') {
             const placement = data.sectionPlacement?.skills || 'right';
@@ -76,7 +64,6 @@ const parse = (data: ResumeData, font: string): string => {
             }
         }
     });
-
     const leftSectionOrder = {
         experiences: data.sectionOrder?.experience || 1,
         internships: data.sectionOrder?.internships || 2,
@@ -87,7 +74,6 @@ const parse = (data: ResumeData, font: string): string => {
         volunteering: data.sectionOrder?.volunteering || 7,
         certificates: data.sectionOrder?.certificates || 8,
     };
-
     const rightSectionOrder = {
         technicalSkills: data.sectionOrder?.skills || 1,
         projects: data.sectionOrder?.projects || 2,
@@ -95,39 +81,28 @@ const parse = (data: ResumeData, font: string): string => {
         volunteering: data.sectionOrder?.volunteering || 4,
         certificates: data.sectionOrder?.certificates || 5,
     };
-
     const leftContent = leftSections
         .sort((a, b) => (leftSectionOrder[a] || 999) - (leftSectionOrder[b] || 999))
         .map(section => allSections[section]())
         .filter(content => content.trim() !== '')
         .join('\n\n');
-
     const dynamicRightContent = rightSections
         .sort((a, b) => (rightSectionOrder[a] || 999) - (rightSectionOrder[b] || 999))
         .map(section => allSections[section]())
         .filter(content => content.trim() !== '');
-
     const staticRightContent = [
         allSections['contact'](),
         allSections['socialLinks'](),
     ].filter(content => content.trim() !== '');
-
     const rightContent = [...staticRightContent, ...dynamicRightContent].join('\n\n');
-
     const headerAndLeftContent = `${convertResumeHeader(data, fontSize, sharedRenderers, config)}
-
 ${leftContent}`;
-
     const twoColumnLayout = convertGrid([headerAndLeftContent, rightContent], '(7fr, 3fr)');
-
     return `#set page(margin: 1.2cm)
 #set text(font: ("${settings.font}"), size: ${fontSize}pt)
-
 ${twoColumnLayout}
-
 #pagebreak(weak: true)`;
 };
-
 export const defaultTemplate: Template = {
     id: 'default',
     name: 'Default',

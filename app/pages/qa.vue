@@ -56,7 +56,6 @@ const faqs = [
         answer: 'You can visit our GitHub repository to report issues, request features, or contribute to the project. We also provide comprehensive documentation and examples to help you get started.',
     },
 ];
-
 const faqCategories = [
     {
         title: 'Getting Started',
@@ -74,7 +73,6 @@ const faqCategories = [
         faqs: faqs.slice(8),
     },
 ];
-
 useHead({
     title: 'Q&A - Free Resume Builder | Frequently Asked Questions & Help',
     meta: [
@@ -90,7 +88,6 @@ useHead({
             name: 'robots',
             content: 'index, follow',
         },
-        // Open Graph tags
         {
             property: 'og:type',
             content: 'website',
@@ -115,7 +112,6 @@ useHead({
             property: 'og:image',
             content: 'https://resumeforfree.com/og-image.png',
         },
-        // Twitter Card tags
         {
             name: 'twitter:card',
             content: 'summary_large_image',
@@ -150,7 +146,6 @@ useHead({
 
 <template>
     <div class="min-h-screen bg-background">
-        <!-- Hero Section -->
         <div class="border-b bg-muted/40">
             <div class="container mx-auto px-4 py-16 text-center">
                 <Badge
@@ -169,8 +164,6 @@ useHead({
                 </p>
             </div>
         </div>
-
-        <!-- FAQ Section -->
         <div class="container mx-auto px-4 py-16">
             <div class="space-y-12">
                 <div
@@ -188,7 +181,6 @@ useHead({
                             {{ category.title }}
                         </h2>
                     </div>
-
                     <Card>
                         <CardContent class="p-6">
                             <Accordion
@@ -215,8 +207,6 @@ useHead({
                 </div>
             </div>
         </div>
-
-        <!-- CTA Section -->
         <div class="border-t bg-muted/40">
             <div class="container mx-auto px-4 py-16 text-center">
                 <h2 class="text-3xl md:text-4xl font-bold tracking-tight mb-4">
