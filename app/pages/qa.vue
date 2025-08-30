@@ -13,7 +13,7 @@ const faqs = [
     },
     {
         question: 'Do I need to create an account or sign up?',
-        answer: 'No account creation is required! You can start building your resume immediately without any registration, email verification, or personal information. All your data is stored locally in your browser, ensuring complete privacy and control over your information.',
+        answer: 'No account creation is required! You can start building your resume immediately without any registration. All your data is stored locally in your browser by default. However, creating an account is only needed if you want to save your resumes in the cloud and access them from multiple browsers or devices.',
     },
     {
         question: 'How does the PDF export work?',
@@ -222,7 +222,7 @@ useHead({
                 >
                     <NuxtLink
                         class="inline-flex items-center gap-2"
-                        to="/builder"
+                        to="/resumes"
                     >
                         Start Building
                         <ArrowRight class="h-4 w-4" />
