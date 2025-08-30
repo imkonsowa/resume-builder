@@ -118,6 +118,12 @@ useHead({
                     Create Your First Resume Now
                 </Button>
             </NuxtLink>
+            <p class="text-xs text-gray-500 mt-4">
+                By using this website you agree to 
+                <NuxtLink to="/terms" class="text-blue-600 hover:text-blue-800 underline">
+                    terms and conditions
+                </NuxtLink>
+            </p>
         </div>
         <div class="grid grid-cols-2 md:grid-cols-3 gap-6 max-w-4xl mx-auto mt-16">
             <div class="text-center">
