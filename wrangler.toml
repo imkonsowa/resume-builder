@@ -16,6 +16,7 @@ database_id = "18a06c90-6adb-4400-bbf5-85313c47df0a"
 
 [vars]
 ENVIRONMENT = "production"
+NUXT_PUBLIC_TURNSTILE_SITE_KEY = "0x4AAAAAABwL8wn1D3oP3pku"
 
 [observability.logs]
 enabled = true

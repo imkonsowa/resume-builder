@@ -10,6 +10,7 @@ export default defineNuxtConfig({
         '@nuxt/eslint',
         '@vite-pwa/nuxt',
         'nitro-cloudflare-dev',
+        '@nuxtjs/turnstile',
     ],
 
     imports: {
@@ -48,6 +49,12 @@ export default defineNuxtConfig({
             pocketbaseUrl: process.env.NODE_ENV === 'production'
                 ? 'https://api.resumeforfree.com'
                 : 'http://localhost:8010',
+            turnstile: {
+                siteKey: process.env.NUXT_PUBLIC_TURNSTILE_SITE_KEY || '1x00000000000000000000AA',
+            },
+        },
+        turnstile: {
+            secretKey: process.env.NUXT_TURNSTILE_SECRET_KEY || '1x0000000000000000000000000000000AA',
         },
     },
     future: {

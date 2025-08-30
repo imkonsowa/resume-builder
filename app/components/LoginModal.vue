@@ -36,10 +36,13 @@
                         :disabled="loading"
                     />
                 </div>
+                <TurnstileWidget
+                    v-model="turnstileToken"
+                />
                 <Button
                     type="submit"
                     class="w-full"
-                    :disabled="loading"
+                    :disabled="loading || !turnstileToken"
                 >
                     <Loader2
                         v-if="loading"
@@ -75,6 +78,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Loader2 } from 'lucide-vue-next';
+import TurnstileWidget from '@/components/elements/TurnstileWidget.vue';
 
 interface Props {
     open: boolean;
@@ -89,6 +93,7 @@ const authStore = useAuthStore();
 const isOpen = ref(props.open);
 const email = ref('');
 const password = ref('');
+const turnstileToken = ref<string | null>(null);
 const loading = ref(false);
 const error = ref('');
 watch(() => props.open, (newValue) => {
@@ -106,20 +111,22 @@ const handleClose = () => {
 const resetForm = () => {
     email.value = '';
     password.value = '';
+    turnstileToken.value = null;
     error.value = '';
     loading.value = false;
 };
 const handleLogin = async () => {
-    if (loading.value) return;
+    if (loading.value || !turnstileToken.value) return;
     loading.value = true;
     error.value = '';
-    const result = await authStore.login(email.value, password.value);
+    const result = await authStore.login(email.value, password.value, turnstileToken.value);
     if (result.success) {
         isOpen.value = false;
         resetForm();
     }
     else {
         error.value = result.error || 'Login failed';
+        turnstileToken.value = null;
     }
     loading.value = false;
 };

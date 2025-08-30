@@ -6,16 +6,16 @@ export const useApi = () => {
     };
     return {
         auth: {
-            async login(email: string, password: string) {
+            async login(email: string, password?: string, turnstileToken?: string) {
                 return await $fetch('/api/auth/login', {
                     method: 'POST',
-                    body: { email, password },
+                    body: { email, password, turnstileToken },
                 }).catch(handleError);
             },
-            async register(email: string, password: string, passwordConfirm: string, name: string) {
+            async register(email: string, password: string, passwordConfirm: string, name: string, turnstileToken?: string) {
                 return await $fetch('/api/auth/register', {
                     method: 'POST',
-                    body: { email, password, name },
+                    body: { email, password, name, turnstileToken },
                 }).catch(handleError);
             },
             async logout() {

@@ -33,10 +33,22 @@ class DatabaseService {
     }
 }
 export default defineEventHandler(async (event) => {
+    const config = useRuntimeConfig();
     const db = event.context.cloudflare?.env?.DB;
+    
     if (!db) {
         const body = await readBody(event);
-        const { email, password, name } = body;
+        const { email, password, name, turnstileToken } = body;
+        
+        if (process.env.NODE_ENV === 'production' && turnstileToken) {
+            const isValidToken = await verifyTurnstileToken(turnstileToken, config.turnstile.secretKey);
+            if (!isValidToken) {
+                throw createError({
+                    statusCode: 400,
+                    statusMessage: 'Invalid captcha verification',
+                });
+            }
+        }
         if (!email || !password) {
             throw createError({
                 statusCode: 400,
@@ -82,7 +94,18 @@ export default defineEventHandler(async (event) => {
         };
     }
     const body = await readBody(event);
-    const { email, password, name } = body;
+    const { email, password, name, turnstileToken } = body;
+    
+    if (process.env.NODE_ENV === 'production') {
+        const isValidToken = await verifyTurnstileToken(turnstileToken, config.turnstile.secretKey);
+        if (!isValidToken) {
+            throw createError({
+                statusCode: 400,
+                statusMessage: 'Invalid captcha verification',
+            });
+        }
+    }
+    
     if (!email || !password) {
         throw createError({
             statusCode: 400,

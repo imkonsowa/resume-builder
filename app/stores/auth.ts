@@ -22,9 +22,9 @@ export const useAuthStore = defineStore('auth', {
         isLoggedIn: state => state.isAuthenticated && Boolean(state.user),
     },
     actions: {
-        async login(email: string, password?: string) {
+        async login(email: string, password?: string, turnstileToken?: string) {
             const api = useApi();
-            return await api.auth.login(email, password)
+            return await api.auth.login(email, password, turnstileToken)
                 .then((result) => {
                     if (result?.user) {
                         this.setAuth(result.user);
@@ -39,9 +39,9 @@ export const useAuthStore = defineStore('auth', {
                     };
                 });
         },
-        async register(email: string, password: string, passwordConfirm: string, name: string) {
+        async register(email: string, password: string, passwordConfirm: string, name: string, turnstileToken?: string) {
             const api = useApi();
-            return await api.auth.register(email, password, passwordConfirm, name)
+            return await api.auth.register(email, password, passwordConfirm, name, turnstileToken)
                 .then((result) => {
                     if (result?.user) {
                         this.setAuth(result.user);
