@@ -113,9 +113,9 @@ useHead({
                 Build Your Resume<br>
                 <span class="text-gray-600">For Free</span>
             </h1>
-            <NuxtLink to="/builder">
+            <NuxtLink to="/resumes">
                 <Button size="lg">
-                    Build Now
+                    Create Your First Resume Now
                 </Button>
             </NuxtLink>
         </div>
