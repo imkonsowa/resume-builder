@@ -1,4 +1,4 @@
-import { defineStore } from 'pinia';
+import {defineStore} from 'pinia';
 import type {
     Certificate,
     Education,
@@ -15,7 +15,7 @@ import type {
     SocialLink,
     Volunteering,
 } from '~/types/resume';
-import { defaultResumeData } from '~/types/resume';
+import {defaultResumeData} from '~/types/resume';
 
 interface ResumeStoreState {
     resumes: Record<string, Resume>;
@@ -189,14 +189,13 @@ export const useResumeStore = defineStore('resume', {
         createResume(name?: string): string {
             const id = `resume-${this.nextId}`;
             const timestamp = new Date().toISOString();
-            const newResume: Resume = {
+            this.resumes[id] = {
                 id,
                 name: name || `Resume ${this.nextId}`,
-                data: { ...defaultResumeData },
+                data: {...defaultResumeData},
                 createdAt: timestamp,
                 updatedAt: timestamp,
             };
-            this.resumes[id] = newResume;
             this.nextId++;
             if (this.resumeCount === 1) {
                 this.activeResumeId = id;
@@ -944,14 +943,17 @@ export const useResumeStore = defineStore('resume', {
         async syncResumeToServer(resumeId: string) {
             const resume = this.resumes[resumeId];
             if (!resume) return;
+
             try {
                 const api = useApi();
+
                 if (resume.serverId) {
                     await api.resumes.update(resume.serverId, {
                         name: resume.name,
                         data: resume.data,
                     });
                 }
+
                 else {
                     const serverResume = await api.resumes.create(resume.name, resume.data);
                     this.resumes[resumeId].serverId = serverResume.id;

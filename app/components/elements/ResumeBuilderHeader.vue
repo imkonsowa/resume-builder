@@ -98,19 +98,8 @@ const handleCloudSync = async () => {
     const { toast } = await import('vue-sonner');
     try {
         isSyncing.value = true;
-        if (activeResume.value.serverId) {
-            toast.info('Updating resume in cloud...');
-        }
-        else {
-            toast.info('Syncing resume to cloud...');
-        }
         await resumeStore.syncResumeToServer(activeResume.value.id);
-        if (activeResume.value.serverId) {
-            toast.success('Resume updated in cloud successfully');
-        }
-        else {
-            toast.success('Resume synced to cloud successfully');
-        }
+        // Silent sync - success toasts are handled by the calling component
     }
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     catch (error: any) {

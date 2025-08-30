@@ -26,11 +26,11 @@ class DatabaseService {
 export default defineEventHandler(async (event) => {
     const config = useRuntimeConfig();
     const db = event.context.cloudflare?.env?.DB;
-    
+
     if (!db) {
         const body = await readBody(event);
         const { email, password, turnstileToken } = body;
-        
+
         if (process.env.NODE_ENV === 'production' && turnstileToken) {
             const isValidToken = await verifyTurnstileToken(turnstileToken, config.turnstile.secretKey);
             if (!isValidToken) {
@@ -80,7 +80,7 @@ export default defineEventHandler(async (event) => {
     }
     const body = await readBody(event);
     const { email, password, turnstileToken } = body;
-    
+
     if (process.env.NODE_ENV === 'production') {
         const isValidToken = await verifyTurnstileToken(turnstileToken, config.turnstile.secretKey);
         if (!isValidToken) {
@@ -90,7 +90,7 @@ export default defineEventHandler(async (event) => {
             });
         }
     }
-    
+
     if (!email || !password) {
         throw createError({
             statusCode: 400,

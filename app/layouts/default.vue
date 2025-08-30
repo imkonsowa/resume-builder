@@ -2,6 +2,7 @@
 import { Edit, FileText, Github, HelpCircle, Mail, LogOut, User } from 'lucide-vue-next';
 import { Toaster } from '@/components/ui/sonner';
 import { Button } from '@/components/ui/button';
+import 'vue-sonner/style.css';
 
 const authStore = useAuthStore();
 const handleLogout = async () => {
@@ -143,20 +144,9 @@ onMounted(async () => {
                 </div>
             </div>
         </footer>
-        <Toaster
-            position="bottom-right"
-            :duration="4000"
-            :theme="'light'"
-            :toast-options="{
-                style: {
-                    background: 'white',
-                    color: 'black',
-                    border: '1px solid #e5e7eb',
-                },
-            }"
-        />
+        <ClientOnly>
+            <Toaster position="top-right" />
+        </ClientOnly>
     </div>
 </template>
 
-<style scoped>
-</style>
