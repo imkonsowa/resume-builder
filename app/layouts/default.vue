@@ -1,21 +1,9 @@
 <script lang="ts" setup>
 import { Edit, FileText, Github, HelpCircle, Mail, LogOut, User } from 'lucide-vue-next';
-import LoginModal from '@/components/LoginModal.vue';
-import RegisterModal from '@/components/RegisterModal.vue';
 import { Toaster } from '@/components/ui/sonner';
 import { Button } from '@/components/ui/button';
 
 const authStore = useAuthStore();
-const showLoginModal = ref(false);
-const showRegisterModal = ref(false);
-const switchToRegister = () => {
-    showLoginModal.value = false;
-    showRegisterModal.value = true;
-};
-const switchToLogin = () => {
-    showRegisterModal.value = false;
-    showLoginModal.value = true;
-};
 const handleLogout = async () => {
     await authStore.logout();
 };
@@ -56,21 +44,23 @@ onMounted(async () => {
                     </div>
                     <div class="flex items-center space-x-2 md:space-x-6">
                         <template v-if="!authStore.isLoggedIn">
-                            <Button
-                                variant="ghost"
-                                size="sm"
-                                class="text-gray-600 hover:text-gray-900"
-                                @click="showLoginModal = true"
-                            >
-                                <User class="w-4 h-4 mr-1" />
-                                <span class="hidden sm:inline">Sign In</span>
-                            </Button>
-                            <Button
-                                size="sm"
-                                @click="showRegisterModal = true"
-                            >
-                                <span class="text-sm">Sign Up</span>
-                            </Button>
+                            <NuxtLink to="/auth/login">
+                                <Button
+                                    variant="ghost"
+                                    size="sm"
+                                    class="text-gray-600 hover:text-gray-900"
+                                >
+                                    <User class="w-4 h-4 mr-1" />
+                                    <span class="hidden sm:inline">Sign In</span>
+                                </Button>
+                            </NuxtLink>
+                            <NuxtLink to="/auth/register">
+                                <Button
+                                    size="sm"
+                                >
+                                    <span class="text-sm">Sign Up</span>
+                                </Button>
+                            </NuxtLink>
                         </template>
                         <template v-else>
                             <div class="flex items-center space-x-2 text-sm text-gray-600">
@@ -153,14 +143,6 @@ onMounted(async () => {
                 </div>
             </div>
         </footer>
-        <LoginModal
-            v-model:open="showLoginModal"
-            @switch-to-register="switchToRegister"
-        />
-        <RegisterModal
-            v-model:open="showRegisterModal"
-            @switch-to-login="switchToLogin"
-        />
         <Toaster
             position="bottom-right"
             :duration="4000"

@@ -10,7 +10,7 @@
                 </p>
             </div>
             <form
-                class="mt-8 space-y-6"
+                class="mt-6 space-y-6 p-6 border border-gray-200 rounded-lg bg-white"
                 @submit.prevent="handleRegister"
             >
                 <div class="space-y-4">
@@ -64,10 +64,13 @@
                         />
                     </div>
                 </div>
+                <TurnstileWidget
+                    v-model="turnstileToken"
+                />
                 <Button
                     type="submit"
                     class="w-full"
-                    :disabled="loading || !isFormValid"
+                    :disabled="loading || !isFormValid || !turnstileToken"
                 >
                     <Loader2
                         v-if="loading"
@@ -108,6 +111,7 @@ import { Button } from '~/components/ui/button';
 import { Input } from '~/components/ui/input';
 import { Label } from '~/components/ui/label';
 import { Loader2 } from 'lucide-vue-next';
+import TurnstileWidget from '~/components/elements/TurnstileWidget.vue';
 
 const authStore = useAuthStore();
 const router = useRouter();
@@ -115,6 +119,7 @@ const name = ref('');
 const email = ref('');
 const password = ref('');
 const passwordConfirm = ref('');
+const turnstileToken = ref<string | null>(null);
 const loading = ref(false);
 const error = ref('');
 const success = ref('');
@@ -135,7 +140,7 @@ watch([password, passwordConfirm], () => {
     }
 });
 const handleRegister = async () => {
-    if (loading.value || !isFormValid.value) return;
+    if (loading.value || !isFormValid.value || !turnstileToken.value) return;
     loading.value = true;
     error.value = '';
     success.value = '';
@@ -144,6 +149,7 @@ const handleRegister = async () => {
         password.value,
         passwordConfirm.value,
         name.value,
+        turnstileToken.value,
     );
     if (result.success) {
         success.value = 'Account created successfully! Redirecting...';
@@ -153,6 +159,7 @@ const handleRegister = async () => {
     }
     else {
         error.value = result.error || 'Registration failed';
+        turnstileToken.value = null;
     }
     loading.value = false;
 };
