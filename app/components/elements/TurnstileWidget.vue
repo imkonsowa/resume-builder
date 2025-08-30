@@ -17,6 +17,7 @@ interface Props {
 }
 
 interface Emits {
+    // eslint-disable-next-line @typescript-eslint/prefer-function-type
     (e: 'update:modelValue', value: string | null): void;
 }
 

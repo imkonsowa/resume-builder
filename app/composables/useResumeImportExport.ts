@@ -46,6 +46,7 @@ export const useResumeImportExport = () => {
                         throw new Error('Invalid file format. Expected an array of resumes.');
                     }
                     const existingNames = resumeStore.resumesList.map(r => r.name.toLowerCase());
+                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
                     const previews: ImportResumePreview[] = data.map((resumeData: any) => {
                         if (!resumeData.name || !resumeData.data) {
                             return null;

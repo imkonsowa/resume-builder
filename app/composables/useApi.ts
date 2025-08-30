@@ -1,4 +1,5 @@
 export const useApi = () => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const handleError = (error: any) => {
         console.error('API Error:', error);
         const message = error?.data?.message || error?.statusMessage || error?.message || 'An error occurred';
@@ -34,12 +35,14 @@ export const useApi = () => {
             async get(id: string) {
                 return await $fetch(`/api/resumes/${id}`).then(({ resume }) => resume).catch(handleError);
             },
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             async create(name: string, data: any, template?: string) {
                 return await $fetch('/api/resumes', {
                     method: 'POST',
                     body: { name, data, template },
                 }).then(({ resume }) => resume).catch(handleError);
             },
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             async update(id: string, updates: any) {
                 return await $fetch(`/api/resumes/${id}`, {
                     method: 'PUT',
@@ -68,6 +71,7 @@ export const useApi = () => {
                     body: { expiresInDays },
                 }).catch(handleError);
             },
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             async sync(data: { resumes: any[] }) {
                 return await $fetch('/api/resumes/sync', {
                     method: 'POST',
@@ -84,6 +88,7 @@ export const useApi = () => {
             async get() {
                 return await $fetch('/api/settings').catch(handleError);
             },
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             async update(settings: any) {
                 return await $fetch('/api/settings', {
                     method: 'PUT',

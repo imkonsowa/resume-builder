@@ -31,6 +31,7 @@ export const useAuthStore = defineStore('auth', {
                     }
                     return { success: true };
                 })
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 .catch((error: any) => {
                     console.error('Login error:', error);
                     return {
@@ -48,6 +49,7 @@ export const useAuthStore = defineStore('auth', {
                     }
                     return { success: true };
                 })
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 .catch((error: any) => {
                     console.error('Registration error:', error);
                     return {
@@ -63,6 +65,7 @@ export const useAuthStore = defineStore('auth', {
                     this.clearAuth();
                     return { success: true };
                 })
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 .catch((error: any) => {
                     console.error('Logout error:', error);
                     return {
@@ -81,6 +84,7 @@ export const useAuthStore = defineStore('auth', {
                     }
                     return { success: false, error: 'No valid session' };
                 })
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 .catch((error: any) => {
                     console.error('Auth refresh error:', error);
                     this.clearAuth();

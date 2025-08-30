@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { useResumeStore } from '~/stores/resume';
-import { EyeIcon } from 'lucide-vue-next';
+import { EyeIcon, FileText, Plus } from 'lucide-vue-next';
 import { Button } from '~/components/ui/button';
 import ZoomControls from '~/components/elements/ZoomControls.vue';
 import ResumeBuilderHeader from '~/components/elements/ResumeBuilderHeader.vue';
@@ -89,11 +89,7 @@ useTypstLoader();
 onMounted(() => {
     settingsStore.initialize();
     resumeStore.initialize();
-    if (resumeStore.resumeCount === 0) {
-        const newResumeId = resumeStore.createResume('Your Resume');
-        resumeStore.setActiveResume(newResumeId);
-    }
-    if (!hasSeenModal() && !authStore.isAuthenticated) {
+    if (!hasSeenModal() && !authStore.isAuthenticated && resumeStore.resumeCount > 0) {
         showFirstTimeModal.value = true;
     }
     if (authStore.isAuthenticated) {
@@ -166,6 +162,8 @@ const sectionComponents = {
     certificates: CertificatesForm,
 };
 const allSections = Object.keys(sectionComponents);
+const hasResumes = computed(() => resumeStore.resumeCount > 0);
+const hasActiveResume = computed(() => Boolean(resumeStore.activeResume));
 const orderedSections = computed(() => {
     const activeData = resumeStore.activeResumeData;
     if (!activeData?.sectionOrder) return allSections;
@@ -195,7 +193,41 @@ const orderedSections = computed(() => {
                 :last-sync-time="lastSyncTime"
                 :error-message="lastSyncError"
             />
-            <div class="flex flex-col lg:flex-row">
+            <!-- Empty State: No Resumes -->
+            <div
+                v-if="!hasResumes || !hasActiveResume"
+                class="min-h-screen flex items-center justify-center p-4"
+            >
+                <div class="max-w-md w-full text-center space-y-6">
+                    <div class="space-y-4">
+                        <div class="mx-auto w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center">
+                            <FileText class="w-8 h-8 text-blue-600" />
+                        </div>
+                        <div>
+                            <h2 class="text-2xl font-semibold text-gray-900 mb-2">
+                                No Resume Selected
+                            </h2>
+                            <p class="text-gray-600">
+                                To start building your resume, you need to create or select a resume first.
+                                Go to your resumes page to create your first resume.
+                            </p>
+                        </div>
+                    </div>
+                    <div>
+                        <NuxtLink to="/resumes">
+                            <Button class="w-full">
+                                <FileText class="w-4 h-4 mr-2" />
+                                Go to Resumes Page →
+                            </Button>
+                        </NuxtLink>
+                    </div>
+                </div>
+            </div>
+            <!-- Builder Content: When Resume Exists -->
+            <div
+                v-else
+                class="flex flex-col lg:flex-row"
+            >
                 <div class="w-full lg:w-1/2 min-h-screen">
                     <div class="p-4 lg:p-8 pb-32">
                         <ResumeBuilderHeader />

@@ -112,6 +112,7 @@ const handleCloudSync = async () => {
             toast.success('Resume synced to cloud successfully');
         }
     }
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     catch (error: any) {
         console.error('Failed to sync resume:', error);
         const errorMessage = error instanceof Error ? error.message : 'Unknown error';

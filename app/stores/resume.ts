@@ -182,9 +182,6 @@ export const useResumeStore = defineStore('resume', {
                     resume.serverId = undefined;
                 }
             });
-            if (Object.keys(this.resumes).length === 0) {
-                this.createResume('My Resume');
-            }
             if (!this.activeResumeId && Object.keys(this.resumes).length > 0) {
                 this.activeResumeId = Object.keys(this.resumes)[0];
             }
