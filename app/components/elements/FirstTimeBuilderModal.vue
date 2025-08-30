@@ -9,7 +9,7 @@
                     <div class="flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 bg-blue-100 rounded-full">
                         <FileText class="w-5 h-5 sm:w-6 sm:h-6 text-blue-600" />
                     </div>
-                    <span class="leading-tight">Welcome to Resume Builder!</span>
+                    <span class="leading-tight">Welcome to The Resume Builder!</span>
                 </DialogTitle>
                 <DialogDescription class="text-sm sm:text-base leading-relaxed pt-1 sm:pt-2">
                     Let's get you started with building your professional resume.
@@ -96,36 +96,32 @@
                     </div>
                 </div>
             </div>
-            <DialogFooter class="flex-col space-y-4 pt-4">
-                <div class="flex flex-col gap-3 w-full">
-                    <Button
-                        variant="outline"
-                        class="w-full"
-                        @click="$emit('continueLocally', dontShowAgain)"
+            <DialogFooter class="!flex-col space-y-4 pt-4">
+                <div class="flex items-center space-x-2 w-full">
+                    <Checkbox
+                        id="dont-show-again"
+                        v-model="dontShowAgain"
+                    />
+                    <Label
+                        for="dont-show-again"
+                        class="text-sm text-gray-600 cursor-pointer"
                     >
-                        Continue Locally
-                    </Button>
+                        Don't show this again
+                    </Label>
+                </div>
+                <div class="flex flex-row justify-between w-full">
                     <Button
-                        class="w-full"
                         @click="$emit('register', dontShowAgain)"
                     >
                         <UserPlus class="w-4 h-4 mr-2" />
                         Create Account & Save to Cloud
                     </Button>
-                </div>
-                <div class="w-full border-t border-gray-200 pt-4">
-                    <div class="flex items-center justify-center space-x-2">
-                        <Checkbox
-                            id="dont-show-again"
-                            v-model="dontShowAgain"
-                        />
-                        <Label
-                            for="dont-show-again"
-                            class="text-sm text-gray-600 cursor-pointer"
-                        >
-                            Don't show this again
-                        </Label>
-                    </div>
+                    <Button
+                        variant="outline"
+                        @click="$emit('continueLocally', dontShowAgain)"
+                    >
+                        Continue Locally
+                    </Button>
                 </div>
             </DialogFooter>
         </DialogContent>

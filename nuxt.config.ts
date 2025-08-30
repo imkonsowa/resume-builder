@@ -93,6 +93,32 @@ export default defineNuxtConfig({
         storage: 'localStorage',
     },
 
+    pwa: {
+        manifest: {
+            name: 'Resume Builder',
+            short_name: 'Resume Builder',
+            description: 'Build professional resumes for free',
+            theme_color: '#3b82f6',
+            background_color: '#ffffff',
+            display: 'standalone',
+            start_url: '/',
+            icons: [
+                {
+                    src: '/icon.svg',
+                    sizes: 'any',
+                    type: 'image/svg+xml',
+                    purpose: 'any maskable',
+                },
+            ],
+        },
+        workbox: {
+            navigateFallback: '/',
+        },
+        devOptions: {
+            enabled: false,
+        },
+    },
+
     seo: {
         redirectToCanonicalSiteUrl: true,
     },
