@@ -1,7 +1,7 @@
 import jwt from '@tsndr/cloudflare-worker-jwt';
 import type { D1Database } from '@cloudflare/workers-types';
 
-const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key-change-in-production';
+const JWT_SECRET = process.env.JWT_SECRET ;
 class DatabaseService {
     constructor(private db: D1Database) {}
     async updateResume(resumeId: string, userId: string, updates: any): Promise<void> {
