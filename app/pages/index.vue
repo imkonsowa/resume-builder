@@ -115,11 +115,11 @@ useHead({
             </h1>
             <NuxtLink to="/resumes">
                 <Button size="lg">
-                    Create Your First Resume Now
+                    Create Your First Resume
                 </Button>
             </NuxtLink>
             <p class="text-xs text-gray-500 mt-4">
-                By using this website you agree to 
+                By using this website you agree to
                 <NuxtLink to="/terms" class="text-blue-600 hover:text-blue-800 underline">
                     terms and conditions
                 </NuxtLink>

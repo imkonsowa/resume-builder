@@ -21,7 +21,7 @@ const faqs = [
     },
     {
         question: 'Is my data secure and private?',
-        answer: 'Absolutely! All your resume data is stored locally in your browser\'s storage. We don\'t collect, store, or transmit any of your personal information to external servers. Your data stays on your device and is completely under your control.',
+        answer: 'Absolutely! All your resume data is stored locally in your browser\'s storage by default. We don\'t collect, store, or transmit any of your personal information to external servers unless you choose to use cloud sync. If you create an account for cloud storage, your data is securely saved and accessible only by you when authenticated.',
     },
     {
         question: 'Can I use this on mobile devices?',
@@ -33,7 +33,15 @@ const faqs = [
     },
     {
         question: 'Can I import and export my resume data?',
-        answer: 'Yes! You can export your resume data as a JSON file for backup purposes or to transfer between devices. You can also import previously exported data to restore your resume or work on it from another device.',
+        answer: 'Yes! You can export your resume data as a JSON file for backup purposes or to transfer between devices. You can also import previously exported data to restore your resume. Additionally, with cloud sync (requires free account), your resumes are automatically accessible across all your devices without manual import/export.',
+    },
+    {
+        question: 'How does cloud sync work?',
+        answer: 'Cloud sync allows you to save up to 3 resumes to our secure servers with a free account. Once synced, your resumes are accessible from any browser or device. Simply create an account, and use the "Sync to Cloud" button to save your resumes. Your data remains private and is only accessible when you\'re logged in.',
+    },
+    {
+        question: 'What should I know about editing resumes from multiple devices?',
+        answer: 'IMPORTANT: Avoid editing the same resume from multiple browsers or devices simultaneously, as this can lead to data conflicts and potential corruption. The system automatically syncs changes every 5 seconds in the builder, but always click the "Sync to Cloud" button before closing the builder page to ensure your latest changes are saved. For best results, edit one resume from one device at a time.',
     },
     {
         question: 'What sections can I add to my resume?',
@@ -53,7 +61,7 @@ const faqs = [
     },
     {
         question: 'How do I get help or report issues?',
-        answer: 'You can visit our GitHub repository to report issues, request features, or contribute to the project. We also provide comprehensive documentation and examples to help you get started.',
+        answer: 'You can visit our GitHub repository to report issues, request features, or contribute to the project, or contact us on contact@resumeforfree.com',
     },
 ];
 const faqCategories = [
@@ -65,14 +73,16 @@ const faqCategories = [
     {
         title: 'Features & Functionality',
         icon: CheckCircle,
-        faqs: faqs.slice(4, 8),
+        faqs: faqs.slice(4, 9),
     },
     {
         title: 'Technical & Support',
         icon: HelpCircle,
-        faqs: faqs.slice(8),
+        faqs: faqs.slice(9),
     },
 ];
+
+
 useHead({
     title: 'Q&A - Free Resume Builder | Frequently Asked Questions & Help',
     meta: [
@@ -187,6 +197,7 @@ useHead({
                                 class="w-full"
                                 collapsible
                                 type="single"
+                                :default-value="category.title === 'Features & Functionality' ? 'item-Features & Functionality-4' : undefined"
                             >
                                 <AccordionItem
                                     v-for="(faq, index) in category.faqs"
